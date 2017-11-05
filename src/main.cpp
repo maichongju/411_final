@@ -12,14 +12,17 @@ char NEWGAMETEXT[] = "Press \"S\" to start";
 char SCORETEXT[] = "Score: ";
 char GAMEOVERTEXT[] = "GAME OVER";
 char GAMEOVERSCORETEXT[] = "Your Score is ";
+char GAMEPAUSETEXT[] = "Pause";
+char GAMERESUMEHINTTEXT[] = "Press 'Esc' to resume";
 
 Color SCORETEXTCOLOR(1, 1, 1, 1);
 Color SCORECOLOR(1, 0, 0, 1);
 Color TEXTCOLOR(1, 1, 1, 1); //General text color (New game text and end game text)
 
-GLint winWidth = 800, winHeight = 800, winx = 100, winy = 100;
+GLint winWidth = WIN_WIDTH, winHeight = WIN_HEIGHT, winx = 100, winy = 100;
 
-int GameStatus = GAME_STATUS_END, GameLevel = GAME_LEVEL_NORMAL;
+int GameStatus = GAME_STATUS_NEW, GameLevel = GAME_LEVEL_NORMAL;
+int KeyDirection = GAME_KEY_NULL;
 int Score = 0;
 int SnakeSpeed = 5;
 
@@ -46,7 +49,7 @@ void setText(void) {
 	}
 
 	if (GameStatus == GAME_STATUS_NEW) {
-		glRasterPos2f(-0.3, 0);
+		glRasterPos2f(-0.2, 0);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; NEWGAMETEXT[i] != '\0'; i++) {
@@ -72,10 +75,72 @@ void setText(void) {
 		for (i = 0; scorechar[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, scorechar[i]);
 		}
+	} else if (GameStatus == GAME_STATUS_PAUSE) {
+		glRasterPos2f(-0.1, 0);
+		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
+				TEXTCOLOR.alpha);
+		for (i = 0; GAMEPAUSETEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, GAMEPAUSETEXT[i]);
+		}
+
+		glRasterPos2f(-0.3, -0.1);
+		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
+				TEXTCOLOR.alpha);
+		for (i = 0; GAMERESUMEHINTTEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,
+					GAMERESUMEHINTTEXT[i]);
+		}
 	}
 
 }
+/**
+ * Function will called by glutKeyboardFunc, react for key input (ASCII key)
+ * @param key
+ * 			the key that the user pressed
+ * @param x
+ * 			position x of mouse while the key press
+ * @param y
+ * 			position y of mouse while the key press
+ */
+void keyboardFunc(unsigned char key, int x, int y) {
+	if (GameStatus == GAME_STATUS_NEW) {
+		if (key == 's' || key == 'S') {
+			GameStatus = GAME_STATUS_RUNNING;
+		}
+	} else if (GameStatus == GAME_STATUS_RUNNING) {
+		if (key == 27) { // 27 is Esc
+			GameStatus = GAME_STATUS_PAUSE;
+		}
+	} else if (GameStatus == GAME_STATUS_PAUSE) {
+		if (key == 27) {
+			GameStatus = GAME_STATUS_RUNNING;
+		}
+	}
 
+}
+/**
+ * Function will called by glutSpecialFunc, react for special key input (Non-ASCII)
+ * @param key
+ * 			the key that the user pressed
+ * @param x
+ * 			position x of mouse while the key press
+ * @param y
+ * 			position y of mouse while the key press
+ */
+void specialFunc(int key, int x, int y) {
+	if (GameStatus == GAME_STATUS_RUNNING) {
+		if (key == GLUT_KEY_UP) {
+			KeyDirection = GAME_KEY_UP;
+		} else if (key == GLUT_KEY_DOWN) {
+			KeyDirection = GAME_KEY_DOWN;
+		} else if (key == GLUT_KEY_LEFT) {
+			KeyDirection = GAME_KEY_LEFT;
+		} else if (key == GLUT_KEY_RIGHT) {
+			KeyDirection = GAME_KEY_RIGHT;
+		}
+	}
+
+}
 /**
  * Function is set for display, every time the screen refresh will run this function
  */
@@ -243,6 +308,8 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(display);
 	glutMouseFunc(mouseAction);
 	glutReshapeFunc(winReshapeFun);
+	glutSpecialFunc(specialFunc);
+	glutKeyboardFunc(keyboardFunc);
 	menu();
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
