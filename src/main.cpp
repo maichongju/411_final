@@ -147,7 +147,7 @@ void specialFunc(int key, int x, int y) {
 
 }
 /**
- * Function will draw the border of the current game size
+ * Function will draw the border of the current game size. Default color is white
  */
 void drawBorder(void) {
 	glLineWidth(2.5);
@@ -164,13 +164,16 @@ void debug(void) {
 		glutSetWindowTitle("New");
 	} else if (GameStatus == GAME_STATUS_RUNNING) {
 		glutSetWindowTitle("Running");
-	}
-	if (GameStatus == GAME_STATUS_PAUSE) {
+	} else if (GameStatus == GAME_STATUS_PAUSE) {
 		glutSetWindowTitle("Pause");
-	}
-	if (GameStatus == GAME_STATUS_END) {
+	} else if (GameStatus == GAME_STATUS_END) {
 		glutSetWindowTitle("End");
 	}
+
+	glColor3f(1, 1, 1);
+	glBegin(GL_POINTS);
+	glVertex2i(50, 50);
+	glEnd();
 }
 //*************************************************************
 /**
@@ -299,7 +302,9 @@ void mainMenu(GLint option) {
 		break;
 	}
 	case 2: {
-		GameStatus = GAME_STATUS_PAUSE;
+		if (GameStatus == GAME_STATUS_RUNNING) {
+			GameStatus = GAME_STATUS_PAUSE;
+		}
 		break;
 	}
 	case 3: {
@@ -336,7 +341,7 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
 	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0, winWidth, winHeight, 0.0);
+	gluOrtho2D(0.0, winWidth, 0.0, winHeight);
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
 	glutInitWindowPosition(winx, winy);
 	glutInitWindowSize(winWidth, winHeight);
