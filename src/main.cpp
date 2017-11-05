@@ -22,7 +22,7 @@ Color TEXTCOLOR(1, 1, 1, 1); //General text color (New game text and end game te
 GLint winWidth = WIN_WIDTH, winHeight = WIN_HEIGHT, winx = 100, winy = 100;
 
 int GameStatus = GAME_STATUS_NEW, GameLevel = GAME_LEVEL_NORMAL;
-int KeyDirection = GAME_KEY_NULL;
+int KeyDirection = GAME_KEY_NULL, KeyDirectionPause = GAME_KEY_NULL;
 int Score = 0;
 int SnakeSpeed = 5;
 
@@ -106,14 +106,19 @@ void keyboardFunc(unsigned char key, int x, int y) {
 	if (GameStatus == GAME_STATUS_NEW) {
 		if (key == 's' || key == 'S') {
 			GameStatus = GAME_STATUS_RUNNING;
+			KeyDirection = GAME_KEY_RIGHT;
 		}
 	} else if (GameStatus == GAME_STATUS_RUNNING) {
 		if (key == 27) { // 27 is Esc
 			GameStatus = GAME_STATUS_PAUSE;
+			KeyDirectionPause = KeyDirection;
+			KeyDirection = GAME_KEY_NULL;
 		}
 	} else if (GameStatus == GAME_STATUS_PAUSE) {
 		if (key == 27) {
 			GameStatus = GAME_STATUS_RUNNING;
+			KeyDirection = KeyDirectionPause;
+			KeyDirectionPause = GAME_KEY_NULL;
 		}
 	}
 
@@ -142,11 +147,40 @@ void specialFunc(int key, int x, int y) {
 
 }
 /**
+ * Function will draw the border of the current game size
+ */
+void drawBorder(void) {
+	glLineWidth(2.5);
+	glColor3f(1, 1, 1);
+	glBegin(GL_LINES);
+
+	glVertex2f(-1, 0.85);
+	glVertex2f(1, 0.85);
+	glEnd();
+}
+//*************************************************************
+void debug(void) {
+	if (GameStatus == GAME_STATUS_NEW) {
+		glutSetWindowTitle("New");
+	} else if (GameStatus == GAME_STATUS_RUNNING) {
+		glutSetWindowTitle("Running");
+	}
+	if (GameStatus == GAME_STATUS_PAUSE) {
+		glutSetWindowTitle("Pause");
+	}
+	if (GameStatus == GAME_STATUS_END) {
+		glutSetWindowTitle("End");
+	}
+}
+//*************************************************************
+/**
  * Function is set for display, every time the screen refresh will run this function
  */
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	debug();
 	setText();
+	drawBorder();
 	glFlush();
 	glutSwapBuffers();
 	glutPostRedisplay();
@@ -300,7 +334,9 @@ void menu() {
 int main(int argc, char** argv) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glMatrixMode(GL_PROJECTION);
+	gluOrtho2D(0.0, winWidth, winHeight, 0.0);
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
 	glutInitWindowPosition(winx, winy);
 	glutInitWindowSize(winWidth, winHeight);
