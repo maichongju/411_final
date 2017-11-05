@@ -6,28 +6,73 @@
 
 #include "World.hpp"
 #include "Constant.hpp"
+#include "Color.hpp"
 
 char NEWGAMETEXT[] = "Press \"S\" to start";
+char SCORETEXT[] = "Score: ";
+char GAMEOVERTEXT[] = "GAME OVER";
+char GAMEOVERSCORETEXT[] = "Your Score is ";
+
+Color SCORETEXTCOLOR(1, 1, 1, 1);
+Color SCORECOLOR(1, 0, 0, 1);
+Color TEXTCOLOR(1, 1, 1, 1); //General text color (New game text and end game text)
 
 GLint winWidth = 800, winHeight = 800, winx = 100, winy = 100;
 
-int GameStatus = GAME_STATUS_NEW, GameLevel = GAME_LEVEL_NORMAL;
+int GameStatus = GAME_STATUS_END, GameLevel = GAME_LEVEL_NORMAL;
+int Score = 0;
 int SnakeSpeed = 5;
 
 /**
- * Function will call by display. Display the New text and End game text on the screen
+ * Function will call by display. Display needed text to the screen
  */
 void setText(void) {
-	glPushMatrix();
+	int i;
+	char scorechar[6];
+	if (GameStatus != GAME_STATUS_END) {
+		glRasterPos2f(-0.95, 0.9);
+		glColor4f(SCORETEXTCOLOR.red, SCORETEXTCOLOR.green, SCORETEXTCOLOR.blue,
+				SCORETEXTCOLOR.alpha);
+		for (i = 0; SCORETEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, SCORETEXT[i]);
+		}
 
-	glRasterPos2f(-0.25, 0);
+		sprintf(scorechar, "%05d", Score);
+		//glColor4f(SCORECOLOR.red, SCORECOLOR.green, SCORECOLOR.blue,
+		//	SCORECOLOR.alpha);
+		for (i = 0; scorechar[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, scorechar[i]);
+		}
+	}
+
 	if (GameStatus == GAME_STATUS_NEW) {
-		int i;
+		glRasterPos2f(-0.3, 0);
+		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
+				TEXTCOLOR.alpha);
 		for (i = 0; NEWGAMETEXT[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, NEWGAMETEXT[i]);
 		}
+
+	} else if (GameStatus == GAME_STATUS_END) {
+		glRasterPos2f(-0.2, 0.1);
+		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
+				TEXTCOLOR.alpha);
+		for (i = 0; GAMEOVERTEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, GAMEOVERTEXT[i]);
+		}
+		glRasterPos2f(-0.25, 0.0);
+		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
+				TEXTCOLOR.alpha);
+		for (i = 0; GAMEOVERSCORETEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,
+					GAMEOVERSCORETEXT[i]);
+		}
+		glRasterPos2f(0.1, 0);
+		sprintf(scorechar, "%d", Score);
+		for (i = 0; scorechar[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, scorechar[i]);
+		}
 	}
-	glPopMatrix();
 
 }
 

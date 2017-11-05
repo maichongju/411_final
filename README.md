@@ -10,3 +10,4 @@ Please do not resize the windows, otherwise the game might now work correctly
 
 Known Issus:
 
+ * getColor4f will not work in setText
