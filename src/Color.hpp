@@ -3,9 +3,9 @@
 
 class Color {
 public:
-	int red, green, blue;
-	Color(int red, int green, int blue);
-	void setColor(int red, int green, int blue);
+	float red, green, blue, alpha;
+	Color(float red, float green, float blue, float alpha);
+	void setColor(float red, float green, float blue, float alpha);
 };
 
 

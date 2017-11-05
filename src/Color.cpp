@@ -1,14 +1,16 @@
 #include "Color.hpp"
 
-Color::Color(int red, int green, int blue) {
+Color::Color(float red, float green, float blue, float alpha) {
 	this->red = red;
 	this->green = green;
 	this->blue = blue;
+	this->alpha = alpha;
 }
 
-void Color::setColor(int red, int green, int blue) {
+void Color::setColor(float red, float green, float blue, float alpha) {
 	this->red = red;
 	this->green = green;
 	this->blue = blue;
+	this->alpha = alpha;
 }
 

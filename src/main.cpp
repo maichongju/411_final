@@ -7,19 +7,39 @@
 #include "World.hpp"
 #include "Constant.hpp"
 
-
+char NEWGAMETEXT[] = "Press \"S\" to start";
 
 GLint winWidth = 800, winHeight = 800, winx = 100, winy = 100;
 
 int GameStatus = GAME_STATUS_NEW, GameLevel = GAME_LEVEL_NORMAL;
 int SnakeSpeed = 5;
+
+/**
+ * Function will call by display. Display the New text and End game text on the screen
+ */
+void setText(void) {
+	glPushMatrix();
+
+	glRasterPos2f(-0.25, 0);
+	if (GameStatus == GAME_STATUS_NEW) {
+		int i;
+		for (i = 0; NEWGAMETEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, NEWGAMETEXT[i]);
+		}
+	}
+	glPopMatrix();
+
+}
+
 /**
  * Function is set for display, every time the screen refresh will run this function
  */
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	setText();
 	glFlush();
 	glutSwapBuffers();
+	glutPostRedisplay();
 }
 
 /**
@@ -69,6 +89,7 @@ void centerwindow(int screen_height, int screen_width) {
  * Function will reset everything for a new game
  */
 void NewGame(void) {
+	GameStatus = GAME_STATUS_NEW;
 
 }
 /**
@@ -103,6 +124,22 @@ void levelMenu(GLint leveloption) {
  * 			user selected item id
  */
 void colorMenu(GLint colorOption) {
+	switch (colorOption) {
+	case 1: {
+
+		break;
+	}
+	case 2: {
+
+		break;
+
+	}
+
+	case 3: {
+
+		break;
+	}
+	}
 
 }
 
@@ -114,7 +151,7 @@ void colorMenu(GLint colorOption) {
 void mainMenu(GLint option) {
 	switch (option) {
 	case 1: {
-		GameStatus = GAME_STATUS_NEW;
+		NewGame();
 		break;
 	}
 	case 2: {
