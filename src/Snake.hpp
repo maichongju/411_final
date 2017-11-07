@@ -10,14 +10,18 @@
 class Snake {
 private:
 	Color color;
-	LinkedList *snake;
+	LinkedList *body;
 	void setDafeult();
 public:
 	Snake();
 	void draw();
 	void reset();
-	void increase();
+	Node *getHead();
+	void changeDirection(int direction);
 	void setColor(float red, float green, float blue, float alpha);
+	bool init(int x, int y);
+	bool initE(int x, int y);
+	void bodypop();
 };
 
 

@@ -17,8 +17,10 @@ public:
 	~LinkedList();
 	void append(int x, int y);
 	void pop();
+	Node *peek();
 	bool isEmpty();
 	bool init(int x, int y);
+	bool initE(int x, int y);
 
 };
 

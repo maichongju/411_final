@@ -3,6 +3,8 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
 #include "World.hpp"
 #include "Constant.hpp"
@@ -23,11 +25,21 @@ GLint winWidth = WIN_WIDTH, winHeight = WIN_HEIGHT, winx = 100, winy = 100;
 
 int GameStatus = GAME_STATUS_NEW;
 int GameLevel = GAME_LEVEL_NORMAL;
-int KeyDirection = GAME_KEY_NULL, KeyDirectionPause = GAME_KEY_NULL;
-int Score = 0;
-int SnakeSpeed = 5;
+int KeyDirection = GAME_KEY_RIGHT, KeyDirectionPause = GAME_KEY_NULL;
+int Score = 0; // Maximum is 99999
+double snakemove;
 
 World myWorld;
+
+static int oldTime, newTime;
+void move() {
+	oldTime = clock();
+	snakemove = (newTime - oldTime);
+	newTime = clock();
+	oldTime = newTime;
+	glutPostRedisplay();
+}
+
 /**
  * Initial function to set up OpenGL state variable other than default
  */
@@ -121,18 +133,22 @@ void keyboardFunc(unsigned char key, int x, int y) {
 		if (key == 's' || key == 'S') {
 			GameStatus = GAME_STATUS_RUNNING;
 			KeyDirection = GAME_KEY_RIGHT;
+			glutIdleFunc(move);
 		}
 	} else if (GameStatus == GAME_STATUS_RUNNING) {
 		if (key == 27) { // 27 is Esc (ASCII)
 			GameStatus = GAME_STATUS_PAUSE;
 			KeyDirectionPause = KeyDirection;
 			KeyDirection = GAME_KEY_NULL;
+			glutIdleFunc(NULL);
+			snakemove = 0;
 		}
 	} else if (GameStatus == GAME_STATUS_PAUSE) {
 		if (key == 27) {
 			GameStatus = GAME_STATUS_RUNNING;
 			KeyDirection = KeyDirectionPause;
 			KeyDirectionPause = GAME_KEY_NULL;
+			glutIdleFunc(move);
 		}
 	}
 
@@ -149,13 +165,21 @@ void keyboardFunc(unsigned char key, int x, int y) {
 void specialFunc(int key, int x, int y) {
 	if (GameStatus == GAME_STATUS_RUNNING) {
 		if (key == GLUT_KEY_UP) {
-			KeyDirection = GAME_KEY_UP;
+			if (KeyDirection != GAME_KEY_DOWN) {
+				KeyDirection = GAME_KEY_UP;
+			}
 		} else if (key == GLUT_KEY_DOWN) {
-			KeyDirection = GAME_KEY_DOWN;
+			if (KeyDirection != GAME_KEY_UP) {
+				KeyDirection = GAME_KEY_DOWN;
+			}
 		} else if (key == GLUT_KEY_LEFT) {
-			KeyDirection = GAME_KEY_LEFT;
+			if (KeyDirection != GAME_KEY_RIGHT) {
+				KeyDirection = GAME_KEY_LEFT;
+			}
 		} else if (key == GLUT_KEY_RIGHT) {
-			KeyDirection = GAME_KEY_RIGHT;
+			if (KeyDirection != GAME_KEY_LEFT) {
+				KeyDirection = GAME_KEY_RIGHT;
+			}
 		}
 	}
 
@@ -171,28 +195,34 @@ void drawBorder(void) {
 	glVertex2i(100, 96);
 	glEnd();
 }
-//*************************************************************
-void debug(void) {
-	if (GameStatus == GAME_STATUS_NEW) {
-		glutSetWindowTitle("New");
-	} else if (GameStatus == GAME_STATUS_RUNNING) {
-		glutSetWindowTitle("Running");
-	} else if (GameStatus == GAME_STATUS_PAUSE) {
-		glutSetWindowTitle("Pause");
-	} else if (GameStatus == GAME_STATUS_END) {
-		glutSetWindowTitle("End");
+
+/**
+ * Function will set the window title with current level
+ */
+void changeTitle(void) {
+	char str[50];
+	strcpy(str, WIN_TITLE);
+	if (GameLevel == GAME_LEVEL_EASY) {
+
+		strcat(str, "   EASY");
+	} else if (GameLevel == GAME_LEVEL_NORMAL) {
+		strcat(str, "   NORMAL");
+	} else if (GameLevel == GAME_LEVEL_HARD) {
+		strcat(str, "   HARD");
+	} else if (GameLevel == GAME_LEVEL_EXPERT) {
+		strcat(str, "   EXPERT");
+	} else if (GameLevel == GAME_LEVEL_EEXPERT) {
+		strcat(str, "   EEXPERT");
 	}
-
-
+	glutSetWindowTitle(str);
 
 }
-//*************************************************************
 /**
  * Function is set for display, every time the screen refresh will run this function
  */
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
-	debug();
+	changeTitle();
 	setText();
 	drawBorder();
 	myWorld.draw();
@@ -201,20 +231,6 @@ void display(void) {
 	glutPostRedisplay();
 }
 
-/**
- * Function will attach to glutMouseFunc, it will receive the info from system
- * @param button
- * 			the button clicked
- * @param state
- * 			the state of the button
- * @param x
- * 			the x position of the mouse clicked
- * @param y
- * 			the y position of the mouse clicked
- */
-void mouseAction(int button, int state, int x, int y) {
-
-}
 
 /**
  * Function will set the windows to the center of the screen according screen resolution
@@ -261,6 +277,9 @@ void levelMenu(GLint leveloption) {
 	case 4: {
 		GameLevel = GAME_LEVEL_EXPERT;
 		break;
+	}
+	case 5: {
+		GameLevel = GAME_LEVEL_EEXPERT;
 	}
 	}
 
@@ -327,11 +346,12 @@ void menu() {
 	glutAddMenuEntry(" Normal", 2);
 	glutAddMenuEntry(" Hard", 3);
 	glutAddMenuEntry(" Expert", 4);
+	glutAddMenuEntry(" YOU DON'T WANT THIS", 5);
 
 	glutCreateMenu(mainMenu);
 	glutAddMenuEntry(" New Game", 1);
 	glutAddMenuEntry(" Pause", 2);
-	glutAddSubMenu(" Snake Color", colormenu);
+	//glutAddSubMenu(" Snake Color", colormenu);
 	glutAddSubMenu(" Level", levelmenu);
 	glutAddMenuEntry(" Exit Game", 3);
 }
@@ -343,7 +363,7 @@ int main(int argc, char** argv) {
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
-	glutCreateWindow("CP411 Final Project (Please do not resize the window)");
+	glutCreateWindow(WIN_TITLE);
 	//init();
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
@@ -351,7 +371,6 @@ int main(int argc, char** argv) {
 	glColor3f(1.0, 1.0, 1.0);
 
 	glutDisplayFunc(display);
-	glutMouseFunc(mouseAction);
 	glutSpecialFunc(specialFunc);
 	glutKeyboardFunc(keyboardFunc);
 

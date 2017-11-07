@@ -11,7 +11,6 @@ Block::Block() {
 	size = GAME_BLOCK_SIZE;
 }
 
-
 /**
  * this will random generate the block location, if the random position is
  * the same position as the current one, then it will keep generate a new one
@@ -24,6 +23,8 @@ void Block::generate() {
 		tx = rand() % (GAME_ZONE_WIDTH);
 		ty = rand() % (GAME_ZONE_HEIGHT);
 	}
+	tx = tx - tx % GAME_BLOCK_SIZE;
+	ty = ty - ty % GAME_BLOCK_SIZE;
 	this->x = tx;
 	this->y = ty;
 }

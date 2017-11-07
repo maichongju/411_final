@@ -2,15 +2,21 @@
 #ifndef CONSTANT_HPP_
 #define CONSTANT_HPP_
 
+#define WIN_TITLE				"Snake Game"
+
 // Window Size
 #define WIN_WIDTH				800
 #define WIN_HEIGHT				800
 
+// Snake Speed
+#define GAME_SNAKE_SPEED		5 // Larger is slower
+
 // Snake Length Start
-#define SNAKE_START_LENGTH		4
+#define SNAKE_START_LENGTH		8
 
 // Game Block Size
 #define GAME_BLOCK_SIZE			2
+#define GAME_BLOCK_SCORE		5
 
 // Game Size (Coordinate)
 #define GAME_SIZE_WIDTH			100
@@ -27,10 +33,11 @@
 #define GAME_STATUS_END 		3
 
 // Game Level
-#define GAME_LEVEL_EASY 		1
-#define GAME_LEVEL_NORMAL 		2
-#define GAME_LEVEL_HARD 		3
+#define GAME_LEVEL_EASY 		12
+#define GAME_LEVEL_NORMAL 		10
+#define GAME_LEVEL_HARD 		6
 #define GAME_LEVEL_EXPERT 		4
+#define GAME_LEVEL_EEXPERT		1
 
 // Key direction
 #define GAME_KEY_NULL			0

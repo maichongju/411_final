@@ -16,7 +16,6 @@ public:
 	Block();
 	void draw();
 	void setColor(float red, float green, float blue, float alpha);
-private:
 	void generate();
 };
 
