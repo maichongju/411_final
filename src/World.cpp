@@ -66,9 +66,12 @@ void World::reset() {
 void World::checkEnd() {
 	int x = this->snake->getHead()->x;
 	int y = this->snake->getHead()->y;
-	if (x < 0 || x == GAME_ZONE_WIDTH || y < 0 || y == GAME_ZONE_HEIGHT) {
-		GameStatus = GAME_STATUS_END;
-	} else if (this->snake->initE(x, y)) {
+	if (GameType == GAME_TYPE_NORMAL) {
+		if (x < 0 || x == GAME_ZONE_WIDTH || y < 0 || y == GAME_ZONE_HEIGHT) {
+			GameStatus = GAME_STATUS_END;
+		}
+	}
+	if (this->snake->initE(x, y)) {
 		GameStatus = GAME_STATUS_END;
 	}
 }

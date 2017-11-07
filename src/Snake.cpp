@@ -6,6 +6,7 @@
 Snake::Snake() {
 	body = new LinkedList();
 	this->setDafeult();
+	Shape = GAME_SHAPE_SQUARE;
 }
 
 /**
@@ -22,6 +23,18 @@ void Snake::setDafeult() {
 		GAME_ZONE_HEIGHT / 2);
 	}
 }
+
+/**
+ * Set the color for snake
+ * @param red
+ * @param green
+ * @param blue
+ * @param alpha
+ */
+void Snake::setColor(float red, float green, float blue, float alpha) {
+	this->color.setColor(red, green, blue, alpha);
+}
+
 /**
  * Reset body to the first place
  */
@@ -38,8 +51,13 @@ void Snake::draw() {
 	Node *current = this->body->head;
 	glColor4f(color.red, color.green, color.blue, color.alpha);
 	for (i = 0; i < this->body->size; i++) {
+		if (this->Shape == GAME_SHAPE_SQUARE) {
 		glRecti(current->x, current->y, current->x + GAME_BLOCK_SIZE,
-				current->y + GAME_BLOCK_SIZE);
+					current->y + GAME_BLOCK_SIZE);
+		} else if (this->Shape == GAME_SHAPE_CIRCLE) {
+			circleMidpoint(current->x + GAME_BLOCK_SIZE / 2,
+					current->y + GAME_BLOCK_SIZE / 2, current->x, current->y);
+		}
 		current = current->next;
 	}
 }
@@ -112,4 +130,36 @@ return this->body->peek();
  */
 bool Snake::initE(int x, int y) {
 	return this->body->initE(x, y);
+}
+
+void Snake::circleFilled(GLint x1, GLint y1, GLint x, GLint y) {
+	glLineWidth(2.0);
+	glBegin(GL_LINES);
+	glVertex2i(x1 + x, y1 + y);
+	glVertex2i(x1 - x, y1 + y);
+	glVertex2i(x1 + x, y1 - y);
+	glVertex2i(x1 - x, y1 - y);
+	glVertex2i(x1 + y, y1 + x);
+	glVertex2i(x1 - y, y1 + x);
+	glVertex2i(x1 + y, y1 - x);
+	glVertex2i(x1 - y, y1 - x);
+	glEnd();
+}
+void Snake::circleMidpoint(GLint x1, GLint y1, GLint x2, GLint y2) {
+	glLineWidth(1.0);
+	GLint r = sqrt(pow((x1 - x2), 2) + pow(y1 - y2, 2));
+	GLint p = 1 - r;
+	GLint x = 0, y = r;
+	while (x < y) {
+		x++;
+		if (p < 0) {
+			p += 2 * x + 1;
+		} else {
+			y--;
+			p += 2 * (x - y) + 1;
+		}
+			circleFilled(x1, y1, x, y);
+
+	}
+
 }

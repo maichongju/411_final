@@ -26,6 +26,7 @@ GLint winWidth = WIN_WIDTH, winHeight = WIN_HEIGHT, winx = 100, winy = 100;
 int GameStatus = GAME_STATUS_NEW;
 int GameLevel = GAME_LEVEL_NORMAL;
 int KeyDirection = GAME_KEY_RIGHT, KeyDirectionPause = GAME_KEY_NULL;
+int GameType = GAME_TYPE_NORMAL;
 int Score = 0; // Maximum is 99999
 double snakemove;
 
@@ -231,7 +232,6 @@ void display(void) {
 	glutPostRedisplay();
 }
 
-
 /**
  * Function will set the windows to the center of the screen according screen resolution
  * if screen_height or screen_width means the resolution cannot get correctly, then the
@@ -253,6 +253,7 @@ void centerwindow(int screen_height, int screen_width) {
 void NewGame(void) {
 	GameStatus = GAME_STATUS_NEW;
 	myWorld.reset();
+	Score = 0;
 
 }
 /**
@@ -292,21 +293,48 @@ void levelMenu(GLint leveloption) {
 void colorMenu(GLint colorOption) {
 	switch (colorOption) {
 	case 1: {
-
+		myWorld.snake->setColor(1.0, 0, 0, 1);
 		break;
 	}
 	case 2: {
-
+		myWorld.snake->setColor(0, 1.0, 0, 1.0);
 		break;
 
 	}
 
 	case 3: {
+		myWorld.snake->setColor(0, 0, 1.0, 1.0);
+		break;
+	}
+	case 4: {
+		myWorld.snake->setColor(1.0, 1.0, 1.0, 1.0);
+	}
+	}
+
+}
+
+void blockMenu(GLint boption) {
+	switch (boption) {
+	case 1: {
+		myWorld.block->setColor(1.0, 0, 0, 1.0);
 
 		break;
 	}
-	}
+	case 2: {
+		myWorld.block->setColor(0, 1.0, 0, 1.0);
 
+		break;
+	}
+	case 3: {
+		myWorld.block->setColor(0, 0, 1.0, 1.0);
+
+		break;
+	}
+	case 4: {
+		myWorld.block->setColor(1.0, 1.0, 1.0, 1.0);
+		break;
+	}
+	}
 }
 
 /**
@@ -337,9 +365,10 @@ void mainMenu(GLint option) {
  */
 void menu() {
 	int colormenu = glutCreateMenu(colorMenu);
-	glutAddMenuEntry(" Color 1", 1);
-	glutAddMenuEntry(" Color 2", 2);
-	glutAddMenuEntry(" Color 3", 3);
+	glutAddMenuEntry(" Red", 1);
+	glutAddMenuEntry(" Green", 2);
+	glutAddMenuEntry(" Blue", 3);
+	glutAddMenuEntry(" White", 4);
 
 	int levelmenu = glutCreateMenu(levelMenu);
 	glutAddMenuEntry(" Easy", 1);
@@ -348,10 +377,17 @@ void menu() {
 	glutAddMenuEntry(" Expert", 4);
 	glutAddMenuEntry(" YOU DON'T WANT THIS", 5);
 
+	int bcolormenu = glutCreateMenu(blockMenu);
+	glutAddMenuEntry(" Red", 1);
+	glutAddMenuEntry(" Green", 2);
+	glutAddMenuEntry(" Blue", 3);
+	glutAddMenuEntry(" White", 4);
+
 	glutCreateMenu(mainMenu);
 	glutAddMenuEntry(" New Game", 1);
 	glutAddMenuEntry(" Pause", 2);
-	//glutAddSubMenu(" Snake Color", colormenu);
+	glutAddSubMenu(" Snake Color", colormenu);
+	glutAddSubMenu(" Block Color", bcolormenu);
 	glutAddSubMenu(" Level", levelmenu);
 	glutAddMenuEntry(" Exit Game", 3);
 }

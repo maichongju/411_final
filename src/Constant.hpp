@@ -18,6 +18,14 @@
 #define GAME_BLOCK_SIZE			2
 #define GAME_BLOCK_SCORE		5
 
+// Game Type
+#define GAME_TYPE_NORMAL		0
+#define GAME_TYPE_THROUGH		1
+
+//Game Object Shape
+#define GAME_SHAPE_SQUARE		0
+#define GAME_SHAPE_CIRCLE		1
+
 // Game Size (Coordinate)
 #define GAME_SIZE_WIDTH			100
 #define GAME_SIZE_HEIGHT		100

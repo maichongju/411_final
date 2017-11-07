@@ -12,18 +12,20 @@ extern double snakemove;
 extern int GameLevel;
 extern int KeyDirection;
 extern int Score;
+extern int GameType;
 
 class World {
 private:
 	float movecount;
-	Block *block;
-	Snake *snake;
+
 public:
 	World();
 	~World();
 	void draw();
 	void reset();
 	void checkEnd();
+	Block *block;
+	Snake *snake;
 };
 
 #endif /* WORLD_HPP_ */

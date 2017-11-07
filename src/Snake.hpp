@@ -1,6 +1,8 @@
 #ifndef SNAKE_HPP_
 #define SNAKE_HPP_
 
+#include <math.h>
+
 #include "Constant.hpp"
 #include "LinkedList.hpp"
 #include "Block.hpp"
@@ -12,6 +14,9 @@ private:
 	Color color;
 	LinkedList *body;
 	void setDafeult();
+	void circleMidpoint(GLint x1, GLint y1, GLint x2, GLint y2);
+	void circleFilled(GLint x1, GLint y1, GLint x2, GLint y2);
+	int Shape;
 public:
 	Snake();
 	void draw();
