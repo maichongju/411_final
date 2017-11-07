@@ -1,5 +1,3 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include <GL/glut.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,6 +30,9 @@ double snakemove;
 
 World myWorld;
 
+/**
+ * Function for idle
+ */
 static int oldTime, newTime;
 void move() {
 	oldTime = clock();
@@ -41,15 +42,6 @@ void move() {
 	glutPostRedisplay();
 }
 
-/**
- * Initial function to set up OpenGL state variable other than default
- */
-void init(void) {
-	glClearColor(1.0, 0.0, 0.0, 0.0);
-	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0, winWidth, winHeight, 0.0);
-	glColor3f(1.0, 1.0, 1.0);
-}
 /**
  * Function will call by display. Display needed text to the screen
  */
@@ -400,7 +392,6 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow(WIN_TITLE);
-	//init();
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	glMatrixMode(GL_PROJECTION);
 	gluOrtho2D(0.0, GAME_SIZE_WIDTH, 0.0, GAME_SIZE_HEIGHT);
