@@ -21,19 +21,30 @@ Color TEXTCOLOR(1, 1, 1, 1); //General text color (New game text and end game te
 
 GLint winWidth = WIN_WIDTH, winHeight = WIN_HEIGHT, winx = 100, winy = 100;
 
-int GameStatus = GAME_STATUS_NEW, GameLevel = GAME_LEVEL_NORMAL;
+int GameStatus = GAME_STATUS_NEW;
+int GameLevel = GAME_LEVEL_NORMAL;
 int KeyDirection = GAME_KEY_NULL, KeyDirectionPause = GAME_KEY_NULL;
 int Score = 0;
 int SnakeSpeed = 5;
 
+World myWorld;
+/**
+ * Initial function to set up OpenGL state variable other than default
+ */
+void init(void) {
+	glClearColor(1.0, 0.0, 0.0, 0.0);
+	glMatrixMode(GL_PROJECTION);
+	gluOrtho2D(0.0, winWidth, winHeight, 0.0);
+	glColor3f(1.0, 1.0, 1.0);
+}
 /**
  * Function will call by display. Display needed text to the screen
  */
 void setText(void) {
-	int i;
+	int i, size;
 	char scorechar[6];
 	if (GameStatus != GAME_STATUS_END) {
-		glRasterPos2f(-0.95, 0.9);
+		glRasterPos2f(2, 96);
 		glColor4f(SCORETEXTCOLOR.red, SCORETEXTCOLOR.green, SCORETEXTCOLOR.blue,
 				SCORETEXTCOLOR.alpha);
 		for (i = 0; SCORETEXT[i] != '\0'; i++) {
@@ -49,7 +60,8 @@ void setText(void) {
 	}
 
 	if (GameStatus == GAME_STATUS_NEW) {
-		glRasterPos2f(-0.2, 0);
+		size = length(NEWGAMETEXT);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; NEWGAMETEXT[i] != '\0'; i++) {
@@ -57,33 +69,35 @@ void setText(void) {
 		}
 
 	} else if (GameStatus == GAME_STATUS_END) {
-		glRasterPos2f(-0.2, 0.1);
+		size = length(GAMEOVERTEXT);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2 + 4);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; GAMEOVERTEXT[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, GAMEOVERTEXT[i]);
 		}
-		glRasterPos2f(-0.25, 0.0);
+		size = length(GAMEOVERSCORETEXT);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; GAMEOVERSCORETEXT[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,
 					GAMEOVERSCORETEXT[i]);
 		}
-		glRasterPos2f(0.1, 0);
 		sprintf(scorechar, "%d", Score);
 		for (i = 0; scorechar[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, scorechar[i]);
 		}
 	} else if (GameStatus == GAME_STATUS_PAUSE) {
-		glRasterPos2f(-0.1, 0);
+		size = length(GAMEPAUSETEXT);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2 + 4);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; GAMEPAUSETEXT[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, GAMEPAUSETEXT[i]);
 		}
-
-		glRasterPos2f(-0.3, -0.1);
+		size = length(GAMERESUMEHINTTEXT);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; GAMERESUMEHINTTEXT[i] != '\0'; i++) {
@@ -109,7 +123,7 @@ void keyboardFunc(unsigned char key, int x, int y) {
 			KeyDirection = GAME_KEY_RIGHT;
 		}
 	} else if (GameStatus == GAME_STATUS_RUNNING) {
-		if (key == 27) { // 27 is Esc
+		if (key == 27) { // 27 is Esc (ASCII)
 			GameStatus = GAME_STATUS_PAUSE;
 			KeyDirectionPause = KeyDirection;
 			KeyDirection = GAME_KEY_NULL;
@@ -150,12 +164,11 @@ void specialFunc(int key, int x, int y) {
  * Function will draw the border of the current game size. Default color is white
  */
 void drawBorder(void) {
-	glLineWidth(2.5);
+	glLineWidth(1.5);
 	glColor3f(1, 1, 1);
 	glBegin(GL_LINES);
-
-	glVertex2f(-1, 0.85);
-	glVertex2f(1, 0.85);
+	glVertex2i(0, 95);
+	glVertex2i(100, 95);
 	glEnd();
 }
 //*************************************************************
@@ -170,36 +183,22 @@ void debug(void) {
 		glutSetWindowTitle("End");
 	}
 
-	glColor3f(1, 1, 1);
-	glBegin(GL_POINTS);
-	glVertex2i(50, 50);
-	glEnd();
+
+
 }
 //*************************************************************
 /**
  * Function is set for display, every time the screen refresh will run this function
  */
 void display(void) {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT);
 	debug();
 	setText();
 	drawBorder();
+	myWorld.draw();
 	glFlush();
 	glutSwapBuffers();
 	glutPostRedisplay();
-}
-
-/**
- * Every time window reshape it will call this function
- * @param newWidth
- * 			the new width for the window
- * @param newHeight
- * 			the new height for the window
- */
-void winReshapeFun(GLint newWidth, GLint newHeight) {
-	glViewport(0, 0, newWidth, newWidth);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
 }
 
 /**
@@ -237,6 +236,7 @@ void centerwindow(int screen_height, int screen_width) {
  */
 void NewGame(void) {
 	GameStatus = GAME_STATUS_NEW;
+	myWorld.reset();
 
 }
 /**
@@ -339,18 +339,22 @@ void menu() {
 int main(int argc, char** argv) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	glMatrixMode(GL_PROJECTION);
-	gluOrtho2D(0.0, winWidth, 0.0, winHeight);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
-	glutInitWindowPosition(winx, winy);
-	glutInitWindowSize(winWidth, winHeight);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(800, 800);
 	glutCreateWindow("CP411 Final Project (Please do not resize the window)");
+	//init();
+	glClearColor(0.0, 0.0, 0.0, 1.0);
+	glMatrixMode(GL_PROJECTION);
+	gluOrtho2D(0.0, GAME_SIZE_WIDTH, 0.0, GAME_SIZE_HEIGHT);
+	glColor3f(1.0, 1.0, 1.0);
+
 	glutDisplayFunc(display);
 	glutMouseFunc(mouseAction);
-	glutReshapeFunc(winReshapeFun);
 	glutSpecialFunc(specialFunc);
 	glutKeyboardFunc(keyboardFunc);
+
 	menu();
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();

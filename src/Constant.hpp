@@ -6,6 +6,17 @@
 #define WIN_WIDTH				800
 #define WIN_HEIGHT				800
 
+// Game Block Size
+#define GAME_BLOCK_SIZE			2
+
+// Game Size (Coordinate)
+#define GAME_SIZE_WIDTH			100
+#define GAME_SIZE_HEIGHT		100
+
+// Game Zone Size
+#define GAME_ZONE_WIDTH			100
+#define GAME_ZONE_HEIGHT		95
+
 // Game Status
 #define GAME_STATUS_NEW 		0
 #define GAME_STATUS_RUNNING 	1
@@ -25,5 +36,7 @@
 #define GAME_KEY_LEFT			3
 #define GAME_KEY_RIGHT			4
 
+//size of array function
+#define length(a) sizeof(a)/sizeof(a[0])
 
 #endif
