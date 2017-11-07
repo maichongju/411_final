@@ -6,6 +6,9 @@
 #define WIN_WIDTH				800
 #define WIN_HEIGHT				800
 
+// Snake Length Start
+#define SNAKE_START_LENGTH		4
+
 // Game Block Size
 #define GAME_BLOCK_SIZE			2
 
@@ -13,9 +16,9 @@
 #define GAME_SIZE_WIDTH			100
 #define GAME_SIZE_HEIGHT		100
 
-// Game Zone Size
+// Game Zone Size (Must can be divide by 2 and can be divide by block size)
 #define GAME_ZONE_WIDTH			100
-#define GAME_ZONE_HEIGHT		95
+#define GAME_ZONE_HEIGHT		96
 
 // Game Status
 #define GAME_STATUS_NEW 		0

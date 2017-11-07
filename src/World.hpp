@@ -6,7 +6,7 @@
 #include "Snake.hpp"
 
 extern int GameStatus;
-
+extern Block block;
 class World {
 private:
 	Block *block;

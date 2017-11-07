@@ -43,7 +43,6 @@ void Block::setColor(float red, float green, float blue, float alpha) {
  * Function will draw the block
  */
 void Block::draw() {
-	printf("%d,%d\n", x, y);
 	glColor4f(color.red, color.green, color.blue, color.alpha);
 	glRecti(x, y, x + size, y + size);
 }

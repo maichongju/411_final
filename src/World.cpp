@@ -14,6 +14,7 @@ World::~World() {
 void World::draw() {
 	if (GameStatus == GAME_STATUS_RUNNING) {
 		this->block->draw();
+		this->snake->draw();
 	}
 }
 

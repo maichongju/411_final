@@ -44,7 +44,7 @@ void setText(void) {
 	int i, size;
 	char scorechar[6];
 	if (GameStatus != GAME_STATUS_END) {
-		glRasterPos2f(2, 96);
+		glRasterPos2f(2, 97);
 		glColor4f(SCORETEXTCOLOR.red, SCORETEXTCOLOR.green, SCORETEXTCOLOR.blue,
 				SCORETEXTCOLOR.alpha);
 		for (i = 0; SCORETEXT[i] != '\0'; i++) {
@@ -167,8 +167,8 @@ void drawBorder(void) {
 	glLineWidth(1.5);
 	glColor3f(1, 1, 1);
 	glBegin(GL_LINES);
-	glVertex2i(0, 95);
-	glVertex2i(100, 95);
+	glVertex2i(0, 96);
+	glVertex2i(100, 96);
 	glEnd();
 }
 //*************************************************************
