@@ -41,10 +41,10 @@
 #define GAME_STATUS_END 		3
 
 // Game Level
-#define GAME_LEVEL_EASY 		12
-#define GAME_LEVEL_NORMAL 		10
-#define GAME_LEVEL_HARD 		6
-#define GAME_LEVEL_EXPERT 		4
+#define GAME_LEVEL_EASY 		10
+#define GAME_LEVEL_NORMAL 		8
+#define GAME_LEVEL_HARD 		5
+#define GAME_LEVEL_EXPERT 		3
 #define GAME_LEVEL_EEXPERT		1
 
 // Key direction

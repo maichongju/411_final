@@ -14,6 +14,8 @@ char GAMEOVERTEXT[] = "GAME OVER";
 char GAMEOVERSCORETEXT[] = "Your Score is ";
 char GAMEPAUSETEXT[] = "Pause";
 char GAMERESUMEHINTTEXT[] = "Press 'Esc' to resume";
+char GAMERESTARTTEXT[] = "Press \"R\" to restart";
+char GAMEHIGHSCORETEXT[] = "HighScore: ";
 
 Color SCORETEXTCOLOR(1, 1, 1, 1);
 Color SCORECOLOR(1, 0, 0, 1);
@@ -26,10 +28,20 @@ int GameLevel = GAME_LEVEL_NORMAL;
 int KeyDirection = GAME_KEY_RIGHT, KeyDirectionPause = GAME_KEY_NULL;
 int GameType = GAME_TYPE_NORMAL;
 int Score = 0; // Maximum is 99999
+int HighScore = 0;
 double snakemove;
 
 World myWorld;
 
+/**
+ * Function will reset everything for a new game
+ */
+void NewGame(void) {
+	GameStatus = GAME_STATUS_NEW;
+	myWorld.reset();
+	Score = 0;
+
+}
 /**
  * Function for idle
  */
@@ -75,7 +87,8 @@ void setText(void) {
 
 	} else if (GameStatus == GAME_STATUS_END) {
 		size = length(GAMEOVERTEXT);
-		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2 + 4);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size * 0.75,
+		GAME_ZONE_HEIGHT / 2 + 4);
 		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
 				TEXTCOLOR.alpha);
 		for (i = 0; GAMEOVERTEXT[i] != '\0'; i++) {
@@ -93,6 +106,13 @@ void setText(void) {
 		for (i = 0; scorechar[i] != '\0'; i++) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, scorechar[i]);
 		}
+		size = length(GAMERESTARTTEXT);
+		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2 - 4);
+		glColor4f(TEXTCOLOR.red, TEXTCOLOR.green, TEXTCOLOR.blue,
+				TEXTCOLOR.alpha);
+		for (i = 0; GAMERESTARTTEXT[i] != '\0'; i++) {
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, GAMERESTARTTEXT[i]);
+		}
 	} else if (GameStatus == GAME_STATUS_PAUSE) {
 		size = length(GAMEPAUSETEXT);
 		glRasterPos2f(GAME_ZONE_WIDTH / 2 - size / 2, GAME_ZONE_HEIGHT / 2 + 4);
@@ -109,6 +129,18 @@ void setText(void) {
 			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,
 					GAMERESUMEHINTTEXT[i]);
 		}
+	}
+
+	glRasterPos2f(75, 97);
+	glColor4f(SCORETEXTCOLOR.red, SCORETEXTCOLOR.green, SCORETEXTCOLOR.blue,
+			SCORETEXTCOLOR.alpha);
+	for (i = 0; GAMEHIGHSCORETEXT[i] != '\0'; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, GAMEHIGHSCORETEXT[i]);
+	}
+
+	sprintf(scorechar, "%05d", HighScore);
+	for (i = 0; scorechar[i] != '\0'; i++) {
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, scorechar[i]);
 	}
 
 }
@@ -142,6 +174,11 @@ void keyboardFunc(unsigned char key, int x, int y) {
 			KeyDirection = KeyDirectionPause;
 			KeyDirectionPause = GAME_KEY_NULL;
 			glutIdleFunc(move);
+		}
+	} else if (GameStatus == GAME_STATUS_END) {
+		if (key == 'r' || 'R') {
+			GameStatus = GAME_STATUS_NEW;
+			NewGame();
 		}
 	}
 
@@ -210,12 +247,24 @@ void changeTitle(void) {
 	glutSetWindowTitle(str);
 
 }
+
+/**
+ * Function will update the high score
+ */
+void updateHighScore() {
+	if (GameStatus == GAME_STATUS_END) {
+		if (Score > HighScore) {
+			HighScore = Score;
+		}
+	}
+}
 /**
  * Function is set for display, every time the screen refresh will run this function
  */
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	changeTitle();
+	updateHighScore();
 	setText();
 	drawBorder();
 	myWorld.draw();
@@ -239,15 +288,7 @@ void centerwindow(int screen_height, int screen_width) {
 		winy = screen_height / 2 - winHeight / 2;
 	}
 }
-/**
- * Function will reset everything for a new game
- */
-void NewGame(void) {
-	GameStatus = GAME_STATUS_NEW;
-	myWorld.reset();
-	Score = 0;
 
-}
 /**
  * Level Menu
  * @param leveloption
