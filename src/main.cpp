@@ -430,7 +430,7 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
-	glutInitWindowPosition(100, 100);
+	glutInitWindowPosition(winx, winy);
 	glutInitWindowSize(800, 800);
 	glutCreateWindow(WIN_TITLE);
 	glClearColor(0.0, 0.0, 0.0, 1.0);
