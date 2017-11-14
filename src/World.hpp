@@ -1,31 +1,23 @@
-#ifndef WORLD_HPP_
-#define WORLD_HPP_
+#ifndef CWORLD_HPP
+#define CWORLD_HPP
 
-#include <stdio.h>
-#include "Constant.hpp"
-#include "Block.hpp"
-#include "Snake.hpp"
+#include "Cube.hpp"
+#include "Mesh.hpp"
+#include <iostream>
+#include <list>
+#include <vector>
 
-extern int GameStatus;
-extern Block block;
-extern double snakemove;
-extern int GameLevel;
-extern int KeyDirection;
-extern int Score;
-extern int GameType;
 
 class World {
-private:
-	float movecount;
-
 public:
+	Shape* list[2];
 	World();
 	~World();
+	void draw_world(); // draw all objects in the world
+	void reset(); // Will reset the world to the basic
+
+private:
 	void draw();
-	void reset();
-	void checkEnd();
-	Block *block;
-	Snake *snake;
 };
 
-#endif /* WORLD_HPP_ */
+#endif
