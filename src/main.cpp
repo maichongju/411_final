@@ -12,7 +12,6 @@
 #include "Constant.hpp"
 #include "World.hpp"
 #include "Camera.hpp"
-#include "mesh.hpp"
 
 GLint winx = 100, winy = 100;
 
@@ -60,6 +59,11 @@ void mouseAction(int button, int state, int x, int y) {
 	}
 }
 
+/**
+ * Function for mouse motion
+ * @param x
+ * @param y
+ */
 void mouseMotion(GLint x, GLint y) {
 
 	GLfloat theta;

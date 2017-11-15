@@ -1,8 +1,8 @@
 #ifndef CWORLD_HPP
 #define CWORLD_HPP
 
-#include "Cube.hpp"
-#include "Mesh.hpp"
+#include "Objects/Basic/Cube.hpp"
+#include "Objects/Basic/Mesh.hpp"
 #include <iostream>
 #include <list>
 #include <vector>

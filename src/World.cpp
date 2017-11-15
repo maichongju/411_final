@@ -3,8 +3,6 @@
  */
 
 #include "World.hpp"
-#include "Pyramid.hpp"
-#include "House.hpp"
 
 World::World() {
 
