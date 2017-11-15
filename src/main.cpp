@@ -15,7 +15,6 @@
 
 GLint winx = 100, winy = 100;
 
-GLfloat red = 1.0, green = 1.0, blue = 1.0;  //color
 GLint moving = 0, xBegin = 0, type = 4, selected;
 GLint mode = 0;  //0 for doing nothing 1 MC 2 WC 3 VC
 GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
@@ -42,7 +41,6 @@ void centerwindow(int screen_height, int screen_width) {
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
-	glColor3f(red, green, blue);
 	myWorld.draw_world(); // draw all objects in the world
 	glFlush();
 	glutSwapBuffers();
@@ -140,9 +138,6 @@ void VCTransMenu(GLint transOption) {
 void mainMenu(GLint option) {
 	switch (option) {
 	case (1): {  // Reset
-		red = 1.0;
-		green = 1.0;
-		blue = 1.0;
 		mode = 0;
 		myWorld.reset(); // Reset world object
 		myCamera.setDefaultCamera();
