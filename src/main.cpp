@@ -9,11 +9,12 @@
 #include <stdio.h>
 #include <math.h>
 
+#include "Constant.hpp"
 #include "World.hpp"
 #include "Camera.hpp"
 #include "mesh.hpp"
 
-GLint winWidth = 800, winHeight = 800;
+GLint winx = 100, winy = 100;
 
 GLfloat red = 1.0, green = 1.0, blue = 1.0;  //color
 GLint moving = 0, xBegin = 0, type = 4, selected;
@@ -23,14 +24,20 @@ GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
 World myWorld;
 Camera myCamera;
 
-void printmac() {
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			printf("%f ", myWorld.list[0]->getMC().mat[i][j]);
-		}
-		printf("\n");
+/**
+ * Function will set the windows to the center of the screen according screen resolution
+ * if screen_height or screen_width means the resolution cannot get correctly, then the
+ * function will not change the default value for window create position
+ * @param screen_height
+ * 			the height of the current screen, 0 means resolution unavailable
+ * @param screen_width
+ * 			the width of the current screen, 0 means resolution unavailable
+ */
+void centerwindow(int screen_height, int screen_width) {
+	if (screen_height != 0 && screen_width != 0) {
+		winx = screen_width / 2 - WIN_WIDTH / 2;
+		winy = screen_height / 2 - WIN_HEIGHT / 2;
 	}
-	printf("\n");
 }
 
 void display(void) {
@@ -42,13 +49,6 @@ void display(void) {
 	glutSwapBuffers();
 }
 
-void winReshapeFcn(GLint newWidth, GLint newHeight) {
-	glViewport(0, 0, newWidth, newHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	winWidth = newWidth;
-	winHeight = newHeight;
-}
 
 void mouseAction(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
@@ -62,76 +62,9 @@ void mouseAction(int button, int state, int x, int y) {
 
 void mouseMotion(GLint x, GLint y) {
 
-	GLfloat rx, ry, rz, theta;
+	GLfloat theta;
 	if (moving) {
-		if (mode == 1) {
-			switch (type) {
-			case 1: {
-				theta = (xBegin - x > 0) ? 1 : -1;
-				rx = myWorld.list[objtype]->getMC().mat[0][0];
-				ry = myWorld.list[objtype]->getMC().mat[1][0];
-				rz = myWorld.list[objtype]->getMC().mat[2][0];
-				myWorld.list[objtype]->rotate_mc(rx, ry, rz, theta * 0.5);
-			}
-				break;
-			case 2: {
-				theta = (xBegin - x > 0) ? 1 : -1;
-				rx = myWorld.list[objtype]->getMC().mat[0][1];
-				ry = myWorld.list[objtype]->getMC().mat[1][1];
-				rz = myWorld.list[objtype]->getMC().mat[2][1];
-				myWorld.list[objtype]->rotate_mc(rx, ry, rz, theta * 0.5);
-			}
-				break;
-			case 3: {
-				theta = (xBegin - x > 0) ? 1 : -1;
-				rx = myWorld.list[objtype]->getMC().mat[0][2];
-				ry = myWorld.list[objtype]->getMC().mat[1][2];
-				rz = myWorld.list[objtype]->getMC().mat[2][2];
-				myWorld.list[objtype]->rotate_mc(rx, ry, rz, theta * 0.5);
-			}
-				break;
-			case 4: {
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myWorld.list[objtype]->scale_change(theta * 0.005);
-				xBegin = x;
-			}
-				break;
-			}
-		} else if (mode == 2) {
-			switch (type) {
-			case 1: { // Rotate x
-				theta = (xBegin - x > 0) ? 1 : -1;
-				myWorld.list[objtype]->rotate(1, 0, 0, theta * 0.5);
-			}
-				break;
-			case 2: { // Rotate y
-				theta = (xBegin - x > 0) ? 1 : -1;
-				myWorld.list[objtype]->rotate(0, 1, 0, theta * 0.5);
-			}
-				break;
-			case 3: { // Rotate z
-				theta = (xBegin - x > 0) ? 1 : -1;
-				myWorld.list[objtype]->rotate(0, 0, 1, theta * 0.5);
-			}
-				break;
-			case 4: { // Translate x
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myWorld.list[objtype]->translate(theta * 0.005, 0, 0);
-			}
-				break;
-			case 5: { // Translate y
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myWorld.list[objtype]->translate(0, theta * 0.005, 0);
-			}
-				break;
-			case 6: { // Translate z
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myWorld.list[objtype]->translate(0, 0, theta * 0.005);
-			}
-				break;
-			}
-
-		} else if (mode == 3) {
+		if (mode == 3) {
 			switch (type) {
 			case 1: { // Rotate x
 				myCamera.rotate(1, 0, 0, 1);
@@ -189,71 +122,9 @@ void mouseMotion(GLint x, GLint y) {
 }
 
 void init(void) {
-	glClearColor(0.0, 0.0, 0.0, 1.0);  // Set display-window color to black
+	glClearColor(0.0, 0, 0, 1.0); // Set display-window color deep sky blue
 	myCamera.setProjectionMatrix();
 
-}
-
-void MCTransMenu(GLint transOption) {
-	switch (transOption) {
-	case 1: {  //Rotate x
-		mode = 1;
-		type = 1;
-	}
-		break;
-	case 2: { //Rotate y
-		mode = 1;
-		type = 2;
-	}
-		break;
-	case 3: { // Rotate z
-		mode = 1;
-		type = 3;
-	}
-		break;
-	case 4: { //Scale
-		mode = 1;
-		type = 4;
-	}
-		break;
-	}
-	glutPostRedisplay();
-}
-
-void WCTransMenu(GLint transOption) {
-	switch (transOption) {
-	case 1: { // Rotate x
-		mode = 2;
-		type = 1;
-	}
-		break;
-	case 2: { // Rotate y
-		mode = 2;
-		type = 2;
-	}
-		break;
-	case 3: { // Rotate z
-		mode = 2;
-		type = 3;
-	}
-		break;
-
-	case 4: { // Translate x
-		mode = 2;
-		type = 4;
-	}
-		break;
-	case 5: { // Translate y
-		mode = 2;
-		type = 5;
-	}
-		break;
-	case 6: { // Translate z
-		mode = 2;
-		type = 6;
-	}
-	}
-	glutPostRedisplay();
 }
 
 void VCTransMenu(GLint transOption) {
@@ -283,6 +154,7 @@ void mainMenu(GLint option) {
 
 void menu() {
 
+	// For debug propose, will be delete
 	GLint VCTrans_Menu = glutCreateMenu(VCTransMenu);
 	glutAddMenuEntry(" Rotate x ", 1);
 	glutAddMenuEntry(" Rotate y ", 2);
@@ -304,9 +176,10 @@ int main(int argc, char** argv) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(winWidth, winHeight);
-	glutCreateWindow("CP411 A2 by Chongju Mai");
+	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
+	glutInitWindowPosition(winx, winy);
+	glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
+	glutCreateWindow (WIN_TITLE);
 	init();
 	menu();
 
