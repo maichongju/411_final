@@ -14,9 +14,10 @@
 #include "World.hpp"
 #include "Camera.hpp"
 
-float GlobalTime = 0;
+float GlobalTime = 7;
 GLUquadric* QOBJ;
 
+float IdleTime = 0;
 GLint winx = 100, winy = 100;
 
 GLint moving = 0, xBegin = 0, type = 4, selected;
@@ -31,9 +32,10 @@ Camera myCamera;
  */
 static int oldTime, newTime;
 void idleFunc(void) {
-	GLfloat speed = 0.005;
+	GLfloat speed = 0.001;
 	oldTime = clock();
-	GlobalTime -= (newTime - oldTime) * speed;
+	IdleTime = (newTime - oldTime) * speed;
+	GlobalTime -= IdleTime;
 	if (GlobalTime > 24) {
 		GlobalTime = 0;
 	}
@@ -65,7 +67,7 @@ void centerwindow(int screen_height, int screen_width) {
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
-	//myWorld.draw_world(); // draw all objects in the world
+	myWorld.draw_world(); // draw all objects in the world
 //	glPointSize(500);
 //	glBegin(GL_POINTS);
 //	glColor4f(1, 0, 0, 1);

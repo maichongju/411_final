@@ -1,7 +1,10 @@
 #ifndef CWORLD_HPP
 #define CWORLD_HPP
 
-#include "Objects/Basic/Cylinder.hpp"
+#include "Objects/Traffic/Traffic.hpp"
+#include "Objects/Buildings/Buildings.hpp"
+
+#include "Constant.hpp"
 
 #include <iostream>
 #include <list>
@@ -15,7 +18,8 @@ public:
 	void reset(); // Will reset the world to the basic
 
 private:
-	Cylinder cube;
+	Traffic *cube;
+	Buildings *b;
 	void draw();
 };
 

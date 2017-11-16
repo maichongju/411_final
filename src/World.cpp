@@ -5,7 +5,8 @@
 #include "World.hpp"
 
 World::World() {
-
+	cube = new Traffic();
+	b = new Buildings();
 }
 
 World::~World() {
@@ -14,15 +15,15 @@ World::~World() {
 
 void World::draw_world() {
 
-	glColor3f(0, 1, 0);
-	glBegin(GL_POLYGON);
-	glVertex3f(-100, 0, -100);
-	glVertex3f(-100, 0, 100);
-	glVertex3f(100, 0, 100);
-	glVertex3f(100, 0, -100);
-	glEnd();
-	cube.draw();
-
+//	glColor3f(0, 1, 0);
+//	glBegin(GL_POLYGON);
+//	glVertex3f(-100, 0, -100);
+//	glVertex3f(-100, 0, 100);
+//	glVertex3f(100, 0, 100);
+//	glVertex3f(100, 0, -100);
+//	glEnd();
+	cube->draw();
+	//b->draw();
 
 	this->draw(); // For debug
 

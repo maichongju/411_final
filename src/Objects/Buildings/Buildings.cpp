@@ -6,4 +6,5 @@ Buildings::Buildings() {
 }
 
 void Buildings::draw() {
+	b->draw();
 }

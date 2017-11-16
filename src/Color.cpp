@@ -19,3 +19,9 @@ void Color::set(float red, float green, float blue, float alpha) {
 	this->blue = blue;
 	this->alpha = alpha;
 }
+
+void Color::scale(float s) {
+	this->red *= s;
+	this->green *= s;
+	this->blue *= s;
+}
