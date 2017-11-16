@@ -46,25 +46,17 @@ void Camera::translate(GLfloat tx, GLfloat ty, GLfloat tz) { //w.r.p.t WC
 	eye.x += tx;
 	eye.y += ty;
 	eye.z += tz;
-	// need to be implemented
 }
 
 void Camera::clipfar(float speed) {
 	farDist += speed;
-	printf("%f\n", farDist);
 }
 
 void Camera::clipnear(float speed) {
 	nearDist += speed;
-	printf("%f\n", nearDist);
 }
 
 void Camera::angle(float angle) {
-	/*
-	Point temp = eye;
-	eye.x += angle;
-	eye.y = eye.x * temp.y / temp.x;
-	 eye.z = eye.x * temp.z / temp.x;*/
 	viewAngle += angle;
 }
 void Camera::setProjectionMatrix() {

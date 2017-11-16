@@ -7,3 +7,7 @@ https://www.opengl.org/resources/libraries/glut/spec3/node1.html
 
 
 Known Issus:
+
+Lighting issus
+Color issus
+Camera issus

@@ -13,6 +13,8 @@
 #include "World.hpp"
 #include "Camera.hpp"
 
+float GlobalTime = 0;
+
 GLint winx = 100, winy = 100;
 
 GLint moving = 0, xBegin = 0, type = 4, selected;
@@ -21,6 +23,8 @@ GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
 //Declare a world containing all objects to draw.
 World myWorld;
 Camera myCamera;
+
+
 
 /**
  * Function will set the windows to the center of the screen according screen resolution
@@ -126,6 +130,39 @@ void mouseMotion(GLint x, GLint y) {
 void init(void) {
 	glClearColor(0.0, 0, 0, 1.0); // Set display-window color deep sky blue
 	myCamera.setProjectionMatrix();
+	glCullFace(GL_BACK);
+	glEnable( GL_NORMALIZE);
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+}
+
+void specialKeyFunc(int key, int x, int y) {
+	switch (key) {
+	{
+	case GLUT_KEY_UP:
+		myCamera.translate(0, 0, -0.05);
+		break;
+	}
+	case GLUT_KEY_DOWN:
+	{
+	myCamera.translate(0, 0, 0.05);
+	break;
+	}
+	case GLUT_KEY_LEFT:
+	{
+	myCamera.translate(-0.05, 0, 0);
+	break;
+	}
+	case GLUT_KEY_RIGHT:
+	{
+	myCamera.translate(0.05, 0, 0);
+	break;
+}
+	}
+	glutPostRedisplay();
+
+	printf("%f,%f,%f\n", myCamera.eye.x, myCamera.eye.y, myCamera.eye.z);
 
 }
 
@@ -149,6 +186,26 @@ void mainMenu(GLint option) {
 	}
 	}
 	glutPostRedisplay();
+}
+/**
+ * Function will setup all the lighting for the function
+ */
+void setLight() {
+	glEnable( GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glShadeModel(GL_SMOOTH);
+//	GLfloat globalAmbient[] = { 1, 1, 1, 1 };
+//	glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+	GLfloat light_ambient[] = { 1, 0, 0, 1.0 };
+	GLfloat light_diffuse[] = { 1, 1, 1, 1 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
+
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 }
 
 void menu() {
@@ -174,17 +231,18 @@ void menu() {
 int main(int argc, char** argv) {
 	setvbuf(stdout, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
 	glutInitWindowPosition(winx, winy);
 	glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
 	glutCreateWindow (WIN_TITLE);
 	init();
 	menu();
-
+	//setLight();
 	glutDisplayFunc(display);
 	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
+	glutSpecialFunc (specialKeyFunc);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
 

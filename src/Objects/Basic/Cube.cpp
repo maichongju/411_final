@@ -17,32 +17,32 @@ Cube::Cube() {
 	 *
 	 *
 	 */
-	vertex[0][0] = -1;
-	vertex[0][1] = -1;
-	vertex[0][2] = -1;
+	vertex[0][0] = 0;
+	vertex[0][1] = 0;
+	vertex[0][2] = 0;
 
-	vertex[1][0] = -1;
+	vertex[1][0] = 0;
 	vertex[1][1] = 1;
-	vertex[1][2] = -1;
+	vertex[1][2] = 0;
 
 	vertex[2][0] = 1;
-	vertex[2][1] = -1;
-	vertex[2][2] = -1;
+	vertex[2][1] = 0;
+	vertex[2][2] = 0;
 
 	vertex[3][0] = 1;
 	vertex[3][1] = 1;
-	vertex[3][2] = -1;
+	vertex[3][2] = 0;
 
-	vertex[4][0] = -1;
-	vertex[4][1] = -1;
+	vertex[4][0] = 0;
+	vertex[4][1] = 0;
 	vertex[4][2] = 1;
 
-	vertex[5][0] = -1;
+	vertex[5][0] = 0;
 	vertex[5][1] = 1;
 	vertex[5][2] = 1;
 
 	vertex[6][0] = 1;
-	vertex[6][1] = -1;
+	vertex[6][1] = 0;
 	vertex[6][2] = 1;
 
 	vertex[7][0] = 1;
@@ -79,12 +79,76 @@ Cube::Cube() {
 	face[5][2] = 0;
 	face[5][3] = 2;
 
+	faceColor[0][0] = 1.0;
+	faceColor[0][1] = 0.0;
+	faceColor[0][2] = 0.0;
 
+	faceColor[1][0] = 0.0;
+	faceColor[1][1] = 1.0;
+	faceColor[1][2] = 0.0;
+
+	faceColor[2][0] = 0.0;
+	faceColor[2][1] = 0.0;
+	faceColor[2][2] = 1.0;
+
+	faceColor[3][0] = 1.0;
+	faceColor[3][1] = 1.0;
+	faceColor[3][2] = 0.0;
+
+	faceColor[4][0] = 1.0;
+	faceColor[4][1] = 0.0;
+	faceColor[4][2] = 1.0;
+
+	faceColor[5][0] = 0.0;
+	faceColor[5][1] = 1.0;
+	faceColor[5][2] = 1.0;
 
 }
 
+/**
+ * Function will scale the cube according the x , y and z.
+ * @param x
+ * 			value need to scale to x (must greater 0)
+ * @param y
+ * 			value need to scale to y (must greater 0)
+ * @param z
+ * 			value need to scale to z (must greater 0)
+ */
+void Cube::scale(float x, float y, float z) {
+	if (x <= 0) {
+		x = 1;
+	}
+	if (y <= 0) {
+		y = 1;
+	}
+	if (z <= 0) {
+		z = 1;
+	}
+	vertex[2][0] *= x;
+	vertex[3][0] *= x;
+	vertex[6][0] *= x;
+	vertex[7][0] *= x;
+
+	vertex[5][1] *= y;
+	vertex[7][1] *= y;
+	vertex[3][1] *= y;
+	vertex[1][1] *= y;
+
+	vertex[5][2] *= z;
+	vertex[7][2] *= z;
+	vertex[6][2] *= z;
+	vertex[4][2] *= z;
+}
+
+/**
+ * Private Function
+ * Draw the ith face for the cube
+ * @param i
+ * 			the
+ */
 void Cube::draw_face(int i) {
-	glBegin(GL_LINE_LOOP);
+	glColor3f(faceColor[i][0], faceColor[i][1], faceColor[i][2]);
+	glBegin(GL_POLYGON);
 	glVertex3fv(&vertex[face[i][0]][0]);
 	glVertex3fv(&vertex[face[i][1]][0]);
 	glVertex3fv(&vertex[face[i][2]][0]);
@@ -93,6 +157,9 @@ void Cube::draw_face(int i) {
 
 }
 
+/**
+ * Draw function for Cube
+ */
 void Cube::draw() {
 	glPushMatrix();
 	this->ctm_multiply();
@@ -101,4 +168,22 @@ void Cube::draw() {
 		draw_face(i);
 	}
 	glPopMatrix();
+}
+
+/**
+ * Function will change the ith side color to given color
+ * @param i
+ * 			number of side face need to be change
+ * @param r
+ * 			Red for the color (float)
+ * @param g
+ * 			Green for the color	(float)
+ * @param b
+ * 			Blue for the color (float)
+ */
+void Cube::changeFaceColor(int i, float r, float g, float b) {
+
+	faceColor[i][0] = r;
+	faceColor[i][1] = g;
+	faceColor[i][2] = b;
 }

@@ -14,7 +14,17 @@ World::~World() {
 
 void World::draw_world() {
 
-	this->draw();
+	glColor3f(0, 1, 0);
+	glBegin(GL_POLYGON);
+	glVertex3f(-100, 0, -100);
+	glVertex3f(-100, 0, 100);
+	glVertex3f(100, 0, 100);
+	glVertex3f(100, 0, -100);
+	glEnd();
+	cube.draw();
+
+
+	this->draw(); // For debug
 
 }
 
@@ -39,3 +49,4 @@ void World::draw() {
 	glVertex3i(0, 0, -100);
 	glEnd();
 }
+
