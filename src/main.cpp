@@ -15,6 +15,7 @@
 #include "Camera.hpp"
 
 float GlobalTime = 0;
+GLUquadric* QOBJ;
 
 GLint winx = 100, winy = 100;
 
@@ -64,9 +65,14 @@ void centerwindow(int screen_height, int screen_width) {
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
-	myWorld.draw_world(); // draw all objects in the world
-
-
+	//myWorld.draw_world(); // draw all objects in the world
+//	glPointSize(500);
+//	glBegin(GL_POINTS);
+//	glColor4f(1, 0, 0, 1);
+//	glVertex3f(0, 0, 0);
+//	glColor4f(0.25, 0, 0, 1);
+//	glVertex3f(1, 1, 0);
+//	glEnd();
 	glFlush();
 	glutSwapBuffers();
 }
@@ -149,6 +155,10 @@ void mouseMotion(GLint x, GLint y) {
 }
 
 void init(void) {
+	QOBJ = gluNewQuadric();
+	gluQuadricNormals(QOBJ, GLU_SMOOTH);
+	glEnable(GL_POINT_SMOOTH);
+	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
 	glClearColor(0.0, 0, 0, 1.0); // Set display-window color deep sky blue
 	myCamera.setProjectionMatrix();
 	glCullFace(GL_BACK);

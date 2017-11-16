@@ -3,6 +3,9 @@
 #define SRC_OBJECTS_CYLINDER_HPP_
 #include "../Basic/Point.hpp"
 #include "../../Color.hpp"
+#include <stdio.h>
+
+extern GLUquadric* QOBJ;
 class Cylinder {
 public:
 	Cylinder();
@@ -14,4 +17,4 @@ private:
 
 
 
-#endif /* SRC_OBJECTS_CYLINDER_HPP_ */
+#endif

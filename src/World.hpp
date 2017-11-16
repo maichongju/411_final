@@ -1,7 +1,7 @@
 #ifndef CWORLD_HPP
 #define CWORLD_HPP
 
-#include "Objects/Buildings/Buildings.hpp"
+#include "Objects/Basic/Cylinder.hpp"
 
 #include <iostream>
 #include <list>
@@ -15,7 +15,7 @@ public:
 	void reset(); // Will reset the world to the basic
 
 private:
-	Buildings cube;
+	Cylinder cube;
 	void draw();
 };
 
