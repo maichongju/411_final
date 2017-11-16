@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <time.h>
 
 #include "Constant.hpp"
 #include "World.hpp"
@@ -24,7 +25,22 @@ GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
 World myWorld;
 Camera myCamera;
 
-
+/**
+ * Function for Idle
+ */
+static int oldTime, newTime;
+void idleFunc(void) {
+	GLfloat speed = 0.005;
+	oldTime = clock();
+	GlobalTime -= (newTime - oldTime) * speed;
+	if (GlobalTime > 24) {
+		GlobalTime = 0;
+	}
+	newTime = clock();
+	oldTime = newTime;
+	glutPostRedisplay();
+	printf("%f\n", GlobalTime);
+}
 
 /**
  * Function will set the windows to the center of the screen according screen resolution
@@ -42,10 +58,15 @@ void centerwindow(int screen_height, int screen_width) {
 	}
 }
 
+/**
+ * Function for display
+ */
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
 	myWorld.draw_world(); // draw all objects in the world
+
+
 	glFlush();
 	glutSwapBuffers();
 }
@@ -137,6 +158,12 @@ void init(void) {
 
 }
 
+/**
+ * Function for special key
+ * @param key
+ * @param x
+ * @param y
+ */
 void specialKeyFunc(int key, int x, int y) {
 	switch (key) {
 	{
@@ -161,8 +188,6 @@ void specialKeyFunc(int key, int x, int y) {
 }
 	}
 	glutPostRedisplay();
-
-	printf("%f,%f,%f\n", myCamera.eye.x, myCamera.eye.y, myCamera.eye.z);
 
 }
 
@@ -243,6 +268,7 @@ int main(int argc, char** argv) {
 	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
 	glutSpecialFunc (specialKeyFunc);
+	glutIdleFunc(idleFunc);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
 

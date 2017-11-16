@@ -33,6 +33,8 @@ void World::reset() {
 
 }
 
+//**********************************************
+//Debug XYZ
 void World::draw() {
 	glLineWidth(2.0);
 	glBegin(GL_LINES);

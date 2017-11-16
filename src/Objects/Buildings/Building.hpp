@@ -9,6 +9,7 @@
 #include "../../Constant.hpp"
 #include <stdio.h>
 
+extern float GlobalTime;
 class Window {
 public:
 	Window();
@@ -29,6 +30,7 @@ public:
 	void scale(float x, float y, float z);
 	void draw();
 	void setBuildingWindows(int front, int right, int rear, int left);
+	void translate(float x, float y, float z);
 private:
 	int windows;
 	Point *position;

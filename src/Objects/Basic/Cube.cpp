@@ -142,7 +142,7 @@ void Cube::scale(float x, float y, float z) {
 
 /**
  * Private Function
- * Draw the ith face for the cube
+ * Draw the ith face for the cube and the outline
  * @param i
  * 			the
  */
@@ -154,6 +154,16 @@ void Cube::draw_face(int i) {
 	glVertex3fv(&vertex[face[i][2]][0]);
 	glVertex3fv(&vertex[face[i][3]][0]);
 	glEnd();
+
+	glColor3f(0, 0, 0);
+	glLineWidth(1);
+	glBegin(GL_LINE_LOOP);
+	glVertex3fv(&vertex[face[i][0]][0]);
+	glVertex3fv(&vertex[face[i][1]][0]);
+	glVertex3fv(&vertex[face[i][2]][0]);
+	glVertex3fv(&vertex[face[i][3]][0]);
+	glEnd();
+
 
 }
 

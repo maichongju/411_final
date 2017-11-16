@@ -12,6 +12,12 @@ Window::Window(Point *position, int direction) {
 	Light = false;
 	this->direction = direction;
 }
+/**
+ * Function will draw the given window
+ * @param p
+ * 			position for the building
+ */
+
 void Window::draw(Point *p) {
 	if (Light) {
 		glColor3f(1, 1, 0);
@@ -58,6 +64,10 @@ void Window::draw(Point *p) {
 	glEnd();
 }
 
+/**
+ * Function will set the light status
+ * @param status
+ */
 void Window::setLight(bool status) {
 	this->Light = status;
 }
@@ -69,15 +79,13 @@ void Window::setLight(bool status) {
 Building::Building() {
 	cube = new Cube();
 	position = new Point(0, 0, 0);
-	outColor = new Color(1, 1, 1, 1);
-	topColor = new Color(0, 0, 0, 1);
-	x = y = z = 1;
-	//setBuildingColor();
+	outColor = new Color(0.5, 0.5, 0.5, 1);
+	topColor = new Color(1, 1, 1, 1);
+	this->x = this->y = this->z = 1;
+	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
 	setBuildingWindows(1, 1, 1, 1);
-
-
 }
 /**
  * Constructor
@@ -89,12 +97,13 @@ Building::Building(float x, float y, float z) {
 	cube = new Cube();
 	cube->translate(x, y, z);
 	position = new Point(x, y, z);
-	outColor = new Color(220 / 256, 220 / 256, 220 / 256, 1);
+	outColor = new Color(0.5, 0.5, 0.5, 1);
 	topColor = new Color(1, 1, 1, 1);
-	x = y = z = 1;
-	//setBuildingColor();
+	this->x = this->y = this->z = 1;
+	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
+	//setBuildingWindows(1, 1, 1, 1);
 
 }
 
@@ -119,11 +128,11 @@ Building::Building(float x, float y, float z, Color outcolor, Color topcolor) {
 			outcolor.alpha);
 	topColor = new Color(topcolor.red, topcolor.green, topcolor.blue,
 			topcolor.alpha);
-	x = y = z = 1;
+	this->x = this->y = this->z = 1;
 	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
-	setBuildingWindows(1, 0, 0, 0);
+	//setBuildingWindows(1, 0, 0, 0);
 
 }
 /**
@@ -133,6 +142,11 @@ void Building::draw() {
 	cube->draw();
 	int i;
 	for (i = 0; i < windows; i++) {
+		if (GlobalTime > 19 && GlobalTime < 20) {
+			window[i]->setLight(true);
+		} else if (GlobalTime > 7 && GlobalTime < 8) {
+			window[i]->setLight(false);
+		}
 		window[i]->draw(this->position);
 	}
 }
@@ -182,18 +196,61 @@ void Building::scale(float x, float y, float z) {
 /**
  * Function will generate the number of windows
  * @param front
+ * 				number of windows are showing at the front
  * @param right
+ * 				number of windows are showing at the right
  * @param rear
+ * 				number of windows are showing at the rear
  * @param left
+ * 				number of windows are showing at the left
  */
 void Building::setBuildingWindows(int front, int right, int rear, int left) {
-	window[0] = new Window(
-			new Point(x / 5, y / 3, z), BUILDING_WINDOW_FRONT);
-	window[3] = new Window(new Point(x, y / 3, z / 2),
-	BUILDING_WINDOW_RIGHT);
-	window[1] = new Window(new Point(x / 5, y / 3, 0), BUILDING_WINDOW_REAR);
-	window[2] = new Window(new Point(0, y / 3, z / 2), BUILDING_WINDOW_LEFT);
-	windows = 4;
+	windows = front + right + rear + left;
+	int index = 0;
+
+	// Calculate front/rear windows
+	float x = 0.05, y = 0.35, z = this->z;
+	float i;
+
+	for (i = 0; i < front; i++) {
+		window[index] = new Window(new Point(x, y, z), BUILDING_WINDOW_FRONT);
+		x += 0.15;
+		if (x > this->x - 0.05) {
+			y += 0.35;
+			x = 0.05;
+		}
+		index++;
+	}
+	x = 0.05, y = 0.35;
+	for (i = 0; i < rear; i++) {
+		window[index] = new Window(new Point(x, y, 0), BUILDING_WINDOW_REAR);
+		x += 0.15;
+		if (x > this->x - 0.05) {
+			y += 0.35;
+			x = 0.05;
+		}
+		index++;
+	}
+	z = this->z - 0.075, y = 0.35;
+	for (i = 0; i < left; i++) {
+		window[index] = new Window(new Point(0, y, z), BUILDING_WINDOW_LEFT);
+		z -= 0.15;
+		if (z < 0.05) {
+			y += 0.35;
+			z = this->z - 0.075;
+		}
+		index++;
+	}
+	z = this->z - 0.075, y = 0.35, x = this->x;
+	for (i = 0; i < right; i++) {
+		window[index] = new Window(new Point(x, y, z), BUILDING_WINDOW_RIGHT);
+		z -= 0.15;
+		if (z < 0.05) {
+			y += 0.35;
+			z = this->z - 0.075;
+		}
+		index++;
+	}
 
 
 }
