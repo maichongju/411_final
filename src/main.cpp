@@ -26,7 +26,7 @@ GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
 //Declare a world containing all objects to draw.
 World myWorld;
 Camera myCamera;
-
+Color *SkyColor;
 /**
  * Function for Idle
  */
@@ -67,6 +67,7 @@ void centerwindow(int screen_height, int screen_width) {
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
+	glClearColor(0.67, 0.93, 0.93, 1); // Set display-window color deep sky blue
 	myWorld.draw_world(); // draw all objects in the world
 //	glPointSize(500);
 //	glBegin(GL_POINTS);
@@ -161,7 +162,6 @@ void init(void) {
 	gluQuadricNormals(QOBJ, GLU_SMOOTH);
 	glEnable(GL_POINT_SMOOTH);
 	glHint(GL_POINT_SMOOTH_HINT, GL_NICEST);
-	glClearColor(0.0, 0, 0, 1.0); // Set display-window color deep sky blue
 	myCamera.setProjectionMatrix();
 	glCullFace(GL_BACK);
 	glEnable( GL_NORMALIZE);

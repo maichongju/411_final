@@ -5,10 +5,10 @@
 bool DEBUG = false;
 
 Camera::Camera() {
-	eye.x = 3.0, eye.y = 3.0, eye.z = 7.0;
+	eye.x = 3, eye.y = 3, eye.z = 5.0;
 	ref.x = 0.0, ref.y = 0.0, ref.z = 0.0;
 	viewup.x = 0.0, viewup.y = 1.0, viewup.z = 0.0;
-	aspect = 1.0, viewAngle = 40.0, nearDist = 1.0, farDist = 10.0, W = 0, H = 0;
+	aspect = 1.0, viewAngle = 40.0, nearDist = 1.0, farDist = 20.0, W = 0, H = 0;
 }
 
 void Camera::setDefaultCamera(void) { // make default camera

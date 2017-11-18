@@ -44,6 +44,7 @@ TrafficLight::TrafficLight(Point *p, int L) {
 	Body->scale(0.25, 0.08, 0.08);
 	Body->rotate_mc(0, 1, 0, Facing);
 	pass = false;
+	LightUp = TRAFFIC_LIGHT_OFF;
 	setBodyColor();
 	setLight();
 

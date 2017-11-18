@@ -1,17 +1,14 @@
 #include "Environment.hpp"
 
 Environment::Environment() {
-
+	G = new Ground();
 }
 
 void Environment::draw() {
-	this->drawFloor();
+	G->draw();
 }
 
 void Environment::reset() {
 
 }
 
-void Environment::drawFloor() {
-
-}

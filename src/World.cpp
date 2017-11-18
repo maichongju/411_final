@@ -7,6 +7,7 @@
 World::World() {
 	cube = new Traffic();
 	b = new Buildings();
+	Env = new Environment();
 }
 
 World::~World() {
@@ -15,16 +16,9 @@ World::~World() {
 
 void World::draw_world() {
 
-//	glColor3f(0, 1, 0);
-//	glBegin(GL_POLYGON);
-//	glVertex3f(-100, 0, -100);
-//	glVertex3f(-100, 0, 100);
-//	glVertex3f(100, 0, 100);
-//	glVertex3f(100, 0, -100);
-//	glEnd();
 	cube->draw();
 	//b->draw();
-
+	Env->draw();
 	this->draw(); // For debug
 
 }

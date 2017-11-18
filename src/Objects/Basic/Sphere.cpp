@@ -19,11 +19,11 @@ void Sphere::draw(Color *color, Point *p) {
 	glPushMatrix();
 	glColor3f(color->red, color->green, color->blue);
 	this->ctm_multiply();
-	//glTranslatef(p->x, p->y, p->z);
 	glutSolidSphere(radius, 30, 30);
 	glPopMatrix();
 	glFlush();
 	glutPostRedisplay();
 }
+
 
 

@@ -9,6 +9,9 @@
 
 #define WIN_TITLE 					"SkyLine"
 
+#define MAP_SIZE_WIDTH				10
+#define MAP_SIZE_HEIGHT				10
+
 #define BUILDING_WINDOW_FRONT		0
 #define BUILDING_WINDOW_RIGHT		1
 #define BUILDING_WINDOW_REAR		2
@@ -19,9 +22,18 @@
 #define TRAFFICLIGHT_EAST			90
 #define TRAFFICLIGHT_WEST			-90
 
+#define CAR_EAST					0
+#define CAR_SOUTH					-90
+#define CAR_NORTH					90
+#define CAR_WEST					180
+
 #define TRAFFIC_LIGHT_RED			0
 #define TRAFFIC_LIGHT_YELLOW		1
 #define TRAFFIC_LIGHT_GREEN			2
 #define TRAFFIC_LIGHT_OFF			3
+
+#define CAR_MOVE_MOVING				0
+#define	CAR_MOVE_STOPPING			1
+#define CAR_MOVE_STOPPED			2
 
 #endif /* SRC_CONSTANT_HPP_ */

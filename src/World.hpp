@@ -3,6 +3,7 @@
 
 #include "Objects/Traffic/Traffic.hpp"
 #include "Objects/Buildings/Buildings.hpp"
+#include "Objects/Environment/Environment.hpp"
 
 #include "Constant.hpp"
 
@@ -20,6 +21,7 @@ public:
 private:
 	Traffic *cube;
 	Buildings *b;
+	Environment *Env;
 	void draw();
 };
 

@@ -1,6 +1,7 @@
 #ifndef SRC_OBJECTS_ENVIRONMENT_HPP_
 #define SRC_OBJECTS_ENVIRONMENT_HPP_
 #include <GL/glut.h>
+#include "Ground.hpp"
 
 class Environment {
 public:
@@ -8,7 +9,7 @@ public:
 	void draw();
 	void reset();
 private:
-	void drawFloor();
+	Ground *G;
 };
 
 

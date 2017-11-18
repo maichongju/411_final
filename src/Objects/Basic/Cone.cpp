@@ -3,3 +3,7 @@
 Cone::Cone() {
 
 }
+
+void Cone::draw() {
+
+}
