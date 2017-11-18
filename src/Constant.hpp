@@ -9,8 +9,8 @@
 
 #define WIN_TITLE 					"SkyLine"
 
-#define MAP_SIZE_WIDTH				7
-#define MAP_SIZE_HEIGHT				7
+#define MAP_SIZE_WIDTH				5
+#define MAP_SIZE_HEIGHT				5
 
 #define BUILDING_WINDOW_FRONT		0
 #define BUILDING_WINDOW_RIGHT		1
@@ -26,6 +26,11 @@
 #define CAR_SOUTH					-90
 #define CAR_NORTH					90
 #define CAR_WEST					180
+
+#define CAR_LIST_EAST				0
+#define CAR_LIST_WEST				1
+#define CAR_LIST_NORTH				2
+#define CAR_LIST_SOUTH				3
 
 #define TRAFFIC_LIGHT_RED			0
 #define TRAFFIC_LIGHT_YELLOW		1

@@ -17,7 +17,7 @@ World::~World() {
 void World::draw_world() {
 
 	cube->draw();
-	b->draw();
+	//b->draw();
 	Env->draw();
 	this->draw(); // For debug
 
@@ -43,7 +43,7 @@ void World::draw() {
 
 	glColor3f(0, 0, 1);
 	glVertex3i(0, 0, 0);
-	glVertex3i(0, 0, -100);
+	glVertex3i(0, 0, 100);
 	glEnd();
 }
 

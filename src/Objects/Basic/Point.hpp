@@ -12,6 +12,7 @@ public:
 	void set(Point& p);
 	void build4tuple(GLfloat v[]); //v[0]=x,v[1]=y,v[2]=z,v[3]=1 for homogeneous
 	void printPoint();
+	void translate(GLfloat x, GLfloat y, GLfloat z);
 };
 
 #endif

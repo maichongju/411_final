@@ -42,7 +42,7 @@ void idleFunc(void) {
 	newTime = clock();
 	oldTime = newTime;
 	glutPostRedisplay();
-	printf("%f\n", GlobalTime);
+	//printf("%f\n", GlobalTime);
 }
 
 /**

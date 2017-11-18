@@ -32,3 +32,9 @@ void Point::build4tuple(float v[]){
 void Point::printPoint(){
 	printf("(x:%f, y:%f, z:%f)\n",x,y,z);
 }
+
+void Point::translate(GLfloat xx, GLfloat yy, GLfloat zz) {
+	x += xx;
+	y += yy;
+	z += zz;
+}

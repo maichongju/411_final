@@ -5,6 +5,8 @@
 #ifndef SRC_OBJECTS_TRAFFIC_CAR_HPP_
 #define SRC_OBJECTS_TRAFFIC_CAR_HPP_
 
+#include <time.h>
+
 #include "../../Constant.hpp"
 #include "../Basic/Cube.hpp"
 #include "../Basic/Sphere.hpp"
@@ -14,11 +16,12 @@ class Car {
 // Car size 0.3, 0.15, 0.2
 public:
 	bool Moving;
-	int Facing;
-	Car(Point *position, int Facing);
+	int Facing, WaitTime;
+	Car(int Facing);
+	~Car();
 	void draw();
 	void reset();
-	void setColor();
+	void setColor(Color *color);
 	float getX();
 	float getZ();
 private:
@@ -27,8 +30,8 @@ private:
 	Point *position;
 	float Speed;
 	void move();
-	void stop();
 	void setWheels();
+	void setNew();
 
 };
 #endif

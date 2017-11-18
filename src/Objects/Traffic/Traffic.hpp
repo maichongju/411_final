@@ -2,6 +2,7 @@
 #define SRC_TRAFFIC_HPP_
 
 #include <cmath>
+#include <stdio.h>
 
 #include "../../Constant.hpp"
 #include "../Basic/Point.hpp"
@@ -10,6 +11,8 @@
 #include "Car.hpp"
 extern float GlobalTime, IdleTime;
 
+static const int MAXCAR = 10;
+
 class Traffic {
 public:
 	Traffic();
@@ -17,10 +20,17 @@ public:
 private:
 
 	TrafficLight *t[4];
+	Car *Cars[4][MAXCAR];
+	int CarNum[4], CarFirst[4];
 	float LightTime;
 	void LightRule();
-	Car *c;
+	void CarRule();
+	void CarListRule(int Side);
+	void AddCar(int Side);
+	void DeleteCar(int Side); // Option
+	//Car *c;
+
 };
 
 
-#endif /* SRC_TRAFFIC_HPP_ */
+#endif
