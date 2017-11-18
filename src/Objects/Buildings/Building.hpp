@@ -31,6 +31,7 @@ public:
 	void draw();
 	void setBuildingWindows(int front, int right, int rear, int left);
 	void translate(float x, float y, float z);
+	void ChangeColor(Color *out, Color *top);
 private:
 	int windows;
 	Point *position;

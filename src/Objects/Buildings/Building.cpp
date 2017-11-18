@@ -103,7 +103,6 @@ Building::Building(float x, float y, float z) {
 	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
-	//setBuildingWindows(1, 1, 1, 1);
 
 }
 
@@ -132,7 +131,6 @@ Building::Building(float x, float y, float z, Color outcolor, Color topcolor) {
 	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
-	//setBuildingWindows(1, 0, 0, 0);
 
 }
 /**
@@ -251,6 +249,15 @@ void Building::setBuildingWindows(int front, int right, int rear, int left) {
 		}
 		index++;
 	}
+}
 
-
+/**
+ * Change the
+ * @param out
+ * @param top
+ */
+void Building::ChangeColor(Color *out, Color *top) {
+	this->outColor->set(out->red, out->green, out->blue, out->alpha);
+	this->topColor->set(top->red, top->green, top->blue, top->alpha);
+	setBuildingColor();
 }

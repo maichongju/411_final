@@ -14,7 +14,7 @@
 #include "World.hpp"
 #include "Camera.hpp"
 
-float GlobalTime = 7;
+float GlobalTime = 17;
 GLUquadric* QOBJ;
 
 float IdleTime = 0;
@@ -32,7 +32,7 @@ Color *SkyColor;
  */
 static int oldTime, newTime;
 void idleFunc(void) {
-	GLfloat speed = 0.001;
+	GLfloat speed = 0.0005;
 	oldTime = clock();
 	IdleTime = (newTime - oldTime) * speed;
 	GlobalTime -= IdleTime;
@@ -45,6 +45,29 @@ void idleFunc(void) {
 	printf("%f\n", GlobalTime);
 }
 
+/**
+ * Function will take the GlobalTime and fade the sky color
+ */
+static int colorcount;
+void dayColor() {
+	if (GlobalTime > 6 && GlobalTime < 9) {
+		colorcount += 1;
+		if (colorcount == 11) {
+			SkyColor->SkyfadeIn();
+			colorcount = 0;
+		}
+	} else if (GlobalTime > 18 && GlobalTime < 21) {
+		colorcount += 1;
+		if (colorcount == 11) {
+			SkyColor->SkyfadeOut();
+			colorcount = 0;
+		}
+	} else {
+		if (colorcount != 0) {
+			colorcount = 0;
+		}
+	}
+}
 /**
  * Function will set the windows to the center of the screen according screen resolution
  * if screen_height or screen_width means the resolution cannot get correctly, then the
@@ -67,7 +90,9 @@ void centerwindow(int screen_height, int screen_width) {
 void display(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
-	glClearColor(0.67, 0.93, 0.93, 1); // Set display-window color deep sky blue
+	dayColor();
+	glClearColor(SkyColor->red, SkyColor->green, SkyColor->blue,
+			SkyColor->alpha); // Set display-window color deep sky blue
 	myWorld.draw_world(); // draw all objects in the world
 //	glPointSize(500);
 //	glBegin(GL_POINTS);
@@ -79,7 +104,6 @@ void display(void) {
 	glFlush();
 	glutSwapBuffers();
 }
-
 
 void mouseAction(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
@@ -158,6 +182,7 @@ void mouseMotion(GLint x, GLint y) {
 }
 
 void init(void) {
+	SkyColor = new Color(0.67, 0.93, 0.93, 0.5);
 	QOBJ = gluNewQuadric();
 	gluQuadricNormals(QOBJ, GLU_SMOOTH);
 	glEnable(GL_POINT_SMOOTH);
@@ -179,22 +204,19 @@ void init(void) {
 void specialKeyFunc(int key, int x, int y) {
 	switch (key) {
 	{
-	case GLUT_KEY_UP:
+		case GLUT_KEY_UP:
 		myCamera.translate(0, 0, -0.05);
 		break;
 	}
-	case GLUT_KEY_DOWN:
-	{
+case GLUT_KEY_DOWN: {
 	myCamera.translate(0, 0, 0.05);
 	break;
-	}
-	case GLUT_KEY_LEFT:
-	{
+}
+case GLUT_KEY_LEFT: {
 	myCamera.translate(-0.05, 0, 0);
 	break;
-	}
-	case GLUT_KEY_RIGHT:
-	{
+}
+case GLUT_KEY_RIGHT: {
 	myCamera.translate(0.05, 0, 0);
 	break;
 }
@@ -272,14 +294,14 @@ int main(int argc, char** argv) {
 	centerwindow(glutGet(GLUT_SCREEN_HEIGHT), glutGet(GLUT_SCREEN_WIDTH));
 	glutInitWindowPosition(winx, winy);
 	glutInitWindowSize(WIN_WIDTH, WIN_HEIGHT);
-	glutCreateWindow (WIN_TITLE);
+	glutCreateWindow(WIN_TITLE);
 	init();
 	menu();
 	//setLight();
 	glutDisplayFunc(display);
 	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
-	glutSpecialFunc (specialKeyFunc);
+	glutSpecialFunc(specialKeyFunc);
 	glutIdleFunc(idleFunc);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();

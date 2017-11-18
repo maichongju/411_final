@@ -19,6 +19,8 @@ public:
 	void draw();
 	void reset();
 	void setColor();
+	float getX();
+	float getZ();
 private:
 	Sphere *Wheels[4];
 	Cube *Body;

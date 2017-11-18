@@ -25,3 +25,33 @@ void Color::scale(float s) {
 	this->green *= s;
 	this->blue *= s;
 }
+
+void Color::SkyfadeOut() {
+	this->red -= 0.01;
+	this->green -= 0.01;
+	this->blue -= 0.01;
+	if (this->red <= 0) {
+		this->red = 0;
+	}
+	if (this->green <= 0) {
+		this->green = 0;
+	}
+	if (this->blue <= 0) {
+		this->blue = 0;
+	}
+}
+
+void Color::SkyfadeIn() {
+	this->red += 0.01;
+	this->green += 0.01;
+	this->blue += 0.01;
+	if (this->red > 0.63) {
+		this->red = 0.63;
+	}
+	if (this->green > 0.93) {
+		this->green = 0.93;
+	}
+	if (this->blue > 0.93) {
+		this->blue = 0.93;
+	}
+}

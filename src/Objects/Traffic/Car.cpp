@@ -3,12 +3,13 @@
 Car::Car(Point *p, int Facing) {
 	position = new Point(p->x, p->y, p->z);
 	Moving = false;
-	Speed = 0.002;
+	Speed = 0.005;
 	this->Facing = Facing;
 	Body = new Cube();
 	Body->scale(0.3, 0.15, 0.2);
-	Body->translate(p->x, p->y + 0.02, p->z + 0.1);
 	Body->rotate(0, 1, 0, Facing);
+	Body->translate(p->x, p->y + 0.02, p->z + 0.1);
+
 	setWheels();
 }
 
@@ -63,6 +64,9 @@ void Car::move() {
 
 }
 
+/**
+ * Function will set all the wheels for car
+ */
 void Car::setWheels() {
 	// Create Wheels
 	Wheels[0] = new Sphere(new Point(0.05, 0.04, 0.2), new Color(0, 0, 0, 0),

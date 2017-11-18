@@ -9,8 +9,8 @@
 
 #define WIN_TITLE 					"SkyLine"
 
-#define MAP_SIZE_WIDTH				10
-#define MAP_SIZE_HEIGHT				10
+#define MAP_SIZE_WIDTH				7
+#define MAP_SIZE_HEIGHT				7
 
 #define BUILDING_WINDOW_FRONT		0
 #define BUILDING_WINDOW_RIGHT		1

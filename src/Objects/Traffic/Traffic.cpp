@@ -5,10 +5,10 @@ Traffic::Traffic() {
 	t[0] = new TrafficLight(new Point(-0.3, 0, -0.4), TRAFFICLIGHT_SOUTH);
 	t[1] = new TrafficLight(new Point(0.3, 0, 0.4), TRAFFICLIGHT_NORTH);
 	t[2] = new TrafficLight(new Point(0.3, 0, -0.1), TRAFFICLIGHT_WEST);
-	t[3] = new TrafficLight(new Point(-0.3, 0, -0.1), TRAFFICLIGHT_EAST);
+	t[3] = new TrafficLight(new Point(-0.3, 0, 0.1), TRAFFICLIGHT_EAST);
 	LightTime = 0;
 
-	c = new Car(new Point(0, 0, 0), CAR_EAST);
+	c = new Car(new Point(0.3, 0, 0), CAR_NORTH);
 	c->Moving = true;
 
 }
@@ -20,7 +20,6 @@ void Traffic::draw() {
 	for (i = 0; i < 4; i++) {
 		t[i]->draw();
 	}
-
 
 	c->draw();
 

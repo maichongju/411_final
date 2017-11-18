@@ -10,7 +10,8 @@ public:
 	Color(float red, float green, float blue, float alpha);
 	void set(float red, float green, float blue, float alpha);
 	void scale(float s);
-
+	void SkyfadeOut();
+	void SkyfadeIn();
 };
 
 
