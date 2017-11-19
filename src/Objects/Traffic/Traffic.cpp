@@ -9,64 +9,63 @@ Traffic::Traffic() {
 
 	int i;
 	for (i = 0; i < 4; i++) {
-		CarNum[i] = 0;
-		CarFirst[i] = 0;
+
+		Ready[i] = new CarQueue();
+		Running[i] = new CarQueue();
 	}
 
 	AddCar(CAR_LIST_NORTH);
-	AddCar(CAR_LIST_NORTH);
-	Cars[CAR_LIST_NORTH][0]->WaitTime = 0;
-	//Cars[CAR_LIST_NORTH][0]->WaitTime = 0;
-//	AddCar(CAR_LIST_SOUTH);
-//	AddCar(CAR_LIST_EAST);
-//	AddCar(CAR_LIST_WEST);
-//	Cars[CAR_LIST_NORTH][0]->Moving = true;
-//	Cars[CAR_LIST_SOUTH][0]->Moving = true;
-//	Cars[CAR_LIST_EAST][0]->Moving = true;
-//	Cars[CAR_LIST_WEST][0]->Moving = true;
+	AddCar(CAR_LIST_SOUTH);
+	AddCar(CAR_LIST_EAST);
+	AddCar(CAR_LIST_WEST);
+
 }
 
 void Traffic::draw() {
 	LightRule();
 	CarRule();
 
-	int i, j;
+	//Draw Traffic Light
+	int i;
 	for (i = 0; i < 4; i++) {
 		t[i]->draw();
 	}
 
+	// Will only draw the running car
 	for (i = 0; i < 4; i++) {
-		for (j = 0; j < CarNum[i]; j++) {
-			Cars[i][j]->draw();
+		Car *temp = Running[i]->front;
+		while (temp != 0) {
+			temp->draw();
+			temp = temp->next;
 		}
 	}
 
 }
 
 void Traffic::AddCar(int Side) {
-	int num = CarNum[Side];
-	if (num < MAXCAR) {
-		int Facing;
-		switch (Side) {
-		case CAR_LIST_NORTH: {
-			Facing = CAR_NORTH;
-			break;
-		}
-		case CAR_LIST_SOUTH: {
-			Facing = CAR_SOUTH;
-			break;
-		}
-		case CAR_LIST_EAST: {
-			Facing = CAR_EAST;
-			break;
-		}
-		case CAR_LIST_WEST: {
-			Facing = CAR_WEST;
-		}
-		}
-		Cars[Side][num] = new Car(Facing);
-		CarNum[Side]++;
+	int Facing;
+	switch (Side) {
+	case CAR_LIST_NORTH: {
+		Facing = CAR_NORTH;
+		break;
 	}
+	case CAR_LIST_SOUTH: {
+		Facing = CAR_SOUTH;
+		break;
+	}
+	case CAR_LIST_EAST: {
+		Facing = CAR_EAST;
+		break;
+	}
+	case CAR_LIST_WEST: {
+		Facing = CAR_WEST;
+	}
+	}
+	Car *car = new Car(Facing);
+	srand(time(NULL) + Side * 100); // Make random actually random
+	car->WaitTime = rand() % 500 + 100;
+	Ready[Side]->push(car);
+
 }
 
 /**
@@ -105,149 +104,114 @@ void Traffic::LightRule() {
  * Function for setting rule for car
  */
 void Traffic::CarRule() {
-	int i, j;
+	ReadyRule();
+	RunningRule();
+}
+
+void Traffic::ReadyRule() {
+	int i;
 	for (i = 0; i < 4; i++) {
-		for (j = 0; j < CarNum[i]; j++) {
-			Car *car = Cars[i][j];
-			switch (i) {
-			case CAR_LIST_NORTH: {
-				printf("%f\n", car->getZ());
-				// Out Map, reset
-				if (car->getZ() + 0.3 < -MAP_SIZE_HEIGHT) {
-					car->reset();
+		if (!Ready[i]->isEmpty()) {
+			Car *current = Ready[i]->front;
+			if (current->WaitTime == 0) {
+				Running[i]->push(Ready[i]->pop());
+				if (!Ready[i]->isEmpty()) {
+					srand(time(NULL) + i * 100); // Make random actually random
+					Ready[i]->front->WaitTime = rand() % 400 + 100;
 				}
-				// Traffic Light
-				else if (car->getZ() < 0.35 && car->getZ() > 0.3) {
-					if (t[0]->pass) {
-						car->Moving = true;
-					} else {
-						car->Moving = false;
-					}
-				} else {
-					int k = j;
-					if (k == 0) { // First car in the list
-						k = CarNum[i] - 1;
-					}
-					if (k != 0) {
-						if (CarFirst[i] == j) {
-							if (car->Moving == false) {
-								if (car->WaitTime == 0) {
-									car->Moving = true;
-
-								} else {
-									car->WaitTime -= 1;
-								}
-							} else if (car->getZ() < MAP_SIZE_HEIGHT - 0.6) {
-								CarFirst[i]++;
-								if (CarFirst[i] == CarNum[i]) {
-									CarFirst[i] = 0;
-								}
-							}
-
-						} else {
-							float distance = abs(
-									car->getZ() - Cars[i][k]->getZ());
-							if (distance < 0.5) {
-								car->Moving = false;
-							} else {
-								if (car->WaitTime == 0) {
-									car->Moving = true;
-								} else {
-									car->WaitTime -= 1;
-								}
-							}
-						}
-					} else {
-						if (car->WaitTime == 0) {
-							car->Moving = true;
-						} else {
-							car->WaitTime -= 1;
-						}
-					}
-
-//					if (k != 0) {
-//						// First Car First Time
-//						if (CarFirst[i]) {
-//							if (car->Moving == false) {
-//								if (car->WaitTime == 0) {
-//									car->Moving = true;
-//								} else {
-//									car->WaitTime -= 1;
-//								}
-//							} else {
-//								if (car->getZ() < MAP_SIZE_HEIGHT - 0.5) {
-//									CarFirst[i] = false;
-//								}
-//							}
-//						} else {
-//							float distance = abs(
-//									car->getZ() - Cars[i][k]->getZ());
-//							if (distance < 0.5) {
-//								car->Moving = false;
-//							} else {
-//								if (car->WaitTime == 0) {
-//									car->Moving = true;
-//								} else {
-//									car->WaitTime -= 1;
-//								}
-//							}
-//						}
-//					} else {
-//						if (car->WaitTime == 0) {
-//							car->Moving = true;
-//						} else {
-//							car->WaitTime -= 1;
-//						}
-//					}
-//
-//				}}
-				}
-				break;
-			}
-			case CAR_LIST_SOUTH: {
-				if (car->getZ() - 0.3 > MAP_SIZE_HEIGHT) {
-					car->reset();
-				}
-				//Traffic Light
-				else if (car->getZ() < -0.5 && car->getZ() > -0.55) {
-					if (t[0]->pass) {
-						car->Moving = true;
-					} else {
-						car->Moving = false;
-					}
-				}
-				break;
-			}
-			case CAR_LIST_EAST: { // -->
-				if (car->getX() + -0.3 > MAP_SIZE_WIDTH) {
-					car->reset();
-				}
-				//Traffic Light
-				else if (car->getX() < -0.7 && car->getX() > -0.75) {
-					if (t[2]->pass) {
-						car->Moving = true;
-					} else {
-						car->Moving = false;
-					}
-				}
-				break;
-			}
-			case CAR_LIST_WEST: { // <--
-				if (car->getX() + 0.3 < - MAP_SIZE_WIDTH) {
-					car->reset();
-				}
-				//Traffic Light
-				else if (car->getX() > 0.7 && car->getX() < 0.75) {
-					if (t[2]->pass) {
-						car->Moving = true;
-					} else {
-						car->Moving = false;
-					}
-				}
-				break;
-			}
+			} else {
+				Ready[i]->front->WaitTime -= 1;
 			}
 		}
 	}
+}
+
+void Traffic::RunningRule() {
+	int i;
+	for (i = 0; i < 4; i++) {
+		if (!Running[i]->isEmpty()) {
+			Car * car = Running[i]->front;
+			while (car != 0) {
+				RunningRuleHelp(i, car);
+				car = car->next;
+			}
+		}
+
+	}
+}
+
+
+
+void Traffic::RunningRuleHelp(int Facing, Car *car) {
+	bool pass, OutMap;
+	float CarPosition, TFF, TFS;
+	switch (Facing) {
+	case CAR_LIST_NORTH: {
+		CarPosition = car->getZ();
+		TFF = 0.35;
+		TFS = 0.3;
+		OutMap = CarPosition + 0.3 < -MAP_SIZE_HEIGHT;
+		pass = t[0]->pass;
+		break;
+	}
+	case CAR_LIST_SOUTH: {
+		CarPosition = car->getZ();
+		TFF = -0.5;
+		TFS = -0.55;
+		OutMap = CarPosition - 0.3 > MAP_SIZE_HEIGHT;
+		pass = t[0]->pass;
+		break;
+	}
+	case CAR_LIST_EAST: {
+		CarPosition = car->getX();
+		TFF = -0.7;
+		TFS = -0.75;
+		OutMap = CarPosition + -0.3 > MAP_SIZE_WIDTH;
+		pass = t[2]->pass;
+		break;
+	}
+	case CAR_LIST_WEST: {
+		CarPosition = car->getX();
+		TFF = 0.75;
+		TFS = 0.7;
+		OutMap = CarPosition + 0.3 < - MAP_SIZE_WIDTH;
+		pass = t[2]->pass;
+		break;
+	}
+	}
+
+
+	if (OutMap) {
+		car->reset();
+		Ready[Facing]->push(Running[Facing]->pop());
+
+	}
+	// Traffic Light
+	else if (CarPosition < TFF && CarPosition > TFS) {
+		if (pass) {
+			car->Moving = true;
+		} else {
+			car->Moving = false;
+		}
+	} else {
+
+		if (car->prev == 0) {
+			car->Moving = true;
+		} else {
+			Car *front = car->prev;
+			float distance;
+			if (Facing == CAR_LIST_NORTH || Facing == CAR_LIST_SOUTH) {
+				distance = abs(front->getZ() - car->getZ());
+			} else {
+				distance = abs(front->getX() - car->getX());
+			}
+			if (distance < 0.5) {
+				car->Moving = false;
+			} else {
+				car->Moving = true;
+			}
+		}
+	}
+
 }
 

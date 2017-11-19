@@ -6,6 +6,7 @@
 #define SRC_OBJECTS_TRAFFIC_CAR_HPP_
 
 #include <time.h>
+#include <stdio.h>
 
 #include "../../Constant.hpp"
 #include "../Basic/Cube.hpp"
@@ -24,6 +25,9 @@ public:
 	void setColor(Color *color);
 	float getX();
 	float getZ();
+	Car* getNext();
+	Car *next;
+	Car *prev;
 private:
 	Sphere *Wheels[4];
 	Cube *Body;
@@ -32,6 +36,5 @@ private:
 	void move();
 	void setWheels();
 	void setNew();
-
 };
 #endif

@@ -4,6 +4,8 @@ Car::Car(int Facing) {
 	Moving = false;
 	Speed = 0.005;
 	this->Facing = Facing;
+	next = 0;
+	prev = 0;
 	setNew();
 }
 
@@ -28,6 +30,15 @@ void Car::draw() {
 	Wheels[1]->draw();
 	Wheels[2]->draw();
 	Wheels[3]->draw();
+}
+
+/**
+ * Get the next Car which is attach to this car
+ * @return
+ * 			next car object
+ */
+Car *Car::getNext() {
+	return this->next;
 }
 
 /**
@@ -101,7 +112,7 @@ void Car::setNew() {
 	Body->scale(0.3, 0.15, 0.2);
 	Body->rotate(0, 1, 0, Facing);
 	srand(time(NULL)); // Make random actually random
-	this->WaitTime = rand() % 500 + 500;
+	this->WaitTime = rand() % 500;
 	this->Moving = false;
 	switch (Facing) {
 	case CAR_NORTH: {
