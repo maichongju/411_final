@@ -9,6 +9,9 @@ Car::Car(int Facing) {
 	setNew();
 }
 
+/**
+ * Delete everything
+ */
 Car::~Car() {
 	delete Wheels[0];
 	delete Wheels[1];
@@ -139,15 +142,27 @@ void Car::setNew() {
 	setWheels();
 }
 
+/**
+ * Reset the Car
+ */
 void Car::reset() {
 	this->~Car();
 	setNew();
 }
-
+/**
+ * Return the current X
+ * @return
+ * 			Current X
+ */
 float Car::getX() {
 	return this->position->x;
 }
 
+/**
+ * Return the current Z
+ * @return
+ * 			Current Z
+ */
 float Car::getZ() {
 	return this->position->z;
 }

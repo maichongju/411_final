@@ -27,6 +27,7 @@ GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
 World myWorld;
 Camera myCamera;
 Color *SkyColor;
+bool Keys[256];
 /**
  * Function for Idle
  */
@@ -121,63 +122,63 @@ void mouseAction(int button, int state, int x, int y) {
  * @param y
  */
 void mouseMotion(GLint x, GLint y) {
-
-	GLfloat theta;
-	if (moving) {
-		if (mode == 3) {
-			switch (type) {
-			case 1: { // Rotate x
-				myCamera.rotate(1, 0, 0, 1);
-			}
-				break;
-			case 2: { // Rotate y
-
-				myCamera.rotate(0, 1, 0, 1);
-			}
-				break;
-			case 3: { // Rotate z
-
-				myCamera.rotate(0, 0, 1, 1);
-			}
-				break;
-			case 4: { // Translate x
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myCamera.translate(theta * 0.05, 0, 0);
-			}
-				break;
-			case 5: { // Translate y
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myCamera.translate(0, theta * 0.05, 0);
-			}
-				break;
-			case 6: { // Translate z
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myCamera.translate(0, 0, theta * 0.05);
-			}
-				break;
-			case 7: { // Clipping Near
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myCamera.clipnear(theta * 0.02);
-				xBegin = x;
-			}
-				break;
-			case 8: { // Clipping Far
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myCamera.clipfar(theta * 0.02);
-				xBegin = x;
-			}
-				break;
-			case 9: { // Angle
-				theta = (xBegin - x < 0) ? 1 : -1;
-				myCamera.angle(theta * 0.05);
-				xBegin = x;
-
-			}
-				break;
-			}
-		}
-	}
-	glutPostRedisplay();
+//
+//	GLfloat theta;
+//	if (moving) {
+//		if (mode == 3) {
+//			switch (type) {
+//			case 1: { // Rotate x
+//				myCamera.rotate(1, 0, 0, 1);
+//			}
+//				break;
+//			case 2: { // Rotate y
+//
+//				myCamera.rotate(0, 1, 0, 1);
+//			}
+//				break;
+//			case 3: { // Rotate z
+//
+//				myCamera.rotate(0, 0, 1, 1);
+//			}
+//				break;
+//			case 4: { // Translate x
+//				theta = (xBegin - x < 0) ? 1 : -1;
+//				myCamera.translate(theta * 0.05, 0, 0);
+//			}
+//				break;
+//			case 5: { // Translate y
+//				theta = (xBegin - x < 0) ? 1 : -1;
+//				myCamera.translate(0, theta * 0.05, 0);
+//			}
+//				break;
+//			case 6: { // Translate z
+//				theta = (xBegin - x < 0) ? 1 : -1;
+//				myCamera.translate(0, 0, theta * 0.05);
+//			}
+//				break;
+//			case 7: { // Clipping Near
+//				theta = (xBegin - x < 0) ? 1 : -1;
+//				myCamera.clipnear(theta * 0.02);
+//				xBegin = x;
+//			}
+//				break;
+//			case 8: { // Clipping Far
+//				theta = (xBegin - x < 0) ? 1 : -1;
+//				myCamera.clipfar(theta * 0.02);
+//				xBegin = x;
+//			}
+//				break;
+//			case 9: { // Angle
+//				theta = (xBegin - x < 0) ? 1 : -1;
+//				myCamera.angle(theta * 0.05);
+//				xBegin = x;
+//
+//			}
+//				break;
+//			}
+//		}
+//	}
+//	glutPostRedisplay();
 
 }
 
@@ -196,30 +197,43 @@ void init(void) {
 }
 
 /**
+ * Function for keyboard
+ * @param key
+ * @param x
+ * @param y
+ */
+void keyboardFunc(unsigned char key, int x, int y) {
+	if (key == 'w' || key == 'W') {
+		myCamera.eyetranslate(0, 0, -0.05);
+		myCamera.reftranslate(0, 0, -0.05);
+	} else if (key == 'a' || key == 'A') {
+		myCamera.eyetranslate(-0.05, 0, 0);
+		myCamera.reftranslate(-0.05, 0, 0);
+	} else if (key == 's' || key == 'S') {
+		myCamera.eyetranslate(0, 0, 0.05);
+		myCamera.reftranslate(0, 0, 0.05);
+	} else if (key == 'd' || key == 'D') {
+		myCamera.eyetranslate(0.05, 0, 0);
+		myCamera.reftranslate(0.05, 0, 0);
+	}
+	glutPostRedisplay();
+}
+
+/**
  * Function for special key
  * @param key
  * @param x
  * @param y
  */
 void specialKeyFunc(int key, int x, int y) {
-	switch (key) {
-	{
-		case GLUT_KEY_UP:
-		myCamera.translate(0, 0, -0.05);
-		break;
-	}
-case GLUT_KEY_DOWN: {
-	myCamera.translate(0, 0, 0.05);
-	break;
-}
-case GLUT_KEY_LEFT: {
-	myCamera.translate(-0.05, 0, 0);
-	break;
-}
-case GLUT_KEY_RIGHT: {
-	myCamera.translate(0.05, 0, 0);
-	break;
-}
+	if (key == GLUT_KEY_UP) {
+		myCamera.reftranslate(0, 0, -0.05);
+	} else if (key == GLUT_KEY_DOWN) {
+		myCamera.reftranslate(0, 0, 0.05);
+	} else if (key == GLUT_KEY_LEFT) {
+		myCamera.reftranslate(-0.05, 0, 0);
+	} else if (key == GLUT_KEY_RIGHT) {
+		myCamera.reftranslate(0.05, 0, 0);
 	}
 	glutPostRedisplay();
 
@@ -246,29 +260,34 @@ void mainMenu(GLint option) {
 	}
 	glutPostRedisplay();
 }
-/**
- * Function will setup all the lighting for the function
- */
-void setLight() {
-	glEnable( GL_LIGHTING);
-	glEnable(GL_LIGHT0);
-	glShadeModel(GL_SMOOTH);
-//	GLfloat globalAmbient[] = { 1, 1, 1, 1 };
-//	glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-	GLfloat light_ambient[] = { 1, 0, 0, 1.0 };
-	GLfloat light_diffuse[] = { 1, 1, 1, 1 };
-	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_position[] = { 1.0, 1.0, 1.0, 0.0 };
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glLightModeli( GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+void trafficmenu(GLint option) {
 }
 
+void addcarmenu(GLint option) {
+	myWorld.traffic->MenuAddCar(option);
+}
+void deletecarmenu(GLint option) {
+	myWorld.traffic->MenuDeleteCar(option);
+}
 void menu() {
+	GLint deleteCarMenu = glutCreateMenu(deletecarmenu);
+	glutAddMenuEntry(" East", 0);
+	glutAddMenuEntry(" West", 1);
+	glutAddMenuEntry(" North", 2);
+	glutAddMenuEntry(" South", 3);
 
+	GLint addCarMenu = glutCreateMenu(addcarmenu);
+	glutAddMenuEntry(" East", 0);
+	glutAddMenuEntry(" West", 1);
+	glutAddMenuEntry(" North", 2);
+	glutAddMenuEntry(" South", 3);
+
+	GLint TrafficMenu = glutCreateMenu(trafficmenu);
+	glutAddSubMenu(" Add Car", addCarMenu);
+	glutAddSubMenu(" Delete Car", deleteCarMenu);
+
+//***************************************************************
 	// For debug propose, will be delete
 	GLint VCTrans_Menu = glutCreateMenu(VCTransMenu);
 	glutAddMenuEntry(" Rotate x ", 1);
@@ -280,10 +299,11 @@ void menu() {
 	glutAddMenuEntry(" Clipping Near ", 7);
 	glutAddMenuEntry(" Clipping Far ", 8);
 	glutAddMenuEntry(" Angle ", 9);
-
+//***************************************************************
 	glutCreateMenu(mainMenu);      // Create main pop-up menu.
 	glutAddMenuEntry(" Reset ", 1);
 	glutAddSubMenu(" View Transformations ", VCTrans_Menu);
+	glutAddSubMenu(" Traffic Control", TrafficMenu);
 	glutAddMenuEntry(" Quit", 2);
 }
 
@@ -297,11 +317,11 @@ int main(int argc, char** argv) {
 	glutCreateWindow(WIN_TITLE);
 	init();
 	menu();
-	//setLight();
 	glutDisplayFunc(display);
 	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
 	glutSpecialFunc(specialKeyFunc);
+	glutKeyboardFunc(keyboardFunc);
 	glutIdleFunc(idleFunc);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();

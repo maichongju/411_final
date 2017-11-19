@@ -21,6 +21,36 @@ Traffic::Traffic() {
 
 }
 
+/**
+ * Function for Menu to add car to specific list
+ * @param Facing
+ * 				List need to be added See Constant.hpp	CAR_LIST
+ */
+void Traffic::MenuAddCar(int Facing) {
+	AddCar(Facing);
+}
+
+/**
+ * Function for menu to delete ready queue car
+ * @param Facing
+ * 				List need to be delete. See constant.hpp CAR_LIST
+ */
+void Traffic::MenuDeleteCar(int Facing) {
+	DeleteCar(Facing);
+}
+
+/**
+ * Function will delete and free the last Car object in the given list
+ * If the given ready queue is empty, then it will not do anything
+ * @param Facing
+ * 				List need to be delete. See Constant.hpp CAR_LIST
+ */
+void Traffic::DeleteCar(int Facing) {
+	Ready[Facing]->removeRear();
+}
+/**
+ * Function will draw the car for the map
+ */
 void Traffic::draw() {
 	LightRule();
 	CarRule();
@@ -42,6 +72,11 @@ void Traffic::draw() {
 
 }
 
+/**
+ * Add car to the Given list number
+ * @param Side
+ * 				Number of list need to be added, See Constants.hpp CAT_LIST_
+ */
 void Traffic::AddCar(int Side) {
 	int Facing;
 	switch (Side) {
@@ -108,6 +143,9 @@ void Traffic::CarRule() {
 	RunningRule();
 }
 
+/**
+ * Car Rule for Ready Queue
+ */
 void Traffic::ReadyRule() {
 	int i;
 	for (i = 0; i < 4; i++) {
@@ -126,6 +164,9 @@ void Traffic::ReadyRule() {
 	}
 }
 
+/**
+ * Car rule for running car
+ */
 void Traffic::RunningRule() {
 	int i;
 	for (i = 0; i < 4; i++) {
@@ -141,7 +182,13 @@ void Traffic::RunningRule() {
 }
 
 
-
+/**
+ * Helper function for RunningRule
+ * @param Facing
+ * 				Side of the current car. See Constant.hpp CAR_LIST_
+ * @param car
+ * 				Given Car Object
+ */
 void Traffic::RunningRuleHelp(int Facing, Car *car) {
 	bool pass, OutMap;
 	float CarPosition, TFF, TFS;
@@ -180,7 +227,7 @@ void Traffic::RunningRuleHelp(int Facing, Car *car) {
 	}
 	}
 
-
+	// Out of the map, back to ready queue
 	if (OutMap) {
 		car->reset();
 		Ready[Facing]->push(Running[Facing]->pop());

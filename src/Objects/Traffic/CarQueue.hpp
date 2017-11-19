@@ -9,11 +9,11 @@ public:
 	Car *front, *rear;
 	CarQueue();
 	void push(Car *car);
-	//Car *get(int index);
 	Car *pop();
 	Car *peek();
 	bool isEmpty();
 	int Size();
+	void removeRear();
 private:
 	int size;
 };

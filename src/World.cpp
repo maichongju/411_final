@@ -5,7 +5,7 @@
 #include "World.hpp"
 
 World::World() {
-	cube = new Traffic();
+	traffic = new Traffic();
 	b = new Buildings();
 	Env = new Environment();
 }
@@ -16,7 +16,7 @@ World::~World() {
 
 void World::draw_world() {
 
-	cube->draw();
+	traffic->draw();
 	//b->draw();
 	Env->draw();
 	this->draw(); // For debug

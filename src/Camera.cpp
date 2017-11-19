@@ -2,7 +2,6 @@
 #include "Camera.hpp"
 #include "Objects/Basic/Matrix.hpp"
 
-bool DEBUG = false;
 
 Camera::Camera() {
 	eye.x = 3, eye.y = 3, eye.z = 5.0;
@@ -15,7 +14,7 @@ void Camera::setDefaultCamera(void) { // make default camera
 	eye.x = 3, eye.y = 3, eye.z = 5.0;
 	ref.x = 0.0, ref.y = 0.0, ref.z = 0.0;
 	viewup.x = 0.0, viewup.y = 1.0, viewup.z = 0.0;
-	aspect = 1.0, viewAngle = 40.0, nearDist = 1.0, farDist = 3.0;
+	aspect = 1.0, viewAngle = 40.0, nearDist = 1.0, farDist = 15.0;
 }
 
 void Camera::set(Point Eye, Point Look, Vector Up) {
@@ -42,23 +41,19 @@ void Camera::rotate(GLfloat rx, GLfloat ry, GLfloat rz, GLfloat angle) { //w.r.p
 	}
 }
 
-void Camera::translate(GLfloat tx, GLfloat ty, GLfloat tz) { //w.r.p.t WC
+void Camera::eyetranslate(GLfloat tx, GLfloat ty, GLfloat tz) { //w.r.p.t WC
 	eye.x += tx;
 	eye.y += ty;
 	eye.z += tz;
 }
 
-void Camera::clipfar(float speed) {
-	farDist += speed;
+void Camera::reftranslate(GLfloat tx, GLfloat ty, GLfloat tz) {
+	eye.x += tx;
+	eye.y += ty;
+	eye.z += tz;
 }
 
-void Camera::clipnear(float speed) {
-	nearDist += speed;
-}
 
-void Camera::angle(float angle) {
-	viewAngle += angle;
-}
 void Camera::setProjectionMatrix() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

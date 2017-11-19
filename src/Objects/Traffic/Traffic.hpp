@@ -20,6 +20,8 @@ class Traffic {
 public:
 	Traffic();
 	void draw();
+	void MenuAddCar(int Facing);
+	void MenuDeleteCar(int Facing);
 private:
 	CarQueue *Ready[4];
 	CarQueue *Running[4];
