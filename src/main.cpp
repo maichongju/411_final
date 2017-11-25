@@ -123,63 +123,29 @@ void mouseAction(int button, int state, int x, int y) {
  */
 void mouseMotion(GLint x, GLint y) {
 //
-//	GLfloat theta;
-//	if (moving) {
-//		if (mode == 3) {
-//			switch (type) {
-//			case 1: { // Rotate x
-//				myCamera.rotate(1, 0, 0, 1);
-//			}
-//				break;
-//			case 2: { // Rotate y
-//
-//				myCamera.rotate(0, 1, 0, 1);
-//			}
-//				break;
-//			case 3: { // Rotate z
-//
-//				myCamera.rotate(0, 0, 1, 1);
-//			}
-//				break;
-//			case 4: { // Translate x
-//				theta = (xBegin - x < 0) ? 1 : -1;
-//				myCamera.translate(theta * 0.05, 0, 0);
-//			}
-//				break;
-//			case 5: { // Translate y
-//				theta = (xBegin - x < 0) ? 1 : -1;
-//				myCamera.translate(0, theta * 0.05, 0);
-//			}
-//				break;
-//			case 6: { // Translate z
-//				theta = (xBegin - x < 0) ? 1 : -1;
-//				myCamera.translate(0, 0, theta * 0.05);
-//			}
-//				break;
-//			case 7: { // Clipping Near
-//				theta = (xBegin - x < 0) ? 1 : -1;
-//				myCamera.clipnear(theta * 0.02);
-//				xBegin = x;
-//			}
-//				break;
-//			case 8: { // Clipping Far
-//				theta = (xBegin - x < 0) ? 1 : -1;
-//				myCamera.clipfar(theta * 0.02);
-//				xBegin = x;
-//			}
-//				break;
-//			case 9: { // Angle
-//				theta = (xBegin - x < 0) ? 1 : -1;
-//				myCamera.angle(theta * 0.05);
-//				xBegin = x;
-//
-//			}
-//				break;
-//			}
-//		}
-//	}
-//	glutPostRedisplay();
+	GLfloat theta;
+	if (moving) {
+		if (mode == 3) {
+			switch (type) {
+			case 1: { // Rotate x
+				myCamera.rotate(1, 0, 0, 1);
+			}
+				break;
+			case 2: { // Rotate y
 
+				myCamera.rotate(0, 1, 0, 1);
+			}
+				break;
+			case 3: { // Rotate z
+
+				myCamera.rotate(0, 0, 1, 1);
+			}
+				break;
+			}
+
+		}
+		glutPostRedisplay();
+	}
 }
 
 void init(void) {

@@ -2,7 +2,8 @@
 #define SRC_OBJECTS_ENVIRONMENT_HPP_
 #include <GL/glut.h>
 #include "Ground.hpp"
-
+#include "../Basic/Cylinder.hpp"
+#include "../Basic/Cone.hpp"
 class Environment {
 public:
 	Environment();
@@ -10,6 +11,8 @@ public:
 	void reset();
 private:
 	Ground *G;
+	Cylinder *T;
+	Cone *T2;
 };
 
 

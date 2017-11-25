@@ -10,10 +10,15 @@ extern GLUquadric* QOBJ;
 class Cylinder: Shape {
 public:
 	Cylinder();
+	Cylinder(float x, float y, float z);
 	Cylinder(Point *position, Color *color);
 	void draw();
 private:
 	Point *position;
+	//float x, y, z;
+	Cylinder *cylinder;
+
+
 };
 
 

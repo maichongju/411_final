@@ -10,7 +10,7 @@ public:
 	Buildings();
 	void draw();
 private:
-	Building *b;
+	Building *b, *b2;
 };
 
 
