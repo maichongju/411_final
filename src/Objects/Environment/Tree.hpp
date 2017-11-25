@@ -2,7 +2,7 @@
  * Tree.hpp
  *
  *  Created on: Nov 25, 2017
- *      Author: User
+ *      Author: Benjamin Ngan
  */
 
 #ifndef SRC_OBJECTS_ENVIRONMENT_TREE_HPP_
