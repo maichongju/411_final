@@ -123,7 +123,6 @@ void mouseAction(int button, int state, int x, int y) {
  */
 void mouseMotion(GLint x, GLint y) {
 //
-	GLfloat theta;
 	if (moving) {
 		if (mode == 3) {
 			switch (type) {
