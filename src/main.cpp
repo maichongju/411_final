@@ -111,18 +111,15 @@ void display(void) {
 	glClearColor(SkyColor->red, SkyColor->green, SkyColor->blue,
 			SkyColor->alpha); // Set display-window color deep sky blue
 	myWorld.draw_world(); // draw all objects in the world
-//	glPointSize(500);
-//	glBegin(GL_POINTS);
-//	glColor4f(1, 0, 0, 1);
-//	glVertex3f(0, 0, 0);
-//	glColor4f(0.25, 0, 0, 1);
-//	glVertex3f(1, 1, 0);
-//	glEnd();
+
+//******************************************************************
 	glColor3f(1, 1, 1);
 	glPointSize(25);
 	glBegin(GL_POINTS);
 	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
 	glEnd();
+
+//******************************************************************
 	glFlush();
 	glutSwapBuffers();
 }
@@ -212,10 +209,6 @@ void specialKeyFunc(int key, int x, int y) {
 		myCamera.updown(CAMERA_UP);
 	} else if (key == GLUT_KEY_DOWN) {
 		myCamera.updown(CAMERA_DOWN);
-	} else if (key == GLUT_KEY_LEFT) {
-		//myCamera.reftranslate(-0.05, 0, 0);
-	} else if (key == GLUT_KEY_RIGHT) {
-		//myCamera.reftranslate(0.05, 0, 0);
 	}
 	glutPostRedisplay();
 
