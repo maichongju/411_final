@@ -41,4 +41,14 @@
 #define	CAR_MOVE_STOPPING			1
 #define CAR_MOVE_STOPPED			2
 
+#define MENU_TIME_MORNING			0
+#define MENU_TIME_NIGHT				1
+#define MENU_TIME_PAUSE				2
+#define MENU_TIME_RESUME			3
+
+#define CAMERA_MOVE_SPEED			0.025
+#define CAMERA_MOVE_FORWARD			0
+#define CAMERA_MOVE_BACKWARD		1
+
+
 #endif /* SRC_CONSTANT_HPP_ */

@@ -102,6 +102,11 @@ void display(void) {
 //	glColor4f(0.25, 0, 0, 1);
 //	glVertex3f(1, 1, 0);
 //	glEnd();
+	glColor3f(1,1,1);
+	glPointSize(25);
+	glBegin(GL_POINTS);
+	glVertex3f(myCamera.ref.x,myCamera.ref.y,myCamera.ref.z);
+	glEnd();
 	glFlush();
 	glutSwapBuffers();
 }
@@ -169,17 +174,9 @@ void init(void) {
  */
 void keyboardFunc(unsigned char key, int x, int y) {
 	if (key == 'w' || key == 'W') {
-		myCamera.eyetranslate(0, 0, -0.05);
-		myCamera.reftranslate(0, 0, -0.05);
-	} else if (key == 'a' || key == 'A') {
-		myCamera.eyetranslate(-0.05, 0, 0);
-		myCamera.reftranslate(-0.05, 0, 0);
+		myCamera.move(CAMERA_MOVE_FORWARD);
 	} else if (key == 's' || key == 'S') {
-		myCamera.eyetranslate(0, 0, 0.05);
-		myCamera.reftranslate(0, 0, 0.05);
-	} else if (key == 'd' || key == 'D') {
-		myCamera.eyetranslate(0.05, 0, 0);
-		myCamera.reftranslate(0.05, 0, 0);
+		myCamera.move(CAMERA_MOVE_BACKWARD);
 	}
 	glutPostRedisplay();
 }
@@ -235,7 +232,33 @@ void addcarmenu(GLint option) {
 void deletecarmenu(GLint option) {
 	myWorld.traffic->MenuDeleteCar(option);
 }
+void cameramenu(GLint option) {
+
+}
+
+void timemenu(GLint option) {
+	if (option == MENU_TIME_MORNING) {
+		GlobalTime = 9;
+		SkyColor->set(0.67, 0.93, 0.93, 1);
+	} else if (option == MENU_TIME_NIGHT) {
+		GlobalTime = 19;
+		SkyColor->set(0, 0, 0, 1);
+	} else if (option == MENU_TIME_RESUME) {
+		glutIdleFunc(idleFunc);
+	} else if (option == MENU_TIME_PAUSE) {
+		glutIdleFunc(NULL);
+	}
+
+}
 void menu() {
+	GLint timeMenu = glutCreateMenu(timemenu);
+		glutAddMenuEntry(" Morning", 0);
+		glutAddMenuEntry(" Night", 1);
+		glutAddMenuEntry(" Pause", 2);
+		glutAddMenuEntry(" Resume", 3);
+
+	GLint cameraMenu = glutCreateMenu(cameramenu);
+
 	GLint deleteCarMenu = glutCreateMenu(deletecarmenu);
 	glutAddMenuEntry(" East", 0);
 	glutAddMenuEntry(" West", 1);
@@ -267,6 +290,8 @@ void menu() {
 //***************************************************************
 	glutCreateMenu(mainMenu);      // Create main pop-up menu.
 	glutAddMenuEntry(" Reset ", 1);
+	glutAddSubMenu(" Time",timeMenu);
+	glutAddSubMenu(" Camera",cameraMenu);
 	glutAddSubMenu(" View Transformations ", VCTrans_Menu);
 	glutAddSubMenu(" Traffic Control", TrafficMenu);
 	glutAddMenuEntry(" Quit", 2);

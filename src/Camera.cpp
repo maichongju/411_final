@@ -2,7 +2,6 @@
 #include "Camera.hpp"
 #include "Objects/Basic/Matrix.hpp"
 
-
 Camera::Camera() {
 	eye.x = 3, eye.y = 3, eye.z = 5.0;
 	ref.x = 0.0, ref.y = 0.0, ref.z = 0.0;
@@ -53,6 +52,36 @@ void Camera::reftranslate(GLfloat tx, GLfloat ty, GLfloat tz) {
 	eye.z += tz;
 }
 
+void Camera::move(int direction) {
+	printf("eye:%f,%f,%f\n", eye.x, eye.y, eye.z);
+	printf("ref:%f,%f,%f\n", ref.x, ref.y, ref.z);
+	GLfloat x1 = eye.x;
+	GLfloat y1 = eye.z;
+	GLfloat x2 = ref.x;
+	GLfloat y2 = ref.z;
+	GLfloat a = (y2 - y1) / (x2 - x1);
+	GLfloat b = y1 - (y2 - y1) / (x2 - x1) * x1;
+	int d = (ref.x - eye.x) / abs(ref.x - eye.x);
+	switch (direction) {
+	case CAMERA_MOVE_FORWARD: {
+		eye.x += d * CAMERA_MOVE_SPEED;
+		eye.z = a * eye.x + b;
+		ref.x += d * CAMERA_MOVE_SPEED;
+		ref.z = a * ref.x + b;
+		break;
+
+	}
+	case CAMERA_MOVE_BACKWARD: {
+		eye.x += -d * CAMERA_MOVE_SPEED;
+		eye.z = a * eye.x + b;
+		ref.x += -d * CAMERA_MOVE_SPEED;
+		ref.z = a * ref.x + b;
+		break;
+	}
+
+	}
+
+}
 
 void Camera::setProjectionMatrix() {
 	glMatrixMode(GL_PROJECTION);

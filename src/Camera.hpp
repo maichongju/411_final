@@ -3,6 +3,7 @@
 #define CCAMERA_H
 
 #include <GL/glut.h>
+#include "Constant.hpp"
 #include "Objects/Basic/Point.hpp"
 #include "Objects/Basic/Vector.hpp"
 
@@ -21,6 +22,7 @@ class Camera {
 	void eyetranslate(GLfloat tx, GLfloat ty, GLfloat tz);
 	void reftranslate(GLfloat tx, GLfloat ty, GLfloat tz);
 	void setViewVolume(float viewAngle, float aspect, float Near, float Far);
+	void move(int direction);
 
 	void setProjectionMatrix();
 
