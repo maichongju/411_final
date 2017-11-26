@@ -102,10 +102,10 @@ void display(void) {
 //	glColor4f(0.25, 0, 0, 1);
 //	glVertex3f(1, 1, 0);
 //	glEnd();
-	glColor3f(1,1,1);
+	glColor3f(1, 1, 1);
 	glPointSize(25);
 	glBegin(GL_POINTS);
-	glVertex3f(myCamera.ref.x,myCamera.ref.y,myCamera.ref.z);
+	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
 	glEnd();
 	glFlush();
 	glutSwapBuffers();
@@ -177,6 +177,10 @@ void keyboardFunc(unsigned char key, int x, int y) {
 		myCamera.move(CAMERA_MOVE_FORWARD);
 	} else if (key == 's' || key == 'S') {
 		myCamera.move(CAMERA_MOVE_BACKWARD);
+	} else if (key == 'd' || key == 'D') {
+		myCamera.turn(CAMERA_TURN_RIGHT);
+	} else if (key == 'a' || key == 'A') {
+		myCamera.turn(CAMERA_TURN_LEFT);
 	}
 	glutPostRedisplay();
 }
@@ -189,13 +193,13 @@ void keyboardFunc(unsigned char key, int x, int y) {
  */
 void specialKeyFunc(int key, int x, int y) {
 	if (key == GLUT_KEY_UP) {
-		myCamera.reftranslate(0, 0, -0.05);
+		myCamera.updown(CAMERA_UP);
 	} else if (key == GLUT_KEY_DOWN) {
-		myCamera.reftranslate(0, 0, 0.05);
+		myCamera.updown(CAMERA_DOWN);
 	} else if (key == GLUT_KEY_LEFT) {
-		myCamera.reftranslate(-0.05, 0, 0);
+		//myCamera.reftranslate(-0.05, 0, 0);
 	} else if (key == GLUT_KEY_RIGHT) {
-		myCamera.reftranslate(0.05, 0, 0);
+		//myCamera.reftranslate(0.05, 0, 0);
 	}
 	glutPostRedisplay();
 
@@ -233,7 +237,7 @@ void deletecarmenu(GLint option) {
 	myWorld.traffic->MenuDeleteCar(option);
 }
 void cameramenu(GLint option) {
-
+	myCamera.Object = option;
 }
 
 void timemenu(GLint option) {
@@ -252,12 +256,14 @@ void timemenu(GLint option) {
 }
 void menu() {
 	GLint timeMenu = glutCreateMenu(timemenu);
-		glutAddMenuEntry(" Morning", 0);
-		glutAddMenuEntry(" Night", 1);
-		glutAddMenuEntry(" Pause", 2);
-		glutAddMenuEntry(" Resume", 3);
+	glutAddMenuEntry(" Morning", 0);
+	glutAddMenuEntry(" Night", 1);
+	glutAddMenuEntry(" Pause", 2);
+	glutAddMenuEntry(" Resume", 3);
 
 	GLint cameraMenu = glutCreateMenu(cameramenu);
+	glutAddMenuEntry(" Eye",CAMERA_EYE);
+	glutAddMenuEntry(" Look at position",CAMERA_REF);
 
 	GLint deleteCarMenu = glutCreateMenu(deletecarmenu);
 	glutAddMenuEntry(" East", 0);
@@ -290,8 +296,8 @@ void menu() {
 //***************************************************************
 	glutCreateMenu(mainMenu);      // Create main pop-up menu.
 	glutAddMenuEntry(" Reset ", 1);
-	glutAddSubMenu(" Time",timeMenu);
-	glutAddSubMenu(" Camera",cameraMenu);
+	glutAddSubMenu(" Time", timeMenu);
+	glutAddSubMenu(" Camera", cameraMenu);
 	glutAddSubMenu(" View Transformations ", VCTrans_Menu);
 	glutAddSubMenu(" Traffic Control", TrafficMenu);
 	glutAddMenuEntry(" Quit", 2);

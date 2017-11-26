@@ -13,6 +13,7 @@ class Camera {
 	Point ref; 			//look at point
 	Vector viewup; 		//view up vector
 	GLfloat aspect, nearDist, farDist, viewAngle, W, H;
+	int Object;
 	Camera();
 	void set(Point Eye, Point look, Vector up);
 	void set(float ex, float ey, float ez, float lx, float ly, float lz, float upx, float upy, float upz);
@@ -23,8 +24,11 @@ class Camera {
 	void reftranslate(GLfloat tx, GLfloat ty, GLfloat tz);
 	void setViewVolume(float viewAngle, float aspect, float Near, float Far);
 	void move(int direction);
+	void turn (int direction);
+	void updown(int direction);
 
 	void setProjectionMatrix();
+
 
 };
 #endif
