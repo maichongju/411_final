@@ -2,6 +2,7 @@
 #define SRC_OBJECTS_ENVIRONMENT_HPP_
 #include <GL/glut.h>
 #include "Ground.hpp"
+#include "Solar.hpp"
 #include "../Basic/Cylinder.hpp"
 #include "../Basic/Cone.hpp"
 class Environment {
@@ -13,6 +14,8 @@ private:
 	Ground *G;
 	Cylinder *T;
 	Cone *T2;
+	Solar *solar;
+
 };
 
 

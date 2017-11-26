@@ -59,9 +59,21 @@ int RGBpixmap:: readBMPFile(string fname)
 	inf.get(ch2);		// type is always 'BM'
 
 	//cout << "file type = " << ch1 << ch2 << endl;
+	ulong fileSize =	getLong();
+	ushort reserved1 =  getShort();     // always 0
+	ushort reserved2 = 	getShort();     // always 0
+	ulong offBits =		getLong();	    // offset to image - unreliable
+	ulong headerSize =  getLong();      // always 40
 	ulong numCols =		getLong();	    // number of columns in image
 	ulong numRows = 	getLong();	    // number of rows in image
+	ushort planes=    	getShort();     // always 1
 	ushort bitsPerPix = getShort();     // 8 or 24;only 24 bit case done 
+	ulong compression = getLong();		// must be 0 for umcompressed
+	ulong imageSize = 	getLong();      // total bytes in image
+	ulong xPels =    	getLong();      // always 0
+	ulong yPels =    	getLong();      // always 0
+	ulong numLUTentries = getLong();	// 256 for 8 bit, otherwise 0
+	ulong impColors = 	getLong();      // always 0
 
 	/*	#define tell(str,val) cout << str << " = " << val << endl;
 	tell("file size",fileSize);
@@ -91,7 +103,7 @@ int RGBpixmap:: readBMPFile(string fname)
 	
 	nRows = numRows; // set class's data members
 	nCols = numCols;
-	cout << "numRows,numCols = " << numRows << "," << numCols << endl;
+	//cout << "numRows,numCols = " << numRows << "," << numCols << endl;
 	cout.flush();
 	pixel = new mRGB[nRows * nCols]; //space for array in memory
 	

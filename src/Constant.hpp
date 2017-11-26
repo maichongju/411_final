@@ -12,6 +12,11 @@
 #define MAP_SIZE_WIDTH				5
 #define MAP_SIZE_HEIGHT				5
 
+#define TEXTURE_SUN					0
+#define TEXTURE_MOON				1
+#define TEXTURE_LEAF				2
+#define TEXTURE_TREE_BARK			3
+
 #define BUILDING_WINDOW_FRONT		0
 #define BUILDING_WINDOW_RIGHT		1
 #define BUILDING_WINDOW_REAR		2

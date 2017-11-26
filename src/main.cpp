@@ -10,6 +10,7 @@
 #include <math.h>
 #include <time.h>
 
+#include "Texture/RGBpixmap.h"
 #include "Constant.hpp"
 #include "World.hpp"
 #include "Camera.hpp"
@@ -27,7 +28,7 @@ GLint objtype = 0; // Type of current object. 0 Cube 1 Pyramid 2 house
 World myWorld;
 Camera myCamera;
 Color *SkyColor;
-bool Keys[256];
+RGBpixmap texture[10];
 /**
  * Function for Idle
  */
@@ -44,6 +45,21 @@ void idleFunc(void) {
 	oldTime = newTime;
 	glutPostRedisplay();
 	//printf("%f\n", GlobalTime);
+}
+
+/**
+ * Function will set up all the texture need to be use
+ */
+void setTexture(){
+	texture[TEXTURE_SUN].readBMPFile("src/Img/sun.bmp");
+	texture[TEXTURE_SUN].setTexture(TEXTURE_SUN);
+	texture[TEXTURE_MOON].readBMPFile("src/Img/moon.bmp");
+	texture[TEXTURE_MOON].setTexture(TEXTURE_MOON);
+	texture[TEXTURE_TREE_BARK].readBMPFile("src/Img/tree_bark.bmp");
+	texture[TEXTURE_TREE_BARK].setTexture(TEXTURE_TREE_BARK);
+	texture[TEXTURE_LEAF].readBMPFile("src/Img/tree_leaf.bmp");
+	texture[TEXTURE_LEAF].setTexture(TEXTURE_LEAF);
+
 }
 
 /**
@@ -313,6 +329,7 @@ int main(int argc, char** argv) {
 	glutCreateWindow(WIN_TITLE);
 	init();
 	menu();
+	setTexture();
 	glutDisplayFunc(display);
 	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
