@@ -14,6 +14,10 @@ World::~World() {
 
 }
 
+void World::settime(int time) {
+	this->Env->setsolar(time);
+}
+
 void World::draw_world() {
 
 	traffic->draw();

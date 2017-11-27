@@ -9,6 +9,8 @@
 
 #define WIN_TITLE 					"City Skyline"
 
+#define GLOBAL_TIME					0.001
+
 #define MAP_SIZE_WIDTH				5
 #define MAP_SIZE_HEIGHT				5
 
@@ -69,5 +71,7 @@
 #define TREE_CUBE					1
 #define TREE_SPHERE					2
 #define TREE_CONE_MULTIPLE			3
+
+#define SOLAR_ROTATE				360/(24/GLOBAL_TIME)
 
 #endif /* SRC_CONSTANT_HPP_ */

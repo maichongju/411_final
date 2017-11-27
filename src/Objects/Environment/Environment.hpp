@@ -13,6 +13,7 @@ public:
 	Environment();
 	void draw();
 	void reset();
+	void setsolar(int time);
 private:
 	Ground *G;
 	tree *T;

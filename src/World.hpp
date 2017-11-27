@@ -17,6 +17,7 @@ public:
 	~World();
 	void draw_world(); // draw all objects in the world
 	void reset(); // Will reset the world to the basic
+	void settime(int time);
 	Traffic *traffic;
 	Buildings *b;
 private:

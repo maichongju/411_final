@@ -15,7 +15,7 @@
 #include "World.hpp"
 #include "Camera.hpp"
 
-float GlobalTime = 17;
+float GlobalTime = 7;
 GLUquadric* QOBJ;
 
 float IdleTime = 0;
@@ -37,14 +37,14 @@ void idleFunc(void) {
 	GLfloat speed = 0.0005;
 	oldTime = clock();
 	IdleTime = (newTime - oldTime) * speed;
-	GlobalTime -= IdleTime;
+	GlobalTime += GLOBAL_TIME;
 	if (GlobalTime > 24) {
 		GlobalTime = 0;
 	}
 	newTime = clock();
 	oldTime = newTime;
 	glutPostRedisplay();
-	//printf("%f\n", GlobalTime);
+	printf("%f\n", SOLAR_ROTATE);
 }
 
 /**
@@ -105,6 +105,7 @@ void centerwindow(int screen_height, int screen_width) {
  * Function for display
  */
 void display(void) {
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	myCamera.setProjectionMatrix();
 	dayColor();
@@ -251,11 +252,14 @@ void cameramenu(GLint option) {
 
 void timemenu(GLint option) {
 	if (option == MENU_TIME_MORNING) {
-		GlobalTime = 9;
+		GlobalTime = 7;
 		SkyColor->set(0.67, 0.93, 0.93, 1);
+		myWorld.settime(MENU_TIME_MORNING);
+
 	} else if (option == MENU_TIME_NIGHT) {
 		GlobalTime = 19;
 		SkyColor->set(0, 0, 0, 1);
+		myWorld.settime( MENU_TIME_NIGHT);
 	} else if (option == MENU_TIME_RESUME) {
 		glutIdleFunc(idleFunc);
 	} else if (option == MENU_TIME_PAUSE) {
@@ -267,8 +271,8 @@ void menu() {
 	GLint timeMenu = glutCreateMenu(timemenu);
 	glutAddMenuEntry(" Morning", 0);
 	glutAddMenuEntry(" Night", 1);
-	glutAddMenuEntry(" Pause", 2);
-	glutAddMenuEntry(" Resume", 3);
+	//glutAddMenuEntry(" Pause", 2);
+	//glutAddMenuEntry(" Resume", 3);
 
 	GLint cameraMenu = glutCreateMenu(cameramenu);
 	glutAddMenuEntry(" Eye",CAMERA_EYE);

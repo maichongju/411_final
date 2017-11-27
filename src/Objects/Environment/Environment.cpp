@@ -16,6 +16,10 @@ void Environment::draw() {
 	solar->draw();
 }
 
+void Environment::setsolar(int time) {
+	this->solar->settime(time);
+}
+
 void Environment::reset() {
 
 }
