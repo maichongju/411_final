@@ -17,21 +17,22 @@ tree::tree() {
 	position = new Point(0, 0, 0);
 }
 tree::tree(float x, float y, float z) {
-	cone = new Cone();
+	cone = new Cone(x, z * -1, y + .4);
 	cylinder = new Cylinder();
 	cube = new Cube();
-	cube->translate(x, y, z + .4);
-	cube->scale(.5, .5, .5);
+	cube->translate(x, y + .4, z);
+	cube->scale(.3, .3, .3);
 	sphere = new Sphere(new Point(0.00, 0.00, 0.0), new Color(.30, .80, 0, 0),
 			0.2);
-	sphere->translate(x, y, z + .4);
+	//sphere->translate(x, y - .5, z - 25);
+	sphere->translate(x, y + .4, z);
 	position = new Point(x, y, z);
 }
 void tree::draw(float x, float y, float z, int treetype) {
 	cylinder->draw(x, y, z);
 	switch (treetype) {
 	case (0): {
-		cone->draw(x, y, z + .4);
+		cone->draw();
 		break;
 	}
 	case (1): {

@@ -8,9 +8,13 @@ extern GLUquadric* QOBJ;
 class Cone {
 public:
 	Cone();
-	void draw(float x, float y, float z);
+	Cone(float x, float y, float z);
+	void draw();
+	void translate(float x, float y, float z);
+
 private:
-	Point *position;
+	//Point *position;
+	float x, y, z;
 };
 
 
