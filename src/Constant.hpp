@@ -7,7 +7,7 @@
 #define WIN_WIDTH					1000
 #define WIN_HEIGHT					1000
 
-#define WIN_TITLE 					"SIMCITY"
+#define WIN_TITLE 					"City Skyline"
 
 #define MAP_SIZE_WIDTH				5
 #define MAP_SIZE_HEIGHT				5
