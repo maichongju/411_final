@@ -20,7 +20,7 @@ tree::tree(float x, float y, float z) {
 	cone = new Cone(x, z * -1, y + .4);
 	cylinder = new Cylinder();
 	cube = new Cube();
-	cube->translate(x, y + .4, z);
+	cube->translate(x - .15, y + .4, z - .15);
 	cube->scale(.3, .3, .3);
 	sphere = new Sphere(new Point(0.00, 0.00, 0.0), new Color(.30, .80, 0, 0),
 			0.2);
