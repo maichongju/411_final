@@ -2,8 +2,8 @@
 Environment::Environment() {
 	G = new Ground();
 	T = new tree();
-	T2 = new tree();
-	T3 = new tree();
+	T2 = new tree(1, 1, 0);
+	T3 = new tree(1, 1, 0);
 	solar = new Solar();
 
 }

@@ -9,7 +9,7 @@ void Cone::draw(float x, float y, float z) {
 	glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
 	glTranslated(x, y, z);
 	//this->ctm_multiply();
-	glColor3f(0, 1, .50);
+	glColor3f(.30, .80, 0);
 	glBegin(GL_POLYGON);
 	GLUquadricObj *obj = gluNewQuadric();
 
