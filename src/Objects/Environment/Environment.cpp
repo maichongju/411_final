@@ -1,9 +1,9 @@
 #include "Environment.hpp"
 Environment::Environment() {
 	G = new Ground();
-	T = new tree();
-	T2 = new tree();
-	T3 = new tree();
+	T = new tree(1, 0, -1);
+	T2 = new tree(1, 0, -2);
+	T3 = new tree(2, 0, -2);
 	solar = new Solar();
 
 }

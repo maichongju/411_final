@@ -7,7 +7,7 @@
 #include "../Basic/Cone.hpp"
 
 #include "Tree.hpp"
-#include "../Constant.hpp"
+#include "../../Constant.hpp"
 class Environment {
 public:
 	Environment();
