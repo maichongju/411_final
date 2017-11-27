@@ -19,7 +19,7 @@ tree::tree() {
 tree::tree(float x, float y, float z, int tt) {
 	treeType = tt;
 	cone = new Cone(x, z * -1, y + .4);
-	cylinder = new Cylinder(x, z * -1, y);
+	cylinder = new Cylinder(x, z * -1, y, TEXTURE_TREE_BARK);
 	cube = new Cube();
 	cube->translate(x - .15, y + .4, z - .15);
 	cube->scale(.3, .3, .3);
@@ -30,7 +30,7 @@ tree::tree(float x, float y, float z, int tt) {
 }
 void tree::draw() {
 	int treetype = this->treeType;
-	cylinder->draw();
+	cylinder->drawtexture();
 	switch (treetype) {
 	case (0): {
 		cone->draw();

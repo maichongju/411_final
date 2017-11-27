@@ -9,13 +9,17 @@
 extern GLUquadric* QOBJ;
 class Cylinder {
 public:
+	int textureID;
 	Cylinder();
 	Cylinder(float x, float y, float z);
+	Cylinder(float x, float y, float z, int TextureID);
 	void draw();
+	void drawtexture();
 	void translate(float x, float y, float z);
 
 private:
 	float x, y, z;
+	GLUquadricObj *obj;
 	//Cylinder *cylinder;
 
 
