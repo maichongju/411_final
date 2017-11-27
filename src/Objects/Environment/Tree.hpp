@@ -15,19 +15,22 @@
 #include "../Basic/Shape.hpp"
 #include "../Basic/Point.hpp"
 #include "../../Color.hpp"
+#include "../../Texture/RGBpixmap.h"
+#include "../../Constant.hpp"
 #include <stdio.h>
-
+extern RGBpixmap texture[];
 class tree {
 public:
 	tree();
-	tree(float x, float y, float z);
-	void draw(float x, float y, float z, int treetype);
+	tree(float x, float y, float z, int tt);
+	void draw();
 private:
 	Cone *cone;
 	Cylinder *cylinder;
 	Cube *cube;
 	Sphere *sphere;
 	Point *position;
+	int treeType;
 
 
 };

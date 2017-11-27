@@ -1,18 +1,18 @@
 #include "Environment.hpp"
 Environment::Environment() {
 	G = new Ground();
-	T = new tree(1, 0, -1);
-	T2 = new tree(1, 0, -2);
-	T3 = new tree(2, 0, -2);
+	T = new tree(1.0, 0.0, -1.0, TREE_CONE);
+	T2 = new tree(1.0, 0.0, -2.0, TREE_CUBE);
+	T3 = new tree(2.0, 0.0, -2.0, TREE_SPHERE);
 	solar = new Solar();
 
 }
 
 void Environment::draw() {
 	G->draw();
-	T->draw(1, 1, 0, CONE_TREE);
-	T2->draw(1, 2, 0, CUBE_TREE);
-	T3->draw(2, 2, 0, SPHERE_TREE);
+	T->draw();
+	T2->draw();
+	T3->draw();
 	solar->draw();
 }
 

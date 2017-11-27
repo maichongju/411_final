@@ -1,10 +1,13 @@
 #include "Cylinder.hpp"
 
 Cylinder::Cylinder() {
-	//cylinder = new Cylinder();
-	position = new Point(0, 0, 0);
-	//this->x = this->y = this->z = 1;
+	this->x = this->y = this->z = 0;
 
+}
+Cylinder::Cylinder(float x, float y, float z) {
+	this->x = x;
+	this->y = y;
+	this->z = z;
 }
 //Cylinder::Cylinder(float x, float y, float z) {
 //	cylinder = new Cylinder();
@@ -14,11 +17,11 @@ Cylinder::Cylinder() {
 //	position = new Point(x, y, z);
 //}
 
-void Cylinder::draw(float x, float y, float z) {
+void Cylinder::draw() {
 	//glClear(GL_COLOR_BUFFER_BIT);
 	glPushMatrix();
 	glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
-	glTranslated(x, y, z);
+	translate(this->x, this->y, this->z);
 	//this->ctm_multiply();
 	glColor3f(.60, .30, 0);
 	glBegin(GL_POLYGON);
@@ -28,8 +31,8 @@ void Cylinder::draw(float x, float y, float z) {
 
 	gluCylinder(obj, 0.05f, 0.05f, .50f, 32, 32);
 	glPopMatrix();
-
-
-
-
 }
+void Cylinder::translate(float x, float y, float z) {
+	glTranslatef(x, y, z);
+}
+

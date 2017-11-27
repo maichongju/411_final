@@ -11,12 +11,12 @@ class Cylinder {
 public:
 	Cylinder();
 	Cylinder(float x, float y, float z);
-	Cylinder(Point *position, Color *color);
-	void draw(float x, float y, float z);
+	void draw();
+	void translate(float x, float y, float z);
+
 private:
-	Point *position;
-	//float x, y, z;
-	Cylinder *cylinder;
+	float x, y, z;
+	//Cylinder *cylinder;
 
 
 };

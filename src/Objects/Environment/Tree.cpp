@@ -5,31 +5,32 @@
  *      Author:Benjamin Ngan
  */
 #include "Tree.hpp"
-#include <iostream>
-#include <stdio.h>
+
 tree::tree() {
+	treeType = 0;
 	cone = new Cone();
 	cylinder = new Cylinder();
 	cube = new Cube();
 
-	sphere = new Sphere(new Point(0.05, 0.04, 0.2), new Color(.60, .30, 0, 0),
-			0.04);
+	sphere = new Sphere(new Point(0, 6, 0), TEXTURE_LEAF, 0.25);
 	position = new Point(0, 0, 0);
+
 }
-tree::tree(float x, float y, float z) {
+tree::tree(float x, float y, float z, int tt) {
+	treeType = tt;
 	cone = new Cone(x, z * -1, y + .4);
-	cylinder = new Cylinder();
+	cylinder = new Cylinder(x, z * -1, y);
 	cube = new Cube();
 	cube->translate(x - .15, y + .4, z - .15);
 	cube->scale(.3, .3, .3);
-	sphere = new Sphere(new Point(0.00, 0.00, 0.0), new Color(.30, .80, 0, 0),
-			0.2);
+	sphere = new Sphere(new Point(0, 0, 0), TEXTURE_LEAF, 0.25);
 	//sphere->translate(x, y - .5, z - 25);
 	sphere->translate(x, y + .4, z);
 	position = new Point(x, y, z);
 }
-void tree::draw(float x, float y, float z, int treetype) {
-	cylinder->draw(x, y, z);
+void tree::draw() {
+	int treetype = this->treeType;
+	cylinder->draw();
 	switch (treetype) {
 	case (0): {
 		cone->draw();
@@ -43,7 +44,7 @@ void tree::draw(float x, float y, float z, int treetype) {
 		break;
 	}
 	case (2): {
-		sphere->draw();
+		sphere->drawtexture();
 		//sphere->translate(x, y, z + .4);
 		break;
 	}
