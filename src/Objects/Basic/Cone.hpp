@@ -5,10 +5,10 @@
 #include "../../Color.hpp"
 #include <stdio.h>
 extern GLUquadric* QOBJ;
-class Cone: Shape {
+class Cone {
 public:
 	Cone();
-	void draw();
+	void draw(float x, float y, float z);
 private:
 	Point *position;
 };

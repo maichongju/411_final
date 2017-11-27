@@ -64,4 +64,9 @@
 
 #define CAMERA_EYE					0
 #define CAMERA_REF					1
+
+#define CONE_TREE					0
+#define CUBE_TREE					1
+#define SPHERE_TREE					2
+
 #endif /* SRC_CONSTANT_HPP_ */

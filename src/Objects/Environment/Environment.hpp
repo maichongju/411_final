@@ -5,6 +5,9 @@
 #include "Solar.hpp"
 #include "../Basic/Cylinder.hpp"
 #include "../Basic/Cone.hpp"
+
+#include "Tree.hpp"
+#include "../Constant.hpp"
 class Environment {
 public:
 	Environment();
@@ -12,8 +15,10 @@ public:
 	void reset();
 private:
 	Ground *G;
-	Cylinder *T;
-	Cone *T2;
+	tree *T;
+	tree *T2;
+	tree *T3;
+
 	Solar *solar;
 
 };
