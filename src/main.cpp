@@ -1,3 +1,9 @@
+/*
+ *	CP411 Assignment 2
+ *  Chongju Mai
+ *  maix3820@mylaurier.ca
+ */
+
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
