@@ -16,9 +16,10 @@ public:
 	void draw();
 	void drawtexture();
 	void translate(float x, float y, float z);
+	void scale(float a, float b, float c);
 
 private:
-	float x, y, z;
+	float x, y, z, a, b, c;
 	GLUquadricObj *obj;
 	//Cylinder *cylinder;
 

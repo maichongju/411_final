@@ -44,7 +44,7 @@ void idleFunc(void) {
 	newTime = clock();
 	oldTime = newTime;
 	glutPostRedisplay();
-	printf("%f\n", SOLAR_ROTATE);
+	//printf("%f\n", SOLAR_ROTATE);
 }
 
 /**
