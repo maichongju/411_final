@@ -48,14 +48,35 @@ void Cylinder::draw() {
 void Cylinder::drawtexture() {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, textureID);
+	/////////
+
+	//////////
 	glPushMatrix();
 	glRotatef(-90.0f, 1.0f, 0.0f, 0.0f);
 	translate(this->x, this->y, this->z);
 	glColor3f(.60, .30, 0);
+	glScaled(.3, .3, .3);
 
 	//glBegin(GL_POLYGON);
 	obj = gluNewQuadric();
 	gluCylinder(obj, 0.05f, 0.05f, .50f, 32, 32);
+
+
+	glBegin( GL_QUAD_STRIP);
+	float PI = 3.141592654f;
+	float nslice = 32;
+	float t = 0.;
+	float dt = 2 * PI / nslice;
+	for (int j = 0; j <= nslice; ++j) {
+		glTexCoord2f(t / (2 * PI), 1.);
+		glVertex3f(cos(t), 2., -sin(t));
+		glTexCoord2f(t / (2 * PI), 0.);
+		glVertex3f(cos(t), 0., -sin(t));
+		t = t + dt;
+	}
+	glEnd();
+
+
 	glPopMatrix();
 	glDisable(GL_TEXTURE_2D);
 }
