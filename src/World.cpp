@@ -6,7 +6,7 @@
 
 World::World() {
 	traffic = new Traffic();
-	//b = new Buildings();
+	b = new Buildings();
 	Env = new Environment();
 }
 
