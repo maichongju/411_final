@@ -6,7 +6,7 @@
  */
 #include "Tree.hpp"
 #include <iostream>
-tree::tree() {
+Tree::Tree() {
 	treeType = 0;
 	cone = new Cone();
 	cylinder = new Cylinder();
@@ -16,7 +16,7 @@ tree::tree() {
 	position = new Point(0, 0, 0);
 
 }
-tree::tree(float x, float y, float z, int tt) {
+Tree::Tree(float x, float y, float z, int tt) {
 	treeType = tt;
 	cone = new Cone(x, z * -1, y + .3);
 	cylinder = new Cylinder(x, z * -1, y, TEXTURE_TREE_BARK);
@@ -30,7 +30,7 @@ tree::tree(float x, float y, float z, int tt) {
 	sphere->translate(x, y + .4, z);
 	position = new Point(x, y, z);
 }
-void tree::draw() {
+void Tree::draw() {
 	int treetype = this->treeType;
 	cylinder->drawtexture();
 	printf("%d\n", cylinder->textureID);
