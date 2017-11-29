@@ -71,8 +71,8 @@ void Cylinder::drawtexture() {
 	float dt = 2 * PI / nslice;
 	for (int j = 0; j <= nslice; ++j) {
 		glTexCoord2f(t / (2 * PI), 1.);
-		glVertex3f(cos(t), 2., -sin(t));
-		glTexCoord2f(t / (2 * PI), 0.);
+		glVertex3f(0, 2.5, 0);
+		glTexCoord2f(t / (2.5 * PI), 0.);
 		glVertex3f(cos(t), 0., -sin(t));
 		t = t + dt;
 	}
