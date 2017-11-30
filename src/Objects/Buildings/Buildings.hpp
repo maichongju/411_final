@@ -5,14 +5,30 @@
 
 extern float GlobalTime;
 
+class BuildingNode {
+public:
+	BuildingNode(Building *b, int front, int right, int rear, int left);
+	Building *b;
+	BuildingNode *next;
+};
+
+class BuildingList {
+public:
+	BuildingNode *head;
+	BuildingList();
+	int size;
+	void draw();
+	void append(Building *b, int front, int right, int rear, int left);
+};
+
 class Buildings {
 public:
 	Buildings();
 	void draw();
 private:
-	Building *b, *b2;
+	BuildingList *l;
 };
 
 
 
-#endif /* SRC_OBJECTS_BUILDINGS_BUILDINGS_HPP_ */
+#endif

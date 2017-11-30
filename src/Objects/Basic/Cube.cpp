@@ -103,6 +103,12 @@ Cube::Cube() {
 	faceColor[5][1] = 1.0;
 	faceColor[5][2] = 1.0;
 
+	facetexture[0] = -1;
+	facetexture[1] = -1;
+	facetexture[2] = -1;
+	facetexture[3] = -1;
+	facetexture[4] = -1;
+	facetexture[5] = -1;
 }
 
 /**
@@ -147,23 +153,39 @@ void Cube::scale(float x, float y, float z) {
  * 			the
  */
 void Cube::draw_face(int i) {
-	glColor3f(faceColor[i][0], faceColor[i][1], faceColor[i][2]);
-	glBegin(GL_POLYGON);
-	glVertex3fv(&vertex[face[i][0]][0]);
-	glVertex3fv(&vertex[face[i][1]][0]);
-	glVertex3fv(&vertex[face[i][2]][0]);
-	glVertex3fv(&vertex[face[i][3]][0]);
-	glEnd();
+	if (facetexture[i] == -1) {
+		glColor3f(faceColor[i][0], faceColor[i][1], faceColor[i][2]);
+		glBegin(GL_POLYGON);
+		glVertex3fv(&vertex[face[i][0]][0]);
+		glVertex3fv(&vertex[face[i][1]][0]);
+		glVertex3fv(&vertex[face[i][2]][0]);
+		glVertex3fv(&vertex[face[i][3]][0]);
+		glEnd();
 
-	glColor3f(0, 0, 0);
-	glLineWidth(1);
-	glBegin(GL_LINE_LOOP);
-	glVertex3fv(&vertex[face[i][0]][0]);
-	glVertex3fv(&vertex[face[i][1]][0]);
-	glVertex3fv(&vertex[face[i][2]][0]);
-	glVertex3fv(&vertex[face[i][3]][0]);
-	glEnd();
-
+		glColor3f(0, 0, 0);
+		glLineWidth(1);
+		glBegin(GL_LINE_LOOP);
+		glVertex3fv(&vertex[face[i][0]][0]);
+		glVertex3fv(&vertex[face[i][1]][0]);
+		glVertex3fv(&vertex[face[i][2]][0]);
+		glVertex3fv(&vertex[face[i][3]][0]);
+		glEnd();
+	} else {
+		glEnable(GL_TEXTURE_2D);
+		glColor3f(1, 1, 1);
+		glBindTexture(GL_TEXTURE_2D, facetexture[i]);
+		glBegin(GL_QUADS);
+		glTexCoord2f(0.0, 0.0);
+		glVertex3fv(&vertex[face[i][0]][0]);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3fv(&vertex[face[i][1]][0]);
+		glTexCoord2f(1.0, 1.0);
+		glVertex3fv(&vertex[face[i][2]][0]);
+		glTexCoord2f(0.0, 1.0);
+		glVertex3fv(&vertex[face[i][3]][0]);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);
+	}
 
 }
 
@@ -196,4 +218,8 @@ void Cube::changeFaceColor(int i, float r, float g, float b) {
 	faceColor[i][0] = r;
 	faceColor[i][1] = g;
 	faceColor[i][2] = b;
+}
+
+void Cube::setTextureID(int i, int ID) {
+	facetexture[i] = ID;
 }

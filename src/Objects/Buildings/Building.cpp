@@ -81,11 +81,13 @@ Building::Building() {
 	position = new Point(0, 0, 0);
 	outColor = new Color(0.5, 0.5, 0.5, 1);
 	topColor = new Color(1, 1, 1, 1);
+	this->cube->translate(0, 0.002, 0);
 	this->x = this->y = this->z = 1;
 	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
 	setBuildingWindows(1, 1, 1, 1);
+	this->TextureID = 0;
 }
 /**
  * Constructor
@@ -95,7 +97,7 @@ Building::Building() {
  */
 Building::Building(float x, float y, float z) {
 	cube = new Cube();
-	cube->translate(x, y, z);
+	cube->translate(x, y + 0.002, z);
 	position = new Point(x, y, z);
 	outColor = new Color(0.5, 0.5, 0.5, 1);
 	topColor = new Color(1, 1, 1, 1);
@@ -103,6 +105,7 @@ Building::Building(float x, float y, float z) {
 	setBuildingColor();
 	setBuildingShape();
 	windows = 0;
+	this->TextureID = 0;
 
 }
 
@@ -121,7 +124,7 @@ Building::Building(float x, float y, float z) {
  */
 Building::Building(float x, float y, float z, Color outcolor, Color topcolor) {
 	cube = new Cube();
-	cube->translate(x, y, z);
+	cube->translate(x, y + 0.002, z);
 	position = new Point(x, y, z);
 	outColor = new Color(outcolor.red, outcolor.green, outcolor.blue,
 			outcolor.alpha);
@@ -260,4 +263,11 @@ void Building::ChangeColor(Color *out, Color *top) {
 	this->outColor->set(out->red, out->green, out->blue, out->alpha);
 	this->topColor->set(top->red, top->green, top->blue, top->alpha);
 	setBuildingColor();
+}
+
+void Building::setwalltexture(int t) {
+	int i;
+	for (i = 0; i < 4; i++) {
+		this->cube->setTextureID(i, t);
+	}
 }

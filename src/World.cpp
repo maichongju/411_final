@@ -21,7 +21,7 @@ void World::settime(int time) {
 void World::draw_world() {
 
 	traffic->draw();
-	//b->draw();
+	b->draw();
 	Env->draw();
 	this->draw(); // For debug
 

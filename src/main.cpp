@@ -1,9 +1,3 @@
-/*
- *	CP411 Assignment 2
- *  Chongju Mai
- *  maix3820@mylaurier.ca
- */
-
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -51,15 +45,16 @@ void idleFunc(void) {
  * Function will set up all the texture need to be use
  */
 void setTexture(){
-	texture[TEXTURE_SUN].readBMPFile("src/Img/sun.bmp");
+	texture[TEXTURE_SUN].readBMPFile("Img/sun.bmp");
 	texture[TEXTURE_SUN].setTexture(TEXTURE_SUN);
-	texture[TEXTURE_MOON].readBMPFile("src/Img/moon.bmp");
+	texture[TEXTURE_MOON].readBMPFile("Img/moon.bmp");
 	texture[TEXTURE_MOON].setTexture(TEXTURE_MOON);
-	texture[TEXTURE_TREE_BARK].readBMPFile("src/Img/tree_bark.bmp");
+	texture[TEXTURE_TREE_BARK].readBMPFile("Img/tree_bark.bmp");
 	texture[TEXTURE_TREE_BARK].setTexture(TEXTURE_TREE_BARK);
-	texture[TEXTURE_LEAF].readBMPFile("src/Img/tree_leaf.bmp");
+	texture[TEXTURE_LEAF].readBMPFile("Img/tree_leaf.bmp");
 	texture[TEXTURE_LEAF].setTexture(TEXTURE_LEAF);
 
+	texture[TEXTURE_BUILDING1].readBMPFile("Img/Building1.bmp");
 }
 
 /**

@@ -6,6 +6,7 @@
 #include "../../Color.hpp"
 #include "../Basic/Point.hpp"
 
+
 #include "../../Constant.hpp"
 #include <stdio.h>
 
@@ -32,7 +33,10 @@ public:
 	void setBuildingWindows(int front, int right, int rear, int left);
 	void translate(float x, float y, float z);
 	void ChangeColor(Color *out, Color *top);
+	void setwalltexture(int t);
+
 private:
+	int TextureID;
 	int windows;
 	Point *position;
 	float x, y, z;

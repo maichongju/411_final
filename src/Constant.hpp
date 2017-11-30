@@ -19,6 +19,11 @@
 #define TEXTURE_LEAF				2
 #define TEXTURE_TREE_BARK			3
 
+#define TEXTURE_BUILDING1			4
+#define TEXTURE_BUILDING2			5
+#define TEXTURE_BUIDLING3			6
+#define TEXTURE_BUILDING4			7
+
 #define BUILDING_WINDOW_FRONT		0
 #define BUILDING_WINDOW_RIGHT		1
 #define BUILDING_WINDOW_REAR		2
@@ -71,6 +76,8 @@
 #define TREE_CUBE					1
 #define TREE_SPHERE					2
 #define TREE_CONE_MULTIPLE			3
+
+
 
 #define SOLAR_ROTATE				360/(24/GLOBAL_TIME)
 
