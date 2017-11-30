@@ -8,6 +8,20 @@
 
 #include "Tree.hpp"
 #include "../../Constant.hpp"
+class TreeNode {
+public:
+	Tree *t;
+	TreeNode *next;
+};
+class TreeNodeList {
+public:
+	TreeNodeList();
+	void draw();
+	void append(TreeNode *t);
+	TreeNode *head;
+	int size;
+};
+
 class Environment {
 public:
 	Environment();
