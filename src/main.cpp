@@ -1,3 +1,5 @@
+#include <windows.h>
+#include <mmsystem.h>
 #include <GL/glut.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -44,7 +46,7 @@ void idleFunc(void) {
 /**
  * Function will set up all the texture need to be use
  */
-void setTexture(){
+void setTexture() {
 	texture[TEXTURE_SUN].readBMPFile("Img/sun.bmp");
 	texture[TEXTURE_SUN].setTexture(TEXTURE_SUN);
 	texture[TEXTURE_MOON].readBMPFile("Img/moon.bmp");
@@ -271,8 +273,8 @@ void menu() {
 	//glutAddMenuEntry(" Resume", 3);
 
 	GLint cameraMenu = glutCreateMenu(cameramenu);
-	glutAddMenuEntry(" Eye",CAMERA_EYE);
-	glutAddMenuEntry(" Look at position",CAMERA_REF);
+	glutAddMenuEntry(" Eye", CAMERA_EYE);
+	glutAddMenuEntry(" Look at position", CAMERA_REF);
 
 	GLint deleteCarMenu = glutCreateMenu(deletecarmenu);
 	glutAddMenuEntry(" East", 0);
@@ -313,6 +315,8 @@ void menu() {
 }
 
 int main(int argc, char** argv) {
+	PlaySound((LPCSTR) "Background.wav", NULL,
+			SND_FILENAME | SND_ASYNC | SND_LOOP );
 	setvbuf(stdout, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
