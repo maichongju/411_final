@@ -62,7 +62,7 @@
 #define CAMERA_MOVE_FORWARD			0
 #define CAMERA_MOVE_BACKWARD		1
 
-#define CAMERA_TURN_SPEED			0.5
+#define CAMERA_TURN_SPEED			1
 #define CAMERA_TURN_LEFT			-1
 #define CAMERA_TURN_RIGHT			1
 

@@ -112,11 +112,11 @@ void display(void) {
 	myWorld.draw_world(); // draw all objects in the world
 
 //******************************************************************
-	glColor3f(1, 1, 1);
-	glPointSize(25);
-	glBegin(GL_POINTS);
-	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
-	glEnd();
+//	glColor3f(1, 1, 1);
+//	glPointSize(25);
+//	glBegin(GL_POINTS);
+//	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
+//	glEnd();
 
 //******************************************************************
 	glFlush();
@@ -132,6 +132,27 @@ void mouseAction(int button, int state, int x, int y) {
 		moving = 0;
 	}
 }
+static int X = -1, Y = -1;
+void passivemouseFunc(int x, int y) {
+	if (X != -1) {
+		int tx = X - x;
+		int ty = Y - y;
+		if (tx > 0) {
+			myCamera.turn(CAMERA_TURN_LEFT);
+		} else if (tx < 0) {
+			myCamera.turn(CAMERA_TURN_RIGHT);
+		}
+		if (ty > 0) {
+			myCamera.refupdown(CAMERA_UP);
+		} else if (ty < 0) {
+			myCamera.refupdown(CAMERA_DOWN);
+		}
+
+	}
+	X = x;
+	Y = y;
+	//printf("%d,%d\n", x, y);
+}
 
 /**
  * Function for mouse motion
@@ -139,7 +160,7 @@ void mouseAction(int button, int state, int x, int y) {
  * @param y
  */
 void mouseMotion(GLint x, GLint y) {
-//
+
 	if (moving) {
 		if (mode == 3) {
 			switch (type) {
@@ -193,6 +214,10 @@ void keyboardFunc(unsigned char key, int x, int y) {
 		myCamera.turn(CAMERA_TURN_RIGHT);
 	} else if (key == 'a' || key == 'A') {
 		myCamera.turn(CAMERA_TURN_LEFT);
+	} else if (key == 'z'|| key == 'Z'){
+		myCamera.eyeupdown(CAMERA_UP);
+	} else if (key == 'x'|| key == 'X'){
+		myCamera.eyeupdown(CAMERA_DOWN);
 	}
 	glutPostRedisplay();
 }
@@ -204,11 +229,11 @@ void keyboardFunc(unsigned char key, int x, int y) {
  * @param y
  */
 void specialKeyFunc(int key, int x, int y) {
-	if (key == GLUT_KEY_UP) {
-		myCamera.updown(CAMERA_UP);
-	} else if (key == GLUT_KEY_DOWN) {
-		myCamera.updown(CAMERA_DOWN);
-	}
+//	if (key == GLUT_KEY_UP) {
+//		myCamera.eyeupdown(CAMERA_UP);
+//	} else if (key == GLUT_KEY_DOWN) {
+//		myCamera.eyeupdown(CAMERA_DOWN);
+//	}
 	glutPostRedisplay();
 
 }
@@ -316,7 +341,7 @@ void menu() {
 
 int main(int argc, char** argv) {
 	PlaySound((LPCSTR) "Background.wav", NULL,
-			SND_FILENAME | SND_ASYNC | SND_LOOP );
+	SND_FILENAME | SND_ASYNC | SND_LOOP);
 	setvbuf(stdout, NULL, _IONBF, 0);
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
@@ -333,6 +358,7 @@ int main(int argc, char** argv) {
 	glutSpecialFunc(specialKeyFunc);
 	glutKeyboardFunc(keyboardFunc);
 	glutIdleFunc(idleFunc);
+	glutPassiveMotionFunc(passivemouseFunc);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 	glutMainLoop();
 

@@ -33,8 +33,8 @@ Tree::Tree(float x, float y, float z, int tt) {
 void Tree::draw() {
 	int treetype = this->treeType;
 	cylinder->drawtexture();
-	printf("%d\n", cylinder->textureID);
-	printf("*");
+//	printf("%d\n", cylinder->textureID);
+//	printf("*");
 	switch (treetype) {
 	case (0): {
 		cone->draw();

@@ -25,8 +25,8 @@ class Camera {
 	void setViewVolume(float viewAngle, float aspect, float Near, float Far);
 	void move(int direction);
 	void turn (int direction);
-	void updown(int direction);
-
+	void eyeupdown(int direction);
+	void refupdown(int direction);
 	void setProjectionMatrix();
 
 

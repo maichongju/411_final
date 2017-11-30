@@ -7,7 +7,7 @@ Camera::Camera() {
 	ref.x = 0.0, ref.y = 0.0, ref.z = 0.0;
 	viewup.x = 0.0, viewup.y = 1.0, viewup.z = 0.0;
 	aspect = 1.0, viewAngle = 40.0, nearDist = 1.0, farDist = 15.0, W = 0, H = 0;\
-	Object = CAMERA_EYE;
+	Object = CAMERA_REF;
 }
 
 void Camera::setDefaultCamera(void) { // make default camera
@@ -15,6 +15,7 @@ void Camera::setDefaultCamera(void) { // make default camera
 	ref.x = 0.0, ref.y = 0.0, ref.z = 0.0;
 	viewup.x = 0.0, viewup.y = 1.0, viewup.z = 0.0;
 	aspect = 1.0, viewAngle = 40.0, nearDist = 1.0, farDist = 15.0;
+	Object = CAMERA_REF;
 }
 
 void Camera::set(Point Eye, Point Look, Vector Up) {
@@ -54,8 +55,8 @@ void Camera::reftranslate(GLfloat tx, GLfloat ty, GLfloat tz) {
 }
 
 void Camera::move(int direction) {
-	printf("eye:%f,%f,%f\n", eye.x, eye.y, eye.z);
-	printf("ref:%f,%f,%f\n\n", ref.x, ref.y, ref.z);
+//	printf("eye:%f,%f,%f\n", eye.x, eye.y, eye.z);
+//	printf("ref:%f,%f,%f\n\n", ref.x, ref.y, ref.z);
 	GLfloat x1 = eye.x;
 	GLfloat y1 = eye.z;
 	GLfloat x2 = ref.x;
@@ -106,15 +107,18 @@ void Camera::move(int direction) {
 
 }
 
-void Camera::updown(int direction) {
-	if (this->Object == CAMERA_EYE) {
-		eye.y += direction * CAMERA_MOVE_SPEED;
-	} else {
-		ref.y += direction * CAMERA_MOVE_SPEED;
-	}
+void Camera::eyeupdown(int direction) {
+
+	eye.y += direction * CAMERA_MOVE_SPEED;
+
 	if (eye.y < 0.5) {
 		eye.y = 0.5;
 	}
+
+}
+
+void Camera::refupdown(int direction) {
+	ref.y += direction * CAMERA_MOVE_SPEED;
 	if (ref.y < 0) {
 		ref.y = 0;
 	}
