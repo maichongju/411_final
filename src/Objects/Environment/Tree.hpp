@@ -19,10 +19,11 @@
 #include "../../Constant.hpp"
 #include <stdio.h>
 extern RGBpixmap texture[];
-class tree {
+
+class Tree {
 public:
-	tree();
-	tree(float x, float y, float z, int tt);
+	Tree();
+	Tree(float x, float y, float z, int tt);
 	void draw();
 private:
 	Cone *cone;

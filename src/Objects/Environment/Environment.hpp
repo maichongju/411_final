@@ -16,9 +16,9 @@ public:
 	void setsolar(int time);
 private:
 	Ground *G;
-	tree *T;
-	tree *T2;
-	tree *T3;
+	Tree *T;
+	Tree *T2;
+	Tree *T3;
 
 	Solar *solar;
 
