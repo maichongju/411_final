@@ -62,7 +62,6 @@ void Cylinder::drawtexture() {
 	//glScaled(.5, .5, .5);
 
 	//glBegin(GL_POLYGON);
-	obj = gluNewQuadric();
 	//gluCylinder(obj, 0.05f, 0.05f, .50f, 32, 32);
 	glBegin( GL_QUAD_STRIP);
 	float PI = 3.141592654f;

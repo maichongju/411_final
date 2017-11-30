@@ -41,10 +41,11 @@ void tree::draw() {
 		break;
 	}
 	case (1): {
+		//for (int i = 0; i <= 6; i++) {
+		//	cube->changeFaceColor(i, .30, .80, 0);
+		//}
 		cube->draw();
-		for (int i = 0; i <= 6; i++) {
-			cube->changeFaceColor(i, .30, .80, 0);
-		}
+
 		break;
 	}
 	case (2): {

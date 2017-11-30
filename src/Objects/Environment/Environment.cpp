@@ -10,9 +10,9 @@ Environment::Environment() {
 
 void Environment::draw() {
 	G->draw();
-	//T->draw();
+	T->draw();
 	T2->draw();
-	//T3->draw();
+	T3->draw();
 	solar->draw();
 }
 
