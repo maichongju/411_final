@@ -42,7 +42,7 @@ void BuildingList::draw() {
 Buildings::Buildings() {
 	l = new BuildingList();
 	Building *n = new Building(0.41, 0, 0.41);
-	n->setwalltexture(0);
+	n->setwalltexture(TEXTURE_BUILDING1);
 	l->append(n, 6, 2, 6, 2);
 
 //	b = new Building(0.4, 0, 0.4);

@@ -54,7 +54,8 @@ void setTexture(){
 	texture[TEXTURE_LEAF].readBMPFile("Img/tree_leaf.bmp");
 	texture[TEXTURE_LEAF].setTexture(TEXTURE_LEAF);
 
-	texture[TEXTURE_BUILDING1].readBMPFile("Img/Building1.bmp");
+	texture[TEXTURE_BUILDING1].readBMPFile("Img/Building5.bmp");
+	texture[TEXTURE_BUILDING1].setTexture(TEXTURE_BUILDING1);
 }
 
 /**
