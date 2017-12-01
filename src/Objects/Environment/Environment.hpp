@@ -5,6 +5,7 @@
 #include "Solar.hpp"
 #include "../Basic/Cylinder.hpp"
 #include "../Basic/Cone.hpp"
+#include "../Basic/Pyramid.hpp"
 
 #include "Tree.hpp"
 #include "../../Constant.hpp"
@@ -29,6 +30,7 @@ public:
 	void reset();
 	void setsolar(int time);
 private:
+	Pyramid *p;
 	Ground *G;
 	Tree *T;
 	Tree *T2;

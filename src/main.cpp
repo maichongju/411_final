@@ -117,7 +117,10 @@ void display(void) {
 //	glBegin(GL_POINTS);
 //	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
 //	glEnd();
-
+	//glTexCoord2d(0.0,1.0);
+	//glVertex2d(0.0,1.0);
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
 //******************************************************************
 	glFlush();
 	glutSwapBuffers();
@@ -214,9 +217,9 @@ void keyboardFunc(unsigned char key, int x, int y) {
 		myCamera.turn(CAMERA_TURN_RIGHT);
 	} else if (key == 'a' || key == 'A') {
 		myCamera.turn(CAMERA_TURN_LEFT);
-	} else if (key == 'z'|| key == 'Z'){
+	} else if (key == 'z' || key == 'Z') {
 		myCamera.eyeupdown(CAMERA_UP);
-	} else if (key == 'x'|| key == 'X'){
+	} else if (key == 'x' || key == 'X') {
 		myCamera.eyeupdown(CAMERA_DOWN);
 	}
 	glutPostRedisplay();

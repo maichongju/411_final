@@ -12,8 +12,8 @@
  *   (1)  ----------- (2)
  */
 
-
 Pyramid::Pyramid() {
+	TextureID = 0;
 	vertex[0][0] = 0;
 	vertex[0][1] = 0;
 	vertex[0][2] = 0;
@@ -34,9 +34,24 @@ Pyramid::Pyramid() {
 	vertex[4][1] = 0.5;
 	vertex[4][2] = 0.5;
 
+	faceColor[0][0] = 1;
+	faceColor[0][1] = 0;
+	faceColor[0][2] = 0;
+
+	faceColor[1][0] = 0;
+	faceColor[1][1] = 1;
+	faceColor[1][2] = 0;
+
+	faceColor[2][0] = 0;
+	faceColor[2][1] = 0;
+	faceColor[2][2] = 1;
+
+	faceColor[3][0] = 1;
+	faceColor[3][1] = 1;
+	faceColor[3][2] = 0;
+	;
 	this->setface();
 }
-
 
 void Pyramid::setface() {
 
@@ -59,13 +74,13 @@ void Pyramid::setface() {
 }
 
 void Pyramid::drawface(int i) {
-	glBegin(GL_LINE_LOOP);
+	glColor3f(faceColor[i][0], faceColor[i][1], faceColor[i][2]);
+	glBegin(GL_POLYGON);
 	glVertex3fv(&vertex[face[i][0]][0]);
 	glVertex3fv(&vertex[face[i][1]][0]);
 	glVertex3fv(&vertex[face[i][2]][0]);
 	glEnd();
 }
-
 
 void Pyramid::draw() {
 	glPushMatrix();
@@ -74,11 +89,57 @@ void Pyramid::draw() {
 	for (int i = 0; i < 4; i++) {
 		drawface(i);
 	}
-	
+
 	glPopMatrix();
 
 }
 
+void Pyramid::drawtexture() {
+	glEnable(GL_TEXTURE_2D);
+	glPushMatrix();
+	this->ctm_multiply();
+	glScalef(s, s, s);
+	for (int i = 0; i < 4; i++) {
+		glBindTexture(GL_TEXTURE_2D, TextureID);
+		glColor3f(1, 1, 1);
+		glBegin(GL_POLYGON);
+		glTexCoord2f(0.0, 0.0);
+		glVertex3fv(&vertex[face[i][0]][0]);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3fv(&vertex[face[i][1]][0]);
+		glTexCoord2f(0.5, 0.5);
+		glVertex3fv(&vertex[face[i][2]][0]);
+		glEnd();
+	}
+	glPopMatrix();
+	glDisable(GL_TEXTURE_2D);
+}
 
+void Pyramid::drawtexture(int TextureID) {
+	glEnable(GL_TEXTURE_2D);
+		glPushMatrix();
+		this->ctm_multiply();
+		glScalef(s, s, s);
+		for (int i = 0; i < 4; i++) {
+			glBindTexture(GL_TEXTURE_2D, TextureID);
+			glColor3f(1, 1, 1);
+			glBegin(GL_POLYGON);
+			glTexCoord2f(0.0, 0.0);
+			glVertex3fv(&vertex[face[i][0]][0]);
+			glTexCoord2f(1.0, 0.0);
+			glVertex3fv(&vertex[face[i][1]][0]);
+			glTexCoord2f(0.5, 0.5);
+			glVertex3fv(&vertex[face[i][2]][0]);
+			glEnd();
+		}
+		glPopMatrix();
+		glDisable(GL_TEXTURE_2D);
+}
 
+void Pyramid::scale(float x, float y, float z) {
 
+}
+
+void Pyramid::setTextureID(int TextureID) {
+	this->TextureID = TextureID;
+}
