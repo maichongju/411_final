@@ -92,18 +92,35 @@ Buildings::Buildings() {
 	l->append(n3e, 6, 2, 6, 2);
 	/////
 	Building *nn = new Building(-0.9, 0, 0.41);
-	Building *nn2 = new Building(-2, 0, 0.41);
+	Building *nn2 = new Building(-2, 0, 0.41 + .4);
+	Building *nn2a = new Building(-2, 0, 0.41 + 1.2);
+	Building *nn2b = new Building(-2, 0, 0.41 + 2);
+	Building *nn2c = new Building(-3, 0, 0.41 + .4);
+	Building *nn2d = new Building(-3, 0, 0.41 + 1.2);
+	Building *nn2e = new Building(-3, 0, 0.41 + 2);
 	Building *nn3 = new Building(-.9, 0, 1.2);
 	Building *nn4 = new Building(-.9, 0, 2);
+
 	nn->setwalltexture(TEXTURE_BUILDING1);
 	nn2->setwalltexture(TEXTURE_BUILDING2);
-	nn3->setwalltexture(TEXTURE_BUILDING2);
-	nn4->setwalltexture(TEXTURE_BUILDING2);
+	nn3->setwalltexture(TEXTURE_BUILDING3);
+	nn4->setwalltexture(TEXTURE_BUILDING4);
+	nn2a->setwalltexture(TEXTURE_BUILDING3);
+	nn2b->setwalltexture(TEXTURE_BUILDING4);
+	nn2c->setwalltexture(TEXTURE_BUILDING4);
+	nn2d->setwalltexture(TEXTURE_BUILDING3);
+	nn2e->setwalltexture(TEXTURE_BUILDING4);
+
 
 	l->append(nn, 6, 2, 6, 2);
 	l->append(nn2, 6, 2, 6, 2);
 	l->append(nn3, 6, 2, 6, 2);
 	l->append(nn4, 6, 2, 6, 2);
+	l->append(nn2a, 6, 2, 6, 2);
+	l->append(nn2b, 6, 2, 6, 2);
+	l->append(nn2c, 6, 2, 6, 2);
+	l->append(nn2d, 6, 2, 6, 2);
+	l->append(nn2e, 6, 2, 6, 2);
 //	b = new Building(0.4, 0, 0.4);
 //	b->setBuildingWindows(6, 2, 6, 2);
 //	b2 = new Building(0.5, 0, 0.5);
