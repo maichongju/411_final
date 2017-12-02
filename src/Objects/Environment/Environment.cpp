@@ -82,7 +82,27 @@ Environment::Environment() {
 	l->append(n9e);
 	l->append(n9f);
 	l->append(n9g);
-
+	////
+	Tree *nn = new Tree(-1, 0, 1, TREE_CONE);
+	Tree *nn2 = new Tree(-.6, 0, 1, TREE_CONE);
+	Tree *nn3 = new Tree(-.8, 0, .8, TREE_CONE);
+	Tree *nna = new Tree(-1, 0, 1 + .8, TREE_CONE);
+	Tree *nn2a = new Tree(-.6, 0, 1 + .8, TREE_CONE);
+	Tree *nn3a = new Tree(-.8, 0, .8 + .8, TREE_CONE);
+	Tree *nnb = new Tree(-1, 0, 1 + 1.6, TREE_CONE);
+	Tree *nn2b = new Tree(-.6, 0, 1 + 1.6, TREE_CONE);
+	Tree *nn3b = new Tree(-.8, 0, .8 + 1.6, TREE_CONE);
+	Tree *nnc = new Tree(-1.25, 0, .5, TREE_CONE);
+	l->append(nn);
+	l->append(nn2);
+	l->append(nn3);
+	l->append(nna);
+	l->append(nn2a);
+	l->append(nn3a);
+	l->append(nnb);
+	l->append(nn2b);
+	l->append(nn3b);
+	l->append(nnc);
 	//T = new Tree(0, 0.0, 0, TREE_CONE);
 	//T2 = new Tree(1.0, 0.0, -2.0, TREE_SPHERE);
 	//T3 = new Tree(2.0, 0.0, -2.0, TREE_CUBE);
