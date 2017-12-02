@@ -18,16 +18,19 @@ Tree::Tree() {
 }
 Tree::Tree(float x, float y, float z, int tt) {
 	treeType = tt;
-	cone = new Cone(x, z * -1, y + .3);
+	cone = new Cone(x, z * -1, y + .3, TEXTURE_LEAF);
+	cone->translate(x, y + .3, z);
+	cone->scale(.1, .2, .1);
 	cylinder = new Cylinder(x, z * -1, y, TEXTURE_TREE_BARK);
-	cylinder->translate(0, 0, 0);
+	cylinder->translate(x, y, z);
 	cylinder->scale(.05, .2, .05);
 	cube = new Cube();
 	cube->translate(x - .15, y + .4, z - .15);
 	cube->scale(.3, .3, .3);
-	sphere = new Sphere(new Point(0, 0, 0), TEXTURE_LEAF, 0.25);
+	sphere = new Sphere(new Point(0, 0, 0), TEXTURE_LEAF, 0.20);
 	//sphere->translate(x, y - .5, z - 25);
 	sphere->translate(x, y + .4, z);
+	sphere->rotate_mc(1, 0, 0, 90);
 	position = new Point(x, y, z);
 }
 void Tree::draw() {
@@ -36,11 +39,11 @@ void Tree::draw() {
 //	printf("%d\n", cylinder->textureID);
 //	printf("*");
 	switch (treetype) {
-	case (0): {
-		cone->draw();
+	case (TREE_CONE): {
+		cone->drawtexture();
 		break;
 	}
-	case (1): {
+	case (TREE_CUBE): {
 		//for (int i = 0; i <= 6; i++) {
 		//	cube->changeFaceColor(i, .30, .80, 0);
 		//}
@@ -48,7 +51,7 @@ void Tree::draw() {
 
 		break;
 	}
-	case (2): {
+	case (TREE_SPHERE): {
 		sphere->drawtexture();
 		//sphere->translate(x, y, z + .4);
 		break;

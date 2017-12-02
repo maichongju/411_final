@@ -7,14 +7,20 @@
 extern GLUquadric* QOBJ;
 class Cone {
 public:
+	int textureID;
 	Cone();
 	Cone(float x, float y, float z);
+	Cone(float x, float y, float z, int TextureID);
 	void draw();
+	void drawtexture();
 	void translate(float x, float y, float z);
+	void scale(float a, float b, float c);
 
 private:
 	//Point *position;
 	float x, y, z;
+	float a, b, c;
+	GLUquadricObj *obj;
 };
 
 
