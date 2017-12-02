@@ -11,8 +11,8 @@
 
 #define GLOBAL_TIME					0.001
 
-#define MAP_SIZE_WIDTH				5
-#define MAP_SIZE_HEIGHT				5
+#define MAP_SIZE_WIDTH				3
+#define MAP_SIZE_HEIGHT				3
 
 #define TEXTURE_SUN					0
 #define TEXTURE_MOON				1
@@ -23,6 +23,8 @@
 #define TEXTURE_BUILDING2			5
 #define TEXTURE_BUIDLING3			6
 #define TEXTURE_BUILDING4			7
+
+#define TEXTURE_PYRAMID				8
 
 #define BUILDING_WINDOW_FRONT		0
 #define BUILDING_WINDOW_RIGHT		1

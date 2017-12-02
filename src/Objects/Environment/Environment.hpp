@@ -5,7 +5,7 @@
 #include "Solar.hpp"
 #include "../Basic/Cylinder.hpp"
 #include "../Basic/Cone.hpp"
-#include "../Basic/Pyramid.hpp"
+#include "Mountain.hpp"
 
 #include "Tree.hpp"
 #include "../../Constant.hpp"
@@ -30,7 +30,7 @@ public:
 	void reset();
 	void setsolar(int time);
 private:
-	Pyramid *p;
+	Mountain *mountain;
 	Ground *G;
 	Tree *T;
 	Tree *T2;

@@ -116,27 +116,48 @@ void Pyramid::drawtexture() {
 }
 
 void Pyramid::drawtexture(int TextureID) {
-	glEnable(GL_TEXTURE_2D);
-		glPushMatrix();
-		this->ctm_multiply();
-		glScalef(s, s, s);
-		for (int i = 0; i < 4; i++) {
-			glBindTexture(GL_TEXTURE_2D, TextureID);
-			glColor3f(1, 1, 1);
-			glBegin(GL_POLYGON);
-			glTexCoord2f(0.0, 0.0);
-			glVertex3fv(&vertex[face[i][0]][0]);
-			glTexCoord2f(1.0, 0.0);
-			glVertex3fv(&vertex[face[i][1]][0]);
-			glTexCoord2f(0.5, 0.5);
-			glVertex3fv(&vertex[face[i][2]][0]);
-			glEnd();
-		}
-		glPopMatrix();
+
+	glPushMatrix();
+	this->ctm_multiply();
+	glScalef(s, s, s);
+	for (int i = 0; i < 4; i++) {
+		glEnable(GL_TEXTURE_2D);
+		glBindTexture(GL_TEXTURE_2D, TextureID);
+		glColor3f(1, 1, 1);
+		glBegin(GL_POLYGON);
+		glTexCoord2f(0.0, 0.0);
+		glVertex3fv(&vertex[face[i][0]][0]);
+		glTexCoord2f(1.0, 0.0);
+		glVertex3fv(&vertex[face[i][1]][0]);
+		glTexCoord2f(0.5, 0.5);
+		glVertex3fv(&vertex[face[i][2]][0]);
+		glEnd();
 		glDisable(GL_TEXTURE_2D);
+	}
+	glPopMatrix();
+
 }
 
 void Pyramid::scale(float x, float y, float z) {
+
+	if (x <= 0) {
+		x = 1;
+	}
+	if (y <= 0) {
+		y = 1;
+	}
+	if (z <= 0) {
+		z = 1;
+	}
+	vertex[2][0] *= x;
+	vertex[3][0] *= x;
+	vertex[4][0] *= x;
+
+	vertex[4][1] *= y;
+
+	vertex[1][2] *= z;
+	vertex[2][2] *= z;
+	vertex[4][2] *= z;
 
 }
 

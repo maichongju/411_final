@@ -58,6 +58,8 @@ void setTexture() {
 
 	texture[TEXTURE_BUILDING1].readBMPFile("Img/Building5.bmp");
 	texture[TEXTURE_BUILDING1].setTexture(TEXTURE_BUILDING1);
+	texture[TEXTURE_PYRAMID].readBMPFile("Img/Pyramid.bmp");
+	texture[TEXTURE_PYRAMID].setTexture(TEXTURE_PYRAMID);
 }
 
 /**
@@ -199,6 +201,8 @@ void init(void) {
 	glEnable( GL_NORMALIZE);
 	glEnable(GL_CULL_FACE);
 	glEnable(GL_DEPTH_TEST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 }
 

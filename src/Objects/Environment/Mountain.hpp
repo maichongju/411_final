@@ -9,6 +9,11 @@ class Mountain{
 public:
 	Mountain();
 	Mountain(float x,float y,float z);
+	void translate(float x, float y, float z);
+	void draw();
+	void scale(float s);
+	void setTextureID(int Texture);
+	//void scale(float x, float y , float z);
 private:
 	//Point *position;
 	Pyramid *p;

@@ -2,9 +2,9 @@
 #define SRC_OBJECTS_ENVIRONMENT_SOLAR_HPP_
 
 #define SUN_SIZE		0.35
-#define SUN_DIS			7
+#define SUN_DIS			5
 #define MOON_SIZE		0.2
-#define MOON_DIS		6
+#define MOON_DIS		4
 
 
 #include "../Basic/Sphere.hpp"
