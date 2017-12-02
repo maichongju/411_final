@@ -56,8 +56,17 @@ void setTexture() {
 	texture[TEXTURE_LEAF].readBMPFile("Img/tree_leaf.bmp");
 	texture[TEXTURE_LEAF].setTexture(TEXTURE_LEAF);
 
-	texture[TEXTURE_BUILDING1].readBMPFile("Img/Building5.bmp");
+	texture[TEXTURE_BUILDING1].readBMPFile("Img/Building1.bmp");
 	texture[TEXTURE_BUILDING1].setTexture(TEXTURE_BUILDING1);
+	texture[TEXTURE_BUILDING2].readBMPFile("Img/Building2.bmp");
+	texture[TEXTURE_BUILDING2].setTexture(TEXTURE_BUILDING2);
+	texture[TEXTURE_BUILDING3].readBMPFile("Img/Building3.bmp");
+	texture[TEXTURE_BUILDING3].setTexture(TEXTURE_BUILDING3);
+	texture[TEXTURE_BUILDING4].readBMPFile("Img/Building4.bmp");
+	texture[TEXTURE_BUILDING4].setTexture(TEXTURE_BUILDING4);
+	texture[TEXTURE_BUILDING5].readBMPFile("Img/Building5.bmp");
+	texture[TEXTURE_BUILDING5].setTexture(TEXTURE_BUILDING5);
+
 	texture[TEXTURE_PYRAMID].readBMPFile("Img/Pyramid.bmp");
 	texture[TEXTURE_PYRAMID].setTexture(TEXTURE_PYRAMID);
 }
