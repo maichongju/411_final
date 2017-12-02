@@ -11,6 +11,7 @@
 #include "../../Constant.hpp"
 class TreeNode {
 public:
+	TreeNode(Tree *t);
 	Tree *t;
 	TreeNode *next;
 };
@@ -18,7 +19,7 @@ class TreeNodeList {
 public:
 	TreeNodeList();
 	void draw();
-	void append(TreeNode *t);
+	void append(Tree *t);
 	TreeNode *head;
 	int size;
 };
@@ -32,10 +33,10 @@ public:
 private:
 	Mountain *mountain;
 	Ground *G;
-	Tree *T;
-	Tree *T2;
+	//Tree *T;
+	//Tree *T2;
 	//Tree *T3;
-
+	TreeNodeList *l;
 	Solar *solar;
 
 };
