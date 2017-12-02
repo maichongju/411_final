@@ -120,9 +120,9 @@ void display(void) {
 //	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
 //	glEnd();
 	//glTexCoord2d(0.0,1.0);
-	//glVertex2d(0.0,1.0);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
+//	//glVertex2d(0.0,1.0);
+//	glEnd();
+//	glDisable(GL_TEXTURE_2D);
 //******************************************************************
 	glFlush();
 	glutSwapBuffers();
