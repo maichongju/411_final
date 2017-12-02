@@ -18,16 +18,19 @@ Tree::Tree() {
 }
 Tree::Tree(float x, float y, float z, int tt) {
 	treeType = tt;
-	cone = new Cone(x, z * -1, y + .3);
+	cone = new Cone(x, z * -1, y + .3, TEXTURE_LEAF);
+	cone->translate(0, .3, 0);
+	cone->scale(.1, .2, .1);
 	cylinder = new Cylinder(x, z * -1, y, TEXTURE_TREE_BARK);
-	cylinder->translate(0, 0, 0);
+	cylinder->translate(x, y, z);
 	cylinder->scale(.05, .2, .05);
 	cube = new Cube();
 	cube->translate(x - .15, y + .4, z - .15);
 	cube->scale(.3, .3, .3);
-	sphere = new Sphere(new Point(0, 0, 0), TEXTURE_LEAF, 0.25);
+	sphere = new Sphere(new Point(0, 0, 0), TEXTURE_LEAF, 0.20);
 	//sphere->translate(x, y - .5, z - 25);
 	sphere->translate(x, y + .4, z);
+	sphere->rotate_mc(1, 0, 0, 90);
 	position = new Point(x, y, z);
 }
 void Tree::draw() {
@@ -37,7 +40,7 @@ void Tree::draw() {
 //	printf("*");
 	switch (treetype) {
 	case (0): {
-		cone->draw();
+		cone->drawtexture();
 		break;
 	}
 	case (1): {

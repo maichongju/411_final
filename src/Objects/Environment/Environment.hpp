@@ -34,7 +34,7 @@ private:
 	Ground *G;
 	Tree *T;
 	Tree *T2;
-	Tree *T3;
+	//Tree *T3;
 
 	Solar *solar;
 
