@@ -24,6 +24,7 @@ class Tree {
 public:
 	Tree();
 	Tree(float x, float y, float z, int tt);
+	Tree(float x, float y, float z, float a, float b, float c, int tt);
 	void draw();
 private:
 	Cone *cone;

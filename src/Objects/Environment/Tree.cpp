@@ -33,6 +33,23 @@ Tree::Tree(float x, float y, float z, int tt) {
 	sphere->rotate_mc(1, 0, 0, 90);
 	position = new Point(x, y, z);
 }
+Tree::Tree(float x, float y, float z, float a, float b, float c, int tt) {
+	treeType = tt;
+	cone = new Cone(x, z * -1, y + .3, TEXTURE_LEAF);
+	cone->translate(x, y + .3, z);
+	cone->scale(a, b, c);
+	cylinder = new Cylinder(x, z * -1, y, TEXTURE_TREE_BARK);
+	cylinder->translate(x, y, z);
+	cylinder->scale(a * .5, b * .5, c * .5);
+	cube = new Cube();
+	cube->translate(x - .15, y + .4, z - .15);
+	cube->scale(.3, .3, .3);
+	sphere = new Sphere(new Point(0, 0, 0), TEXTURE_LEAF, a);
+	//sphere->translate(x, y - .5, z - 25);
+	sphere->translate(x, y + .4, z);
+	sphere->rotate_mc(1, 0, 0, 90);
+	position = new Point(x, y, z);
+}
 void Tree::draw() {
 	int treetype = this->treeType;
 	cylinder->drawtexture();

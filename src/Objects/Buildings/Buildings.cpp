@@ -66,14 +66,14 @@ Buildings::Buildings() {
 	n2b->setwalltexture(TEXTURE_BUILDING4);
 	n3b->setwalltexture(TEXTURE_BUILDING1);
 	nc->setwalltexture(TEXTURE_BUILDING4);
-	n2c->setwalltexture(TEXTURE_BUILDING3);
-	n3c->setwalltexture(TEXTURE_BUILDING4);
+	n2c->setwalltexture(TEXTURE_BUILDING5);
+	n3c->setwalltexture(TEXTURE_BUILDING5);
 	nd->setwalltexture(TEXTURE_BUILDING2);
 	n2d->setwalltexture(TEXTURE_BUILDING3);
-	n3d->setwalltexture(TEXTURE_BUILDING1);
+	n3d->setwalltexture(TEXTURE_BUILDING5);
 	ne->setwalltexture(TEXTURE_BUILDING3);
 	n2e->setwalltexture(TEXTURE_BUILDING4);
-	n3e->setwalltexture(TEXTURE_BUILDING2);
+	n3e->setwalltexture(TEXTURE_BUILDING5);
 	l->append(na, 6, 2, 6, 2);
 	l->append(n2a, 6, 2, 6, 2);
 	l->append(n3a, 6, 2, 6, 2);
@@ -103,13 +103,13 @@ Buildings::Buildings() {
 
 	nn->setwalltexture(TEXTURE_BUILDING1);
 	nn2->setwalltexture(TEXTURE_BUILDING2);
-	nn3->setwalltexture(TEXTURE_BUILDING3);
+	nn3->setwalltexture(TEXTURE_BUILDING5);
 	nn4->setwalltexture(TEXTURE_BUILDING4);
-	nn2a->setwalltexture(TEXTURE_BUILDING3);
+	nn2a->setwalltexture(TEXTURE_BUILDING5);
 	nn2b->setwalltexture(TEXTURE_BUILDING4);
-	nn2c->setwalltexture(TEXTURE_BUILDING4);
+	nn2c->setwalltexture(TEXTURE_BUILDING5);
 	nn2d->setwalltexture(TEXTURE_BUILDING3);
-	nn2e->setwalltexture(TEXTURE_BUILDING4);
+	nn2e->setwalltexture(TEXTURE_BUILDING5);
 
 
 	l->append(nn, 6, 2, 6, 2);
