@@ -133,9 +133,6 @@ Environment::Environment() {
 	l->append(nnh);
 	l->append(nn2h);
 	l->append(nn3h);
-	//T = new Tree(0, 0.0, 0, TREE_CONE);
-	//T2 = new Tree(1.0, 0.0, -2.0, TREE_SPHERE);
-	//T3 = new Tree(2.0, 0.0, -2.0, TREE_CUBE);
 	solar = new Solar();
 	mountain = new Mountain(-2.8,0,-2.8);
 	mountain->scale(1.3);
@@ -143,7 +140,6 @@ Environment::Environment() {
 
 }
 TreeNode::TreeNode(Tree *t) {
-	//t->Tree(x, y, z, treetype);
 	this->t = t;
 	next = NULL;
 }
@@ -177,9 +173,6 @@ void TreeNodeList::draw() {
 void Environment::draw() {
 	G->draw();
 	l->draw();
-	//T->draw();
-	//T2->draw();
-	//T3->draw();
 	solar->draw();
 	mountain->draw();
 }

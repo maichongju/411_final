@@ -121,18 +121,6 @@ void display(void) {
 	glClearColor(SkyColor->red, SkyColor->green, SkyColor->blue,
 			SkyColor->alpha); // Set display-window color deep sky blue
 	myWorld.draw_world(); // draw all objects in the world
-
-//******************************************************************
-//	glColor3f(1, 1, 1);
-//	glPointSize(25);
-//	glBegin(GL_POINTS);
-//	glVertex3f(myCamera.ref.x, myCamera.ref.y, myCamera.ref.z);
-//	glEnd();
-	//glTexCoord2d(0.0,1.0);
-//	//glVertex2d(0.0,1.0);
-//	glEnd();
-//	glDisable(GL_TEXTURE_2D);
-//******************************************************************
 	glFlush();
 	glutSwapBuffers();
 }
@@ -168,36 +156,6 @@ void passivemouseFunc(int x, int y) {
 	//printf("%d,%d\n", x, y);
 }
 
-/**
- * Function for mouse motion
- * @param x
- * @param y
- */
-void mouseMotion(GLint x, GLint y) {
-
-	if (moving) {
-		if (mode == 3) {
-			switch (type) {
-			case 1: { // Rotate x
-				myCamera.rotate(1, 0, 0, 1);
-			}
-				break;
-			case 2: { // Rotate y
-
-				myCamera.rotate(0, 1, 0, 1);
-			}
-				break;
-			case 3: { // Rotate z
-
-				myCamera.rotate(0, 0, 1, 1);
-			}
-				break;
-			}
-
-		}
-		glutPostRedisplay();
-	}
-}
 
 void init(void) {
 	SkyColor = new Color(0.67, 0.93, 0.93, 0.5);
@@ -238,21 +196,6 @@ void keyboardFunc(unsigned char key, int x, int y) {
 	glutPostRedisplay();
 }
 
-/**
- * Function for special key
- * @param key
- * @param x
- * @param y
- */
-void specialKeyFunc(int key, int x, int y) {
-//	if (key == GLUT_KEY_UP) {
-//		myCamera.eyeupdown(CAMERA_UP);
-//	} else if (key == GLUT_KEY_DOWN) {
-//		myCamera.eyeupdown(CAMERA_DOWN);
-//	}
-	glutPostRedisplay();
-
-}
 
 void VCTransMenu(GLint transOption) {
 	mode = 3;
@@ -285,9 +228,6 @@ void addcarmenu(GLint option) {
 void deletecarmenu(GLint option) {
 	myWorld.traffic->MenuDeleteCar(option);
 }
-void cameramenu(GLint option) {
-	myCamera.Object = option;
-}
 
 void timemenu(GLint option) {
 	if (option == MENU_TIME_MORNING) {
@@ -310,12 +250,6 @@ void menu() {
 	GLint timeMenu = glutCreateMenu(timemenu);
 	glutAddMenuEntry(" Morning", 0);
 	glutAddMenuEntry(" Night", 1);
-	//glutAddMenuEntry(" Pause", 2);
-	//glutAddMenuEntry(" Resume", 3);
-
-	GLint cameraMenu = glutCreateMenu(cameramenu);
-	glutAddMenuEntry(" Eye", CAMERA_EYE);
-	glutAddMenuEntry(" Look at position", CAMERA_REF);
 
 	GLint deleteCarMenu = glutCreateMenu(deletecarmenu);
 	glutAddMenuEntry(" East", 0);
@@ -333,24 +267,9 @@ void menu() {
 	glutAddSubMenu(" Add Car", addCarMenu);
 	glutAddSubMenu(" Delete Car", deleteCarMenu);
 
-//***************************************************************
-	// For debug propose, will be delete
-	GLint VCTrans_Menu = glutCreateMenu(VCTransMenu);
-	glutAddMenuEntry(" Rotate x ", 1);
-	glutAddMenuEntry(" Rotate y ", 2);
-	glutAddMenuEntry(" Rotate z", 3);
-	glutAddMenuEntry(" Translate x ", 4);
-	glutAddMenuEntry(" Translate y ", 5);
-	glutAddMenuEntry(" Translate z", 6);
-	glutAddMenuEntry(" Clipping Near ", 7);
-	glutAddMenuEntry(" Clipping Far ", 8);
-	glutAddMenuEntry(" Angle ", 9);
-//***************************************************************
 	glutCreateMenu(mainMenu);      // Create main pop-up menu.
 	glutAddMenuEntry(" Reset ", 1);
 	glutAddSubMenu(" Time", timeMenu);
-	glutAddSubMenu(" Camera", cameraMenu);
-	glutAddSubMenu(" View Transformations ", VCTrans_Menu);
 	glutAddSubMenu(" Traffic Control", TrafficMenu);
 	glutAddMenuEntry(" Quit", 2);
 }
@@ -369,9 +288,7 @@ int main(int argc, char** argv) {
 	menu();
 	setTexture();
 	glutDisplayFunc(display);
-	glutMotionFunc(mouseMotion);
 	glutMouseFunc(mouseAction);
-	glutSpecialFunc(specialKeyFunc);
 	glutKeyboardFunc(keyboardFunc);
 	glutIdleFunc(idleFunc);
 	glutPassiveMotionFunc(passivemouseFunc);
