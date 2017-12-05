@@ -9,7 +9,7 @@
 
 #define WIN_TITLE 					"City Skyline"
 
-#define GLOBAL_TIME					0.005
+#define GLOBAL_TIME					0.0025
 
 #define MAP_SIZE_WIDTH				3
 #define MAP_SIZE_HEIGHT				3
